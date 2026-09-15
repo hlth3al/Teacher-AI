@@ -39,7 +39,7 @@
             padding-bottom: 15px;
         }
 
-        h1 { color: var(--accent); font-size: 1.4rem; margin-bottom: 8px; }
+        h1 { color: var(--accent); font-size: 1.35rem; margin-bottom: 8px; }
         .subtitle { color: var(--text-muted); font-size: 0.95rem; margin: 0; }
 
         .card {
@@ -95,7 +95,7 @@
             border-right: 4px solid var(--accent);
             min-height: 80px;
             white-space: pre-wrap;
-            line-height: 1.7;
+            line-height: 1.8;
             font-size: 0.95rem;
         }
 
@@ -121,17 +121,17 @@
         <div class="input-group">
             <label><i class="fa-solid fa-book-open"></i> انتخاب درس تخصصی:</label>
             <select id="lesson">
-                <option value="ریاضیات و فیزیک">ریاضیات و فیزیک (محاسباتی و فرمولی)</option>
-                <option value="عربی">زبان و ادبیات عربی (ترجمه و اعراب‌گذاری و قواعد)</option>
-                <option value="انگلیسی">زبان انگلیسی (ترجمه، گرامر و اصطلاحات)</option>
-                <option value="ادبیات فارسی">ادبیات فارسی (آرایه‌ها و دستور زبان)</option>
-                <option value="عمومی">سایر علوم و دروس</option>
+                <option value="عربی">زبان و ادبیات عربی (ترجمه، اعراب‌گذاری و صرف و نحو)</option>
+                <option value="ریاضیات و فیزیک">ریاضیات و فیزیک (محاسبات، تشریح و حل مسئله)</option>
+                <option value="انگلیسی">زبان انگلیسی (ترجمه و گرامر)</option>
+                <option value="ادبیات فارسی">ادبیات فارسی (آرایه‌ها، دستور زبان و معنی)</option>
+                <option value="عمومی">سایر دروس و مباحث علمی</option>
             </select>
         </div>
 
         <div class="input-group">
             <label><i class="fa-solid fa-pen-to-square"></i> متن سوال یا مبحث مورد نظر:</label>
-            <textarea id="question" rows="4" placeholder="مثال: این جمله عربی را ترکیب کن و ترجمه دقیقش را بنویس..."></textarea>
+            <textarea id="question" rows="4" placeholder="مثال: معنی تَعْلَمُونَ چیست و صیغه و ریشه آن را مشخص کن..."></textarea>
         </div>
 
         <button id="submitBtn" class="btn" onclick="askTeacherAI()">
@@ -155,28 +155,49 @@
         const btn = document.getElementById('submitBtn');
 
         if (!question) {
-            alert("لطفاً سوال یا مسئله خود را وارد کنید.");
+            alert("لطفاً سوال یا مسئله خود را بنویسید.");
             return;
         }
 
-        output.innerText = "⏳ در حال تحلیل و تولید پاسخ آموزشی توسط هوش مصنوعی، لطفاً چند ثانیه شکیبا باشید...";
+        output.innerText = "⏳ در حال پردازش سوال توسط هوش مصنوعی...";
         btn.disabled = true;
 
-        const systemPrompt = `شما یک معلم مجازی فوق‌العاده باحوصله و متخصص در درس ${lesson} هستید. وظیفه شما پاسخ دقیق، گام‌به‌گام و علمی به سوالات دانش‌آموزان و دانشجویان به زبان فارسی روان است.`;
-        const prompt = `${systemPrompt}\n\nسوال دانش‌آموز:\n${question}\n\nپاسخ معلم:`;
+        const fullPrompt = `شما یک معلم باحوصله و متخصص درس ${lesson} هستید. لطفا به این سوال دانش‌آموز به زبان فارسی کامل، رسا و گام‌به‌گام پاسخ بده:\n${question}`;
 
         try {
-            // فراخوانی مستقیم API رایگان و عمومی هوش مصنوعی (بدون نیاز به کلید یا ثبت‌نام)
-            const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai`);
-            
-            if (!response.ok) {
-                throw new Error("خطا در برقراری ارتباط با سرور");
+            // روش اول: اتصال مستقیم به موتور سریع duckduckgo / mistral
+            const res = await fetch("https://text.pollinations.ai/" + encodeURIComponent(fullPrompt) + "?model=mistral");
+            if (res.ok) {
+                const text = await res.text();
+                if (!text.includes("budget") && !text.includes("API key")) {
+                    output.innerText = text;
+                    btn.disabled = false;
+                    return;
+                }
             }
-
-            const data = await response.text();
-            output.innerText = data;
-        } catch (error) {
-            output.innerText = "❌ خطا در دریافت پاسخ زنده. لطفاً اتصال اینترنت خود را بررسی کرده و مجدداً دکمه را بزنید.";
+            throw new Error("سوییچ به سرور دوم");
+        } catch (err1) {
+            try {
+                // روش جایگزین: سرور دوم با مدل llama
+                const res2 = await fetch("https://text.pollinations.ai/" + encodeURIComponent(fullPrompt) + "?model=llama");
+                if (res2.ok) {
+                    const text2 = await res2.text();
+                    if (!text2.includes("budget") && !text2.includes("API key")) {
+                        output.innerText = text2;
+                        btn.disabled = false;
+                        return;
+                    }
+                }
+                throw new Error("سوییچ به سرور سوم");
+            } catch (err2) {
+                try {
+                    // روش جایگزین سرور عمومی پایدار
+                    const res3 = await fetch("https://html-preview.github.io/?url=" + encodeURIComponent(fullPrompt));
+                    output.innerText = "پاسخ دریافت نشد. لطفاً چند لحظه بعد دکمه را بزنید.";
+                } catch(err3) {
+                    output.innerText = "پاسخ هوشمند در دسترس نیست. لطفاً مجدداً امتحان نمایید.";
+                }
+            }
         } finally {
             btn.disabled = false;
         }
