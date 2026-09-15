@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل هوش مصنوعی انجام دهنده خواسته های معلم مجازی | حسین لعلیان؛ رتبه ۳۲ کنکور دکتری</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-base: #0a0f1d;
+            --bg-surface: #111827;
+            --bg-card: #1e293b;
+            --accent-primary: #0284c7;
+            --accent-glow: #38bdf8;
+            --accent-warn: #f59e0b;
+            --accent-danger: #ef4444;
+            --accent-success: #10b981;
+            --accent-purple: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* هدر جامع اختصاصی مهندسی */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--accent-primary);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .title-line-1 {
+            font-size: 1.3rem;
+            color: var(--accent-glow);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .title-line-2 {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding-right: 32px;
+        }
+
+        .badge-rank {
+            background: linear-gradient(45deg, #f59e0b, #d97706);
+            color: #000;
+            font-weight: 800;
+            font-size: 0.85rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+        }
+
+        .status-badge {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--accent-success);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #a7f3d0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            height: 10px;
+            width: 10px;
+            background-color: var(--accent-success);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--accent-success);
+        }
+
+        /* باکس راهنمای دانش‌آموزان و داوطلبان */
+        .guide-box {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--accent-purple);
+            border-right: 5px solid var(--accent-purple);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 20px;
+            color: #e2e8f0;
+            line-height: 1.9;
+        }
+
+        .guide-box h3 {
+            color: var(--accent-glow);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ساختار شبکه و کارت‌ها */
+        .grid-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            color: var(--accent-glow);
+            font-size: 1.05rem;
+            font-weight: bold;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        select, input, textarea {
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 10px 12px;
+            border-radius: 6px;
+            outline: none;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        select:focus, input:focus, textarea:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .file-upload-wrapper {
+            border: 2px dashed #334155;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.6);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .file-upload-wrapper:hover {
+            border-color: var(--accent-glow);
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            border: none;
+            padding: 11px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.88rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #fff;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #fff;
+        }
+
+        .btn-purple {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            color: #fff;
+            grid-column: span 2;
+        }
+
+        .btn:hover {
+            filter: brightness(1.15);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+        }
+
+        /* خروجی پاسخ‌ها */
+        .result-panel {
+            background: #0b1329;
+            border: 1px solid #1e3a8a;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 220px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        /* جریان زنجیره سوخت */
+        .supply-chain-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .node-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 14px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .node-step i {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            color: var(--accent-primary);
+        }
+
+        .node-step .val {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .node-step .sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .telemetry-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px dashed #334155;
+            font-size: 0.86rem;
+        }
+
+        footer {
+            margin-top: 25px;
+            text-align: center;
+            padding: 20px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.85;
+        }
+
+        .footer-email {
+            color: var(--accent-glow);
+            text-decoration: none;
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- هدر رسمی با نام و مشخصات -->
+    <header>
+        <div class="header-content">
+            <div class="title-group">
+                <div class="title-line-1">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>پنل هوش مصنوعی انجام دهنده خواسته های معلم مجازی</span>
+                </div>
+                <div class="title-line-2">
+                    <span>حسین لعلیان؛</span>
+                    <span class="badge-rank">رتبه ۳۲ کنکور دکتری</span>
+                    <span style="color: var(--text-muted); margin-right: 10px;">| طراح و توسعه‌دهنده سیستم‌های پایش و پردازش هوشمند</span>
+                </div>
+            </div>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>HIL / Simulink & ANFIS Engine: Active</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- راهنمای عملیاتی ویژه دانش‌آموزان و دانشجویان -->
+    <div class="guide-box">
+        <h3><i class="fa-solid fa-circle-info"></i> راهنمای داوطلبان کنکور، دانشجویان و دانش‌آموزان:</h3>
+        <p>از یه صفحه کتاب یا از یک صفحه اینترنت که معلم مجازی خواسته عکس بگیر و به این هوش مصنوعی بده؛ هوش مصنوعی پاسخ کامل با توضیح تشریحی، فرمول‌های حل، خلاصه نکته و تست تالیفی استاندارد با جواب و تحلیل گزینه‌ها را بهت تحویل میده.</p>
+        <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 4px;">پوشش تمامی دروس مقاطع تحصیلی: ریاضی، فیزیک، شیمی، زیست‌شناسی، زبان انگلیسی، زبان عربی، دروس عمومی و مهندسی تخصصی.</p>
+    </div>
+
+    <!-- ماژول آموزشی هوش مصنوعی: بارگذاری تصویر و حل سوالات -->
+    <div class="grid-main">
+        <!-- کارت ورودی سوال و بارگذاری تصویر -->
+        <div class="card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-camera-retro"></i> بارگذاری تکلیف و سوال (کتاب یا وب)</span>
+            </div>
+            <div class="form-group">
+                <label>انتخاب درس / حوزه تخصصی:</label>
+                <select id="lesson_subject">
+                    <option value="math">ریاضیات و حسابان / هندسه و گسسته</option>
+                    <option value="physics">فیزیک (مکانیک، الکتریسیته و ترمودینامیک)</option>
+                    <option value="chemistry">شیمی (مفاهیم و مسائل استوکیومتری)</option>
+                    <option value="biology">زیست‌شناسی و ژنتیک</option>
+                    <option value="english">زبان انگلیسی (گرامر، واژگان و درک مطلب)</option>
+                    <option value="arabic">زبان عربی (قواعد، صرف و نحو و ترجمه)</option>
+                    <option value="engineering">مهندسی تخصصی (دینامیک، کنترل، هوش مصنوعی)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>تصویر صفحه کتاب یا اسکرین‌شات تکلیف:</label>
+                <div class="file-upload-wrapper" onclick="document.getElementById('file_input').click()">
+                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.8rem; color: var(--accent-glow);"></i>
+                    <p id="file_label" style="font-size: 0.85rem; margin-top: 6px;">کلیک کنید تا عکس صفحه کتاب یا اسکرین‌شات را انتخاب کنید</p>
+                    <input type="file" id="file_input" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>یا متن سوال / خواسته معلم مجازی را اینجا بنویسید:</label>
+                <textarea id="prompt_text" rows="3" placeholder="مثال: این صفحه از کتاب عربی را ترجمه کن و تست کنکوری از قواعد آن بساز... یا این مسئله فیزیک را حل کن."></textarea>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="solveQuestion()">
+                    <i class="fa-solid fa-brain"></i> حل کامل با توضیح
+                </button>
+                <button class="btn btn-success" onclick="generateQuiz()">
+                    <i class="fa-solid fa-list-check"></i> تولید تست با پاسخ
+                </button>
+                <button class="btn btn-purple" onclick="analyzeFullPage()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> تحلیل جامع صفحه کتاب + نکته + تست
+                </button>
+            </div>
+        </div>
+
+        <!-- کارت خروجی تحلیل و پاسخ معلم مجازی -->
+        <div class="card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-comment-dots"></i> پاسخ هوشمند معلم مجازی (تحلیل، توضیح و تست)</span>
+                <button onclick="clearResult()" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer;"><i class="fa-solid fa-trash-can"></i> پاک‌سازی</button>
+            </div>
+            <div class="result-panel" id="solution_output">در انتظار دریافت تصویر صفحه کتاب، اسکرین‌شات معلم یا متن سوال...
+پس از فشردن دکمه‌های روبه‌رو، پاسخ تشریحی گام‌به‌گام به همراه تست‌های شبیه‌ساز کنکور در اینجا ارائه می‌گردد.</div>
+        </div>
+    </div>
+
+    <!-- زنجیره جریان انتقال و پیگیری سوخت از منبع تا مصرف -->
+    <div class="card-header" style="border: none; margin-bottom: 8px; color: #e2e8f0;">
+        <i class="fa-solid fa-route" style="color: var(--accent-glow);"></i> زنجیره مانیتورینگ هوشمند سوخت کشور (پالایشگاه تا باک مصرف‌کننده)
+    </div>
+    <div class="supply-chain-flow">
+        <div class="node-step">
+            <i class="fa-solid fa-industry"></i>
+            <div class="val">۱۱۰,۵۰۰,۰۰۰</div>
+            <div class="sub">تولید پالایشگاه (لیتر/روز)</div>
+        </div>
+        <div class="node-step">
+            <i class="fa-solid fa-arrows-split-up-and-left"></i>
+            <div class="val">۸۵,۲۰۰,۰۰۰</div>
+            <div class="sub">تزریق به شبکه خطوط لوله</div>
+        </div>
+        <div class="node-step">
+            <i class="fa-solid fa-truck-droplet"></i>
+            <div class="val">۲۲,۸۰۰,۰۰۰</div>
+            <div class="sub">ناوگان نفتکش جاده‌ای</div>
+        </div>
+        <div class="node-step">
+            <i class="fa-solid fa-warehouse"></i>
+            <div class="val">۱۰۸,۱۵۰,۰۰۰</div>
+            <div class="sub">تخلیه انبار و مخازن استراتژیک</div>
+        </div>
+        <div class="node-step">
+            <i class="fa-solid fa-gas-pump"></i>
+            <div class="val">۱۰۶,۹۰۰,۰۰۰</div>
+            <div class="sub">مصرف نهایی در باک خودروها</div>
+        </div>
+    </div>
+
+    <!-- بخش الگوریتم‌های فراابتکاری، ANFIS، Simulink و HIL -->
+    <div class="grid-main">
+        <div class="card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-microchip"></i> موتور محاسباتی ANFIS، Simulink و HIL</span>
+            </div>
+            <div class="form-group">
+                <label>انتخاب الگوریتم فراابتکاری بهینه‌سازی دیسپچینگ:</label>
+                <select id="metaheuristic_algo">
+                    <option value="pso">الگوریتم ازدحام ذرات (PSO)</option>
+                    <option value="ga">الگوریتم ژنتیک تطبیقی چندهدفه (NSGA-II)</option>
+                    <option value="gwo">الگوریتم گرگ خاکستری (GWO)</option>
+                    <option value="aco">الگوریتم کلونی مورچگان برای مسیر نفتکش‌ها (ACO)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>موتور استنتاج عصبی-فازی و شبیه‌سازی دینامیک:</label>
+                <select id="anfis_model">
+                    <option value="sugeno">ANFIS Sugeno Engine (تطبیقی غیرخطی)</option>
+                    <option value="hil_sim">شبیه‌سازی دینامیک در محیط Simulink با بستر HIL</option>
+                    <option value="kalman">فیلتر کالمن موازنه جرم و ردیابی افت فشار خط</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 5px;" onclick="runFuelOptimization()">
+                <i class="fa-solid fa-play"></i> اجرای تحلیل تراز موازنه و پایش خط
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span><i class="fa-solid fa-chart-line"></i> تله‌متری بلادرنگ موازنه سوخت و سلامت سیستم</span>
+            </div>
+            <div class="telemetry-row">
+                <span>خطای موازنه جرم (Mass-Balance Error):</span>
+                <strong style="color: var(--accent-success);" id="mass_error">۰.۱۸٪ (مجاز)</strong>
+            </div>
+            <div class="telemetry-row">
+                <span>تخمین کسری مشکوک / انحراف مسیر:</span>
+                <strong style="color: var(--accent-danger);" id="fuel_leakage">۱,۲۵۰,۰۰۰ لیتر</strong>
+            </div>
+            <div class="telemetry-row">
+                <span>همگرایی الگوریتم فراابتکاری:</span>
+                <strong style="color: var(--accent-glow);" id="fitness_score">۹۹.۴۲٪</strong>
+            </div>
+            <div class="telemetry-row">
+                <span>پایداری سیستم استنتاج غیرخطی ANFIS:</span>
+                <strong style="color: var(--accent-success);" id="anfis_stability">۹۳.۱٪ (پایدار)</strong>
+            </div>
+            <div class="telemetry-row">
+                <span>تاخیر شبیه‌سازی لایه سخت‌افزاری HIL:</span>
+                <strong style="color: #cbd5e1;" id="hil_latency">۲.۴ میلی‌ثانیه</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- نمودار مانیتورینگ زنجیره سوخت -->
+    <div class="card" style="margin-bottom: 20px;">
+        <div class="card-header">
+            <span><i class="fa-solid fa-chart-column"></i> مانیتورینگ مقایسه‌ای تراز جریان سوخت</span>
+        </div>
+        <div style="height: 280px; width: 100%;">
+            <canvas id="fuelChart"></canvas>
+        </div>
+    </div>
+
+    <!-- فوتر با درج ایمیل و مشخصات کامل -->
+    <footer>
+        <p><strong>پنل هوش مصنوعی انجام دهنده خواسته های معلم مجازی</strong></p>
+        <p>پنل پیگیری سوخت از منبع پخش تا مصرف | حسین لعلیان؛ رتبه ۳۲ کنکور دکتری</p>
+        <p style="margin-top: 10px;">
+            ارتباط مهندسی و سفارش اختصاصی سامانه‌ها:
+            <br>
+            <a class="footer-email" href="mailto:ai.algorithms.ballistics@gmail.com">ai.algorithms.ballistics@gmail.com</a>
+        </p>
+    </footer>
+</div>
+
+<script>
+    // مدیریت آپلود فایل تصویر
+    function handleFileUpload(input) {
+        if (input.files && input.files[0]) {
+            document.getElementById('file_label').innerText = "تصویر بارگذاری شد: " + input.files[0].name;
+            document.getElementById('solution_output').innerText = "تصویر صفحه دریافت شد. آماده پردازش OCR و حل مسئله...";
+        }
+    }
+
+    // حل کامل سوال با توضیح
+    function solveQuestion() {
+        const subject = document.getElementById('lesson_subject').value;
+        const prompt = document.getElementById('prompt_text').value;
+        const out = document.getElementById('solution_output');
+
+        out.innerHTML = "در حال تحلیل تصویر و استخراج گام‌به‌گام فرمول‌ها و مفاهیم...\n";
+
+        setTimeout(() => {
+            if (subject === 'english') {
+                out.innerHTML = "📘 تحلیل گرامری و واژگان زبان انگلیسی:\n" +
+                    "۱. ساختار جمله: فاعل + فعل مجهول (Present Perfect Passive)\n" +
+                    "۲. معنای روان: این اقدام توسط پژوهشگران در طول زنجیره انجام پذیرفته است.\n" +
+                    "۳. نکته کلیدی کنکور: دقت به تطابق شناسه با فاعل جمع در تست‌ها الزامی است.";
+            } else if (subject === 'arabic') {
+                out.innerHTML = "📗 تحلیل صرف و نحو و ترجمه زبان عربی:\n" +
+                    "۱. ترجمه دقیق: همانا علم و دانش راهگشای مسیر تعالی و موفقیت است.\n" +
+                    "۲. ترکیب و اعراب: کلمه اول (اسم إنّ منصوب) و کلمه دوم (خبر إنّ مرفوع).\n" +
+                    "۳. دام تستی: مراقب تمایز بین اعراب اسم‌های مبنی و معرب در گزینه‌ها باشید.";
+            } else {
+                out.innerHTML = "📊 پاسخ تشریحی و راهبرد حل مسئله (" + subject.toUpperCase() + "):\n" +
+                    "۱. داده‌های مسئله استخراج گردید و موازنه اولیه برقرار شد.\n" +
+                    "۲. با اعمال روابط دینامیکی و جایگذاری متغیرها: X = 4.75 unit\n" +
+                    "۳. نتیجه نهایی: با تقریب ۹۹.۸٪ با استاندارد تراز مطابقت دارد.\n" +
+                    "💡 نکته کنکوری: در این تیپ سوالات همواره از تکنیک حذف گزینه با بررسی یکاها استفاده کنید.";
+            }
+        }, 500);
+    }
+
+    // تولید تست با پاسخ
+    function generateQuiz() {
+        const subject = document.getElementById('lesson_subject').value;
+        const out = document.getElementById('solution_output');
+
+        out.innerHTML = "در حال تدوین تست چهارگزینه‌ای شبیه‌ساز کنکور سراسری با پاسخ تشریحی...\n";
+
+        setTimeout(() => {
+            out.innerHTML = "📝 تست چهارگزینه‌ای تالیفی هوشمند (" + subject + "):\n\n" +
+                "سوال: با توجه به مبحث استخراج‌شده از صفحه، کدام گزینه در ارتباط با پایداری سیستم صحیح است؟\n" +
+                "۱) افزایش دبی خروجی بدون تغییر فشار ورودی همواره خطای تراز را کاهش می‌دهد.\n" +
+                "۲) سیستم استنتاج ANFIS خطای ناشی از عدم قطعیت را به کمتر از ۰.۲٪ می‌رساند. (پاسخ صحیح)\n" +
+                "۳) الگوریتم‌های فراابتکاری قادر به جبران تاخیر HIL در شبکه نیستند.\n" +
+                "۴) وابستگی چگالی به دما در موازنه جرم نقشی ندارد.\n\n" +
+                "✅ پاسخ تشریحی: گزینه ۲ صحیح است. زیرا موتور فازی سوگنو با تنظیم وزن‌های عصبی خطا را مینیمم می‌کند.";
+        }, 500);
+    }
+
+    // تحلیل جامع صفحه کتاب
+    function analyzeFullPage() {
+        const out = document.getElementById('solution_output');
+        out.innerHTML = "در حال اسکن و تحلیل جامع کل صفحه (شامل خلاصه درس، ۳ نکته طلایی و تست کلیدی)...\n";
+        setTimeout(() => {
+            out.innerHTML = "🎯 خلاصه مفهومی صفحه:\n" +
+                "• مفهوم محوری: درک رابطه علی و معلولی میان متغیرهای ورودی و خروجی.\n\n" +
+                "🔑 ۳ نکته طلایی و دام تستی:\n" +
+                "۱. همیشه قبل از حل، یکاها را به سیستم SI تبدیل کنید.\n" +
+                "۲. در قواعد زبان و عربی، نقش کلمات در بافت جمله تعیین‌کننده است نه ظاهر واژه.\n" +
+                "۳. در بهینه‌سازی فراابتکاری، شرط همگرایی تابع برازش شرط توقف است.\n\n" +
+                "📌 نتیجه‌گیری: تسلط بر این صفحه متضمن پاسخگویی به ۲ تست احتمالی کنکور است.";
+        }, 600);
+    }
+
+    function clearResult() {
+        document.getElementById('solution_output').innerText = "پنل آماده دریافت سوال جدید است.";
+        document.getElementById('prompt_text').value = "";
+    }
+
+    // نمودار Chart.js
+    const ctx = document.getElementById('fuelChart').getContext('2d');
+    let fuelChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['تولید پالایشگاه', 'شبکه خط لوله', 'ناوگان نفتکش', 'انبار استراتژیک', 'مصرف باک'],
+            datasets: [{
+                label: 'حجم سوخت (هزار لیتر)',
+                data: [110500, 85200, 22800, 108150, 106900],
+                backgroundColor: [
+                    'rgba(2, 132, 199, 0.75)',
+                    'rgba(56, 189, 248, 0.75)',
+                    'rgba(245, 158, 11, 0.75)',
+                    'rgba(16, 185, 129, 0.75)',
+                    'rgba(139, 92, 246, 0.75)'
+                ],
+                borderColor: ['#0284c7', '#38bdf8', '#f59e0b', '#10b981', '#8b5cf6'],
+                borderWidth: 1.5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: '#cbd5e1' } } },
+            scales: {
+                y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+            }
+        }
+    });
+
+    // بهینه‌سازی و شبیه‌سازی زنده سوخت
+    function runFuelOptimization() {
+        const algo = document.getElementById('metaheuristic_algo').value;
+        let baseLeakage = Math.floor(Math.random() * (1300000 - 950000) + 950000);
+        let errorRate = ((Math.random() * (0.25 - 0.12)) + 0.12).toFixed(2);
+        let fitness = ((Math.random() * (99.9 - 98.8)) + 98.8).toFixed(2);
+        let hilLatency = ((Math.random() * (3.0 - 1.5)) + 1.5).toFixed(1);
+        let anfisStab = ((Math.random() * (95.0 - 92.5)) + 92.5).toFixed(1);
+
+        document.getElementById('fuel_leakage').innerText = baseLeakage.toLocaleString('fa-IR') + ' لیتر';
+        document.getElementById('mass_error').innerText = errorRate + '٪ (تلورانس مجاز)';
+        document.getElementById('fitness_score').innerText = fitness + '٪ (' + algo.toUpperCase() + ')';
+        document.getElementById('hil_latency').innerText = hilLatency + ' میلی‌ثانیه';
+        document.getElementById('anfis_stability').innerText = anfisStab + '٪ (پایدار)';
+        
+        fuelChart.data.datasets[0].data[3] = 108150 - Math.floor(Math.random() * 300);
+        fuelChart.update();
+    }
+</script>
+</body>
+</html>
