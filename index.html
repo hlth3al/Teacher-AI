@@ -84,6 +84,7 @@
         }
 
         .btn:hover { background: #1d4ed8; }
+        .btn:disabled { background: #475569; cursor: not-allowed; }
 
         #output {
             margin-top: 20px;
@@ -93,7 +94,7 @@
             border-right: 4px solid var(--accent);
             min-height: 80px;
             white-space: pre-wrap;
-            line-height: 1.8;
+            line-height: 1.9;
             font-size: 0.95rem;
         }
 
@@ -119,20 +120,21 @@
         <div class="input-group">
             <label><i class="fa-solid fa-book-open"></i> انتخاب درس تخصصی:</label>
             <select id="lesson">
-                <option value="arabic">زبان و ادبیات عربی (ترجمه، اعراب‌گذاری و صرف و نحو)</option>
-                <option value="math">ریاضیات و فیزیک (محاسبات، فرمول و حل مسئله)</option>
-                <option value="english">زبان انگلیسی (ترجمه و گرامر)</option>
-                <option value="persian">ادبیات فارسی (آرایه‌ها و دستور زبان)</option>
-                <option value="general">سایر دروس و مباحث علمی</option>
+                <option value="علوم تجربی و زمین‌شناسی">علوم تجربی و زمین‌شناسی</option>
+                <option value="عربی">زبان و ادبیات عربی (ترجمه و صرف و نحو)</option>
+                <option value="ریاضیات و فیزیک">ریاضیات و فیزیک (محاسبات و حل مسئله)</option>
+                <option value="انگلیسی">زبان انگلیسی (ترجمه و گرامر)</option>
+                <option value="ادبیات فارسی">ادبیات فارسی</option>
+                <option value="عمومی">سایر علوم و مباحث درسی</option>
             </select>
         </div>
 
         <div class="input-group">
             <label><i class="fa-solid fa-pen-to-square"></i> متن سوال یا مبحث مورد نظر:</label>
-            <textarea id="question" rows="4" placeholder="سوال خود را بنویسید (مثلاً: هاذان یعنی چه؟ یا تعلمون چیست؟)"></textarea>
+            <textarea id="question" rows="4" placeholder="هر سوالی در هر زمینه‌ای دارید بنویسید (مثلاً: سنگ آذرین چیست؟ یا هاذان یعنی چه؟)..."></textarea>
         </div>
 
-        <button id="submitBtn" class="btn" onclick="processQuestion()">
+        <button id="submitBtn" class="btn" onclick="askAI()">
             <i class="fa-solid fa-robot"></i> دریافت پاسخ هوشمند معلم مجازی
         </button>
 
@@ -146,61 +148,85 @@
 </div>
 
 <script>
-    // پایگاه دانش تخصصی درون‌برنامه‌ای (بدون قطعی اینترنت و بدون فیلتر)
-    const knowledgeBase = {
-        "هاذان": `📌 **پاسخ تخصصی معلم مجازی عربی:**\n\n• **معنی:** «این دو» (اشاره به نزدیک برای دو نفر یا دو چیز)\n• **نوع کلمه:** اسم اشاره مثنی مذکر (حالت رفعی).\n• **حالت نصبی و جری:** «هَذَیْنِ»\n• **مثال قرآنی و کاربردی:** «قَالُوا إِنْ هَذَانِ لَسَاحِرَانِ» (گفتند: مسلماً این دو جادوگرند).\n• **نکته صرفی:** مفرد آن «هذا» (این - مذکر) و مؤنث آن «هاتانِ / هاتَیْنِ» است.`,
-        "هذان": `📌 **پاسخ تخصصی معلم مجازی عربی:**\n\n• **معنی:** «این دو» (اشاره به نزدیک برای دو نفر یا دو چیز)\n• **نوع کلمه:** اسم اشاره مثنی مذکر (حالت رفعی).\n• **حالت نصبی و جری:** «هَذَیْنِ»\n• **نکته صرفی:** مفرد آن «هذا» و جمع آن «هؤلاءِ» می‌باشد.`,
-        "تعلمون": `📌 **پاسخ تخصصی معلم مجازی عربی:**\n\n• **معنی:** «می‌دانید» / «می‌دانند»\n• **ریشه و وزن:** از ریشه (ع-ل-م) بر وزن «تَفْعَلُونَ»\n• **صیغه:** فعل مضارع، للغائبین یا للمخاطبین (جمع مذکر مخاطب: شما می‌دانید).\n• **مثال قرآنی:** «وَتَعْلَمُونَ مَا فِي أَنفُسِكُمْ» یا «إِن كُنتُمْ تَعْلَمُونَ» (اگر می‌دانید).`,
-        "هاتان": `📌 **پاسخ تخصصی معلم مجازی عربی:**\n\n• **معنی:** «این دو زن» یا «این دو چیز مؤنث»\n• **نوع کلمه:** اسم اشاره به نزدیک برای مثنی مؤنث در حالت رفع.\n• **حالت نصب و جر:** هاتَیْنِ.`,
-        "هؤلاء": `📌 **پاسخ تخصصی معلم مجازی عربی:**\n\n• **معنی:** «این‌ها / این افراد» (اشاره به نزدیک برای جمع عاقل - هم مذکر و هم مؤنث).`,
-        "ذلک": `📌 **پاسخ تخصصی معلم مجازی عربی:**\n\n• **معنی:** «آن» (اسم اشاره به دور برای مفرد مذکر).\n• **مؤنث:** تلکَ (آن - مفرد مؤنث).`
-    };
-
-    async function processQuestion() {
+    async function askAI() {
         const q = document.getElementById('question').value.trim();
-        const output = document.getElementById('output');
         const lesson = document.getElementById('lesson').value;
+        const output = document.getElementById('output');
+        const btn = document.getElementById('submitBtn');
 
         if (!q) {
-            alert("لطفاً متن سوال را بنویسید.");
+            alert("لطفاً ابتدا سوال خود را بنویسید.");
             return;
         }
 
-        output.innerText = "⏳ در حال پردازش و استخراج پاسخ تخصصی...";
+        output.innerText = "⏳ در حال اتصال به هوش مصنوعی و تدوین پاسخ کامل علمی...";
+        btn.disabled = true;
 
-        // ۱. بررسی فوری در پایگاه دانش محلی (پاسخ در صدم ثانیه بدون خطای شبکه)
-        for (let key in knowledgeBase) {
-            if (q.includes(key)) {
-                setTimeout(() => {
-                    output.innerText = knowledgeBase[key];
-                }, 300);
-                return;
+        const systemPrompt = `شما یک معلم مجازی و استاد دلسوز در درس ${lesson} هستید. لطفا به این سوال به زبان فارسی روان، علمی، جامع و دقیق پاسخ بده:\n${q}`;
+
+        // لیست اندپوینت‌های هوش مصنوعی زنده و بدون فیلتر با قابلیت سوئیچ خودکار
+        const endpoints = [
+            {
+                url: "https://text.pollinations.ai/",
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    messages: [
+                        { role: "system", content: `شما استاد و معلم متخصص درس ${lesson} هستید. پاسخ‌ها را دقیق، کامل، مستدل و به زبان فارسی بنویسید.` },
+                        { role: "user", content: q }
+                    ],
+                    model: "searchgpt",
+                    jsonMode: false
+                })
+            },
+            {
+                url: "https://text.pollinations.ai/" + encodeURIComponent(systemPrompt) + "?model=searchgpt&seed=" + Math.floor(Math.random() * 1000),
+                method: "GET",
+                headers: {}
+            },
+            {
+                url: "https://text.pollinations.ai/" + encodeURIComponent(systemPrompt) + "?model=unity&seed=" + Math.floor(Math.random() * 1000),
+                method: "GET",
+                headers: {}
             }
-        }
+        ];
 
-        // ۲. برای سایر سوالات: تلاش برای اتصال به موتور تحلیلی آنلاین
-        try {
-            const prompt = `شما یک معلم با تجربه درس ${lesson} هستید. به سوال زیر به زبان فارسی دقیق، کوتاه و آموزشی پاسخ بده: ${q}`;
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 6000);
+        let answered = false;
 
-            const res = await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent("https://text.pollinations.ai/" + encodeURIComponent(prompt) + "?model=mistral"), {
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
+        for (const ep of endpoints) {
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 12000);
 
-            if (res.ok) {
-                const answer = await res.text();
-                if (answer && !answer.includes("budget") && !answer.includes("API key")) {
-                    output.innerText = "📌 **پاسخ معلم مجازی:**\n\n" + answer;
-                    return;
+                const opts = {
+                    method: ep.method,
+                    headers: ep.headers,
+                    signal: controller.signal
+                };
+                if (ep.body) opts.body = ep.body;
+
+                const response = await fetch(ep.url, opts);
+                clearTimeout(timeout);
+
+                if (response.ok) {
+                    const text = await response.text();
+                    if (text && text.trim().length > 15 && !text.includes("budget") && !text.includes("API key")) {
+                        output.innerText = text.trim();
+                        answered = true;
+                        break;
+                    }
                 }
+            } catch (err) {
+                // اگر این سرور پاسخ نداد به بعدی سوئیچ می‌شود
+                continue;
             }
-            throw new Error("ترافیک سرور");
-        } catch (e) {
-            // در صورت قطع بودن اینترنت بین‌الملل، تحلیل منطقی بر اساس واژگان ورودی
-            output.innerText = `📌 **تحلیل آموزشی معلم مجازی:**\n\nسوال شما در درس مربوطه دریافت شد: «${q}»\n\n• نکته: اگر سوال صرفی یا نحوی دیگری در عربی، حل فرمول در ریاضی، یا لغت انگلیسی دارید بنویسید تا تفکیک و تشریح گردد.`;
         }
+
+        if (!answered) {
+            output.innerText = "⚠️ خطای موقت شبکه در اتصال به سرورهای هوش مصنوعی رخ داد. لطفاً فیلترشکن خود را بررسی کرده یا مجدداً روی دکمه کلیک کنید.";
+        }
+
+        btn.disabled = false;
     }
 </script>
 </body>
