@@ -8,6 +8,7 @@
     <style>
         :root {
             --primary: #2563eb;
+            --primary-hover: #1d4ed8;
             --bg: #0f172a;
             --surface: #1e293b;
             --text: #f8fafc;
@@ -15,6 +16,7 @@
             --accent: #38bdf8;
             --border: #334155;
             --success: #22c55e;
+            --danger: #ef4444;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,51 +24,80 @@
         body {
             background-color: var(--bg);
             color: var(--text);
-            font-family: 'Segoe UI', Tahoma, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
             padding: 16px;
             direction: rtl;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .container {
-            max-width: 760px;
+            max-width: 780px;
             margin: 0 auto;
+            width: 100%;
         }
 
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             border-bottom: 2px solid var(--border);
-            padding-bottom: 16px;
+            padding-bottom: 18px;
         }
 
-        h1 { color: var(--accent); font-size: 1.3rem; margin-bottom: 6px; line-height: 1.4; }
-        .subtitle { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; }
+        h1 { 
+            color: var(--accent); 
+            font-size: 1.35rem; 
+            margin-bottom: 8px; 
+            line-height: 1.5;
+            font-weight: 800;
+        }
+        
+        .subtitle { 
+            color: var(--text-muted); 
+            font-size: 0.95rem; 
+            font-weight: 500; 
+        }
 
         .card {
             background: var(--surface);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border);
         }
 
-        .input-group { margin-bottom: 16px; }
-        label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; font-weight: bold; }
+        .input-group { margin-bottom: 18px; }
+        
+        label { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            margin-bottom: 8px; 
+            color: #cbd5e1; 
+            font-size: 0.92rem; 
+            font-weight: 600; 
+        }
+
+        label i { color: var(--accent); }
         
         select, textarea {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 13px;
+            border-radius: 9px;
             border: 1px solid var(--border);
-            background: #0f172a;
-            color: white;
+            background: #0b1329;
+            color: #ffffff;
             font-size: 0.95rem;
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
 
         select:focus, textarea:focus {
             border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
         }
 
         .btn {
@@ -74,50 +105,55 @@
             color: white;
             padding: 14px;
             border: none;
-            border-radius: 8px;
+            border-radius: 9px;
             width: 100%;
-            font-weight: bold;
-            font-size: 1rem;
+            font-weight: 700;
+            font-size: 1.02rem;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
-            transition: background 0.2s;
+            gap: 10px;
+            transition: all 0.2s ease;
         }
 
-        .btn:hover { background: #1d4ed8; }
-        .btn:disabled { background: #475569; cursor: wait; }
+        .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn:active { transform: translateY(0); }
+        .btn:disabled { background: #475569; cursor: not-allowed; opacity: 0.8; }
 
         .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+            display: inline-block;
             font-size: 0.8rem;
-            color: var(--success);
+            padding: 4px 10px;
+            border-radius: 20px;
             margin-top: 10px;
+            background: #1e293b;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
         }
 
         #outputBox {
-            margin-top: 20px;
-            padding: 18px;
-            border-radius: 8px;
-            background: #0b1120;
+            margin-top: 22px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #090e1a;
             border-right: 4px solid var(--accent);
-            min-height: 90px;
+            min-height: 120px;
             white-space: pre-wrap;
-            line-height: 1.9;
-            font-size: 0.95rem;
+            line-height: 2;
+            font-size: 0.98rem;
             color: #e2e8f0;
+            border: 1px solid #1e293b;
+            border-right: 4px solid var(--accent);
         }
 
         footer { 
             text-align: center; 
-            margin-top: 25px; 
+            margin-top: 30px; 
             color: var(--text-muted); 
             font-size: 0.85rem; 
             border-top: 1px solid var(--border);
-            padding-top: 15px;
+            padding-top: 16px;
         }
     </style>
 </head>
@@ -131,147 +167,119 @@
 
     <div class="card">
         <div class="input-group">
-            <label><i class="fa-solid fa-book-bookmark"></i> انتخاب حوزه و درس تخصصی:</label>
+            <label><i class="fa-solid fa-graduation-cap"></i> انتخاب حوزه و درس تخصصی:</label>
             <select id="lesson">
-                <option value="علوم تجربی و زمین‌شناسی">علوم تجربی و زمین‌شناسی</option>
-                <option value="عربی">زبان و ادبیات عربی (صرف، نحو و ترجمه)</option>
-                <option value="ریاضیات و فیزیک">ریاضیات و فیزیک (فرمول و حل مسئله)</option>
-                <option value="انگلیسی">زبان انگلیسی (گرامر و ترجمه)</option>
+                <option value="علوم تجربی، فیزیک و زمین‌شناسی">علوم تجربی، فیزیک و زمین‌شناسی</option>
+                <option value="زبان و ادبیات عربی">زبان و ادبیات عربی (صرف، نحو و ترجمه)</option>
+                <option value="ریاضیات و هندسه">ریاضیات و هندسه (فرمول و حل مسئله)</option>
+                <option value="زبان انگلیسی">زبان انگلیسی (گرامر و ترجمه)</option>
                 <option value="ادبیات فارسی">ادبیات و زبان فارسی</option>
+                <option value="علوم انسانی و معارف">علوم انسانی، تاریخ، فلسفه و دینی</option>
                 <option value="عمومی">سایر علوم و مباحث درسی</option>
             </select>
         </div>
 
         <div class="input-group">
-            <label><i class="fa-solid fa-pen-fancy"></i> متن سوال یا مبحث مورد نظر:</label>
-            <textarea id="question" rows="4" placeholder="سوال خود را وارد کنید (مثلاً: سنگ آذرین چیست؟ یا هاذان یعنی چه؟)..."></textarea>
+            <label><i class="fa-solid fa-pen-nib"></i> متن سوال یا مبحث مورد نظر:</label>
+            <textarea id="question" rows="4" placeholder="سوال خود را با دقت بنویسید (مثلاً: ساختار اتم چیست؟ انواع اعراب در زبان عربی چیست؟ قانون دوم نیوتون را توضیح بده)..."></textarea>
         </div>
 
-        <button id="submitBtn" class="btn" onclick="handleQuestion()">
-            <i class="fa-solid fa-graduation-cap"></i> دریافت پاسخ هوشمند معلم مجازی
+        <button id="submitBtn" class="btn" onclick="executeRealAI()">
+            <i class="fa-solid fa-brain"></i> دریافت پاسخ هوشمند معلم مجازی
         </button>
-
-        <div class="status-badge">
-            <i class="fa-solid fa-circle-check"></i> وضعیت سامانه: فعال و آماده پاسخگویی سریع
-        </div>
 
         <div id="outputBox">پاسخ تشریحی معلم مجازی پس از فشردن دکمه در این بخش نمایش داده می‌شود...</div>
     </div>
 
     <footer>
-        <p>ارتباط با مدیریت و توسعه اختصاصی سامانه‌ها:</p>
-        <p><a href="mailto:ai.algorithms.ballistics@gmail.com" style="color: var(--accent); text-decoration: none;">ai.algorithms.ballistics@gmail.com</a></p>
+        <p>توسعه اختصاصی سامانه‌ها | ارتباط مستقیم:</p>
+        <p><a href="mailto:ai.algorithms.ballistics@gmail.com" style="color: var(--accent); text-decoration: none; font-weight: bold;">ai.algorithms.ballistics@gmail.com</a></p>
     </footer>
 </div>
 
 <script>
-    // پایگاه دانش تحلیلی و آموزشی جامع درون‌برنامه‌ای (پاسخ ۱۰۰٪ تضمینی حتی در زمان قطع کامل اینترنت بین‌الملل)
-    const educationalDB = [
-        {
-            keywords: ["سنگ آذرین", "اذرین", "سنگهای اذرین", "ماگما", "سنگ ماگمایی"],
-            response: `📌 **پاسخ جامع معلم مجازی (علوم تجربی و زمین‌شناسی):**\n\n` +
-                      `• **تعریف:** سنگ‌های آذرین (Igneous Rocks) سنگ‌هایی هستند که از سرد شدن و انجماد مواد مذاب درون زمین (ماگما) یا بر روی سطح زمین (لاوا یا گدازه) تشکیل می‌شوند.\n\n` +
-                      `• **انواع سنگ‌های آذرین:**\n` +
-                      `  ۱. **آذرین درونی (Intrusive):** زمانی که ماگما به آرامی در اعماق پوسته سرد می‌شود. بلورهای درشت دارند. مثال: **گرانیت (سنگ خارا)**، گابرو، دیوریت.\n` +
-                      `  ۲. **آذرین بیرونی (Extrusive):** زمانی که ماده مذاب از آتشفشان خارج شده و به سرعت در مجاورت هوا یا آب سرد می‌شود. بلورهای ریز دارند یا شیشه‌ای هستند. مثال: **بازالت**، ریولیت، ابسیدین (شیشه آتشفشانی) و سنگ پا (پومیس).\n\n` +
-                      `• **اهمیت اقتصادی و علمی:** منبع اصلی بسیاری از کانسارهای فلزی (طلا، نقره، آهن) و مواد اولیه مصالح ساختمانی هستند.`
-        },
-        {
-            keywords: ["هاذان", "هذان"],
-            response: `📌 **پاسخ تخصصی معلم مجازی (زبان و ادبیات عربی):**\n\n` +
-                      `• **معنی:** «این دو» (اشاره به نزدیک برای دو شخص یا دو شیء مذکر).\n` +
-                      `• **نوع کلمه:** اسم اشاره مثنی مذکر.\n` +
-                      `• **حالات اعرابی:**\n` +
-                      `  - حالت رفع: **هَذَانِ** (مانند: «هذانِ کِتابانِ»)\n` +
-                      `  - حالت نصب و جر: **هَذَیْنِ** (مانند: «رَأَیْتُ هذَیْنِ»)\n` +
-                      `• **شاهد قرآنی:** ﴿قَالُوا إِنْ هَذَانِ لَسَاحِرَانِ﴾ (طه: ۶۳).`
-        },
-        {
-            keywords: ["هاتان", "هتان"],
-            response: `📌 **پاسخ تخصصی معلم مجازی (زبان و ادبیات عربی):**\n\n` +
-                      `• **معنی:** «این دو» (اشاره به نزدیک برای مثنی مؤنث).\n` +
-                      `• **اعراب:** در حالت رفع «هَاتَانِ» و در حالت نصب و جر «هَاتَیْنِ» به کار می‌رود.`
-        },
-        {
-            keywords: ["تعلمون", "یعلمون"],
-            response: `📌 **پاسخ تخصصی معلم مجازی (زبان و ادبیات عربی):**\n\n` +
-                      `• **معنی:** «می‌دانید» (یا می‌دانند).\n` +
-                      `• **صیغه و ریشه:** صیغه جمع مذکر مخاطب از فعل مضارع، ثلاثی مجرد از ریشه «ع-ل-م» بر وزن «تَفْعَلُونَ».\n` +
-                      `• **اعراب:** فعل مضارع مرفوع و علامت رفع آن ثبوت نون (ن) است.`
-        },
-        {
-            keywords: ["مشتق", "دیفرانسیل", "فرمول مشتق"],
-            response: `📌 **پاسخ تحلیلی معلم مجازی (ریاضیات):**\n\n` +
-                      `• **تعریف مشتق:** مشتق بیانگر نرخ تغییرات لحظه‌ای تابع و شیب خط مماس بر نمودار در یک نقطه است:\n` +
-                      `  f'(x) = lim (h -> 0) [f(x+h) - f(x)] / h\n\n` +
-                      `• **فرمول‌های پایه:**\n` +
-                      `  - d/dx (x^n) = n * x^(n-1)\n` +
-                      `  - d/dx (sin x) = cos x\n` +
-                      `  - d/dx (cos x) = -sin x\n` +
-                      `  - d/dx (e^x) = e^x`
-        },
-        {
-            keywords: ["فتوسنتز", "تغذیه گیاه"],
-            response: `📌 **پاسخ جامع معلم مجازی (زیست‌شناسی):**\n\n` +
-                      `• **تعریف فتوسنتز:** فرآیندی زیستی در کلروپلاست گیاهان و جلبک‌ها که با استفاده از نور خورشید، دی‌اکسید کربن (CO2) و آب (H2O) را به قند (گلوکز) و اکسیژن (O2) تبدیل می‌کند.\n` +
-                      `• **معادله شیمیایی:**\n` +
-                      `  6CO2 + 6H2O + Light -> C6H12O6 + 6O2`
-        }
-    ];
-
-    async function handleQuestion() {
+    async function executeRealAI() {
         const q = document.getElementById('question').value.trim();
         const lesson = document.getElementById('lesson').value;
         const output = document.getElementById('outputBox');
         const btn = document.getElementById('submitBtn');
 
         if (!q) {
-            alert("لطفاً سوال خود را در کادر وارد نمایید.");
+            alert("لطفاً سوال خود را در کادر متنی بنویسید.");
             return;
         }
 
-        output.innerText = "⏳ در حال بررسی و تدوین پاسخ کامل علمی...";
+        output.innerHTML = "⏳ <strong>در حال برقراری ارتباط با شبکه هوش مصنوعی و نگارش پاسخ تحلیلی...</strong><br><small style='color: #94a3b8;'>لطفاً چند لحظه صبر کنید...</small>";
         btn.disabled = true;
 
-        // ۱. ابتدا جستجو در دیتابیس داخلی غنی برای دریافت پاسخ در ۰.۱ ثانیه و بدون وابستگی به اینترنت خارجی
-        const cleanQ = q.toLowerCase();
-        for (const item of educationalDB) {
-            if (item.keywords.some(k => cleanQ.includes(k.toLowerCase()))) {
-                setTimeout(() => {
-                    output.innerText = item.response;
-                    btn.disabled = false;
-                }, 300);
-                return;
+        const promptText = `شما یک معلم مجازی و استاد مسلط در مبحث "${lesson}" هستید. لطفاً به این سوال به صورت دقیق، گام‌به‌گام، علمی و روان به زبان فارسی پاسخ دهید:\n${q}`;
+
+        // موتورهای ارتباطی متوالی و مقاوم به تحریم
+        const engines = [
+            // سرور ۱: اندپوینت مستقیم متن هوشمند بدون نیاز به پروکسی جانبی
+            async () => {
+                const response = await fetch("https://text.pollinations.ai/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        messages: [
+                            { role: "system", content: "شما یک معلم صبور و علمی ایرانی هستید. پاسخ‌ها را دقیق، خوانا و با ساختار آموزشی به زبان فارسی ارائه دهید." },
+                            { role: "user", content: promptText }
+                        ],
+                        model: "mistral",
+                        code: "beesknees"
+                    })
+                });
+                if (!response.ok) throw new Error("HTTP error " + response.status);
+                const txt = await response.text();
+                if (txt && txt.trim().length > 15 && !txt.includes("error") && !txt.includes("budget")) return txt;
+                throw new Error("Invalid response");
+            },
+
+            // سرور ۲: موتور جستجو و پاسخ برخط مبتنی بر Qwen
+            async () => {
+                const url = "https://text.pollinations.ai/" + encodeURIComponent(promptText) + "?model=qwen-coder";
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Fetch error");
+                const txt = await response.text();
+                if (txt && txt.trim().length > 15 && !txt.includes("budget")) return txt;
+                throw new Error("Invalid content");
+            },
+
+            // سرور ۳: مسیر متنی سریع سبک
+            async () => {
+                const url = "https://text.pollinations.ai/" + encodeURIComponent(promptText);
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Fetch fallback error");
+                const txt = await response.text();
+                if (txt && txt.trim().length > 15) return txt;
+                throw new Error("Fallback failed");
+            }
+        ];
+
+        let answered = false;
+
+        for (let i = 0; i < engines.length; i++) {
+            try {
+                const res = await Promise.race([
+                    engines[i](),
+                    new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 14000))
+                ]);
+
+                if (res) {
+                    output.innerText = res.trim();
+                    answered = true;
+                    break;
+                }
+            } catch (err) {
+                console.warn(`Engine ${i + 1} failed, trying next...`, err);
             }
         }
 
-        // ۲. برای سایر سوالاتی که در کلیدواژه‌های اولیه نیستند: ارسال به API ابری با پروتکل سازگار با شبکه ایران
-        try {
-            const prompt = `شما یک معلم با تجربه درس ${lesson} هستید. پاسخ دقیق، کامل و علمی به این سوال بده:\n${q}`;
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 7000);
-
-            const res = await fetch("https://text.pollinations.ai/" + encodeURIComponent(prompt), {
-                method: "GET",
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-
-            if (res.ok) {
-                const text = await res.text();
-                if (text && text.length > 20 && !text.includes("budget") && !text.includes("API key")) {
-                    output.innerText = `📌 **پاسخ معلم مجازی (${lesson}):**\n\n` + text;
-                    btn.disabled = false;
-                    return;
-                }
-            }
-            throw new Error("شبکه خارجی پاسخ نداد");
-        } catch (err) {
-            // در صورت بروز هرگونه اختلال یا تحریم، پاسخ آموزشی و هوشمند ساختاریافته تولید می‌شود
-            output.innerText = `📌 **پاسخ ساختاری معلم مجازی (${lesson}):**\n\n` +
-                              `سوال: «${q}»\n\n` +
-                              `• این سوال به عنوان یکی از سرفصل‌های مهم درس ${lesson} ثبت گردید.\n` +
-                              `• جهت دریافت تحلیل عمیق‌تر، می‌توانید عبارات کلیدی مستقیم مانند نام سنگ‌ها، افعال عربی، یا مفاهیم ریاضی را نیز تایپ فرمایید.`;
+        if (!answered) {
+            output.innerHTML = `⚠️ <strong>خطا در برقراری ارتباط با هسته هوش مصنوعی:</strong><br>` +
+                `ارتباط شبکه با سرورها در حال حاضر به دلیل اختلالات اینترنتی یا محدودیت‌های تحریم با تاخیر مواجه شد.<br>` +
+                `🔹 لطفاً اتصال اینترنت خود را چک کرده و چند ثانیه بعد مجدداً دکمه را لمس کنید.`;
         }
 
         btn.disabled = false;
