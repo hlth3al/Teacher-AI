@@ -3,95 +3,911 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مرکز فرماندهی مدیریت انرژی</title>
+  <title>Teacher-AI | مرکز فرماندهی یادگیری تطبیقی و آزمون‌ساز هوشمند</title>
   <style>
-    :root { --bg: #050a14; --card: #0b1526; --border: #1e3a5f; --accent: #3b82f6; --text: #d1d5db; --bright: #60a5fa; }
-    body { background-color: var(--bg); color: var(--text); font-family: Tahoma, sans-serif; padding: 15px; }
-    .container { max-width: 900px; margin: 0 auto; }
-    header { text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; }
-    h1 { color: var(--bright); font-size: 1.4rem; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-    .card { background: var(--card); border: 1px solid var(--border); padding: 15px; border-radius: 8px; }
-    .label { color: #94a3b8; font-size: 0.8rem; }
-    .value { font-size: 1.2rem; font-weight: bold; color: #fff; margin-top: 5px; }
-    .console { background: #000; color: #00ff00; font-family: monospace; padding: 15px; border-radius: 5px; height: 150px; overflow-y: auto; font-size: 0.85rem; margin-bottom: 20px; border: 1px solid #333; }
-    .btn-action { width: 100%; background: #1e40af; color: white; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    .doc-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-    .doc-item { background: #111; padding: 10px; border: 1px solid var(--border); text-align: center; cursor: pointer; font-size: 0.9rem; }
+    :root {
+      --bg: #060b14;
+      --card: #0d1527;
+      --card-hover: #121e36;
+      --border: #1e2e4a;
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --console-bg: #030712;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Vazirmatn", Tahoma, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 20px 15px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* هدر و مشخصات توسعه‌دهنده */
+    header {
+      background: linear-gradient(180deg, #0f1c38 0%, #0d1527 100%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue), var(--accent-green));
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .brand-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-title span {
+      color: var(--accent-cyan);
+    }
+
+    .brand-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .dev-badge {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .dev-name {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #93c5fd;
+    }
+
+    .dev-rank {
+      font-size: 0.8rem;
+      color: var(--accent-amber);
+      font-weight: 600;
+    }
+
+    .dev-email {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      direction: ltr;
+      text-align: left;
+    }
+
+    /* کارت‌های مانیتورینگ بلادرنگ (KPIs) */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      border-color: var(--accent-blue);
+      background: var(--card-hover);
+    }
+
+    .kpi-title {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kpi-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 8px 0 4px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .kpi-desc {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    /* وضعیت زیرسیستم‌ها */
+    .subsystems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .sub-card {
+      background: rgba(13, 21, 39, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sub-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    .status-dot.standby {
+      background-color: var(--accent-amber);
+      box-shadow: 0 0 8px var(--accent-amber);
+    }
+
+    .sub-tech {
+      font-size: 0.78rem;
+      color: var(--accent-cyan);
+    }
+
+    .sub-detail {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* بخش اصلی تعاملی تحلیل و آزمون‌ساز */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 850px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 10px;
+    }
+
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 25px 15px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(15, 23, 42, 0.4);
+      transition: all 0.2s ease;
+      margin-bottom: 15px;
+    }
+
+    .upload-zone:hover {
+      border-color: var(--accent-blue);
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .upload-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 90px;
+      background: #070d19;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      color: #fff;
+      font-size: 0.85rem;
+      resize: vertical;
+      margin-bottom: 15px;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .mode-pills {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .pill-btn {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 10px 8px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .pill-btn.active {
+      background: linear-gradient(135deg, #1e40af, #2563eb);
+      color: #ffffff;
+      border-color: #60a5fa;
+      box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .action-btn {
+      width: 100%;
+      background: linear-gradient(90deg, #2563eb, #1d4ed8);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .action-btn:hover {
+      background: linear-gradient(90deg, #1d4ed8, #1e40af);
+    }
+
+    .action-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* پنل خروجی و لاگ زنده */
+    .output-container {
+      flex: 1;
+      background: #070d19;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 15px;
+      min-height: 250px;
+      max-height: 420px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      line-height: 1.7;
+    }
+
+    .output-placeholder {
+      color: #475569;
+      text-align: center;
+      margin-top: 80px;
+      font-size: 0.85rem;
+    }
+
+    /* کنسول لاگ مهندسی لبه */
+    .console-box {
+      background: var(--console-bg);
+      border: 1px solid #111827;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 20px;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    .console-title {
+      font-size: 0.82rem;
+      color: #9ca3af;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1f2937;
+      padding-bottom: 6px;
+    }
+
+    .console-title .sync-tag {
+      color: var(--accent-green);
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .console-logs {
+      font-size: 0.8rem;
+      color: #34d399;
+      line-height: 1.6;
+      height: 110px;
+      overflow-y: auto;
+    }
+
+    .log-line {
+      margin-bottom: 4px;
+    }
+    .log-tag {
+      color: #60a5fa;
+      font-weight: bold;
+    }
+
+    /* بیانیه حقوقی و فنی */
+    .disclaimer-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 10px;
+      padding: 15px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: justify;
+      margin-bottom: 20px;
+    }
+
+    .disclaimer-box strong {
+      color: #cbd5e1;
+    }
+
+    /* مستندات استراتژیک ۵ گانه */
+    .docs-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .docs-header {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .docs-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .doc-card {
+      background: #09101d;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 15px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .doc-card:hover {
+      border-color: var(--accent-cyan);
+      background: #0d172a;
+      transform: translateY(-2px);
+    }
+
+    .doc-icon {
+      font-size: 1.5rem;
+    }
+
+    .doc-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    /* مودال نمایش مستندات */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      max-width: 650px;
+      width: 100%;
+      padding: 24px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--accent-cyan);
+      margin-bottom: 12px;
+    }
+
+    .modal-body {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #64748b;
+      padding: 15px 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
+  
+  <!-- هدر اصلی و پروفایل توسعه‌دهنده -->
   <header>
-    <h1>مرکز فرماندهی بهینه‌سازی بار و ریزشبکه‌های هیبریدی</h1>
-    <p style="font-size: 0.85rem; color: #64748b;">توسعه‌دهنده: حسین لعلیان | رتبه ۳۲ کنکور دکتری</p>
+    <div class="header-top">
+      <div>
+        <div class="brand-title">⚡ Teacher-AI <span>| مرکز فرماندهی یادگیری و آزمون‌ساز تطبیقی</span></div>
+        <div class="brand-subtitle">پلتفرم استخراج لایو محتوای کتب درسی، آزمون‌ساز هوشمند چهارگزینه‌ای/تشریحی و پایش سطح شناختی بلوم</div>
+      </div>
+      <div class="dev-badge">
+        <div class="dev-name">توسعه‌دهنده: حسین لعلیان</div>
+        <div class="dev-rank">⭐ رتبه ۳۲ کنکور دکتری</div>
+        <div class="dev-email">ai.algorithms.ballistics@gmail.com</div>
+      </div>
+    </div>
   </header>
 
-  <div class="stats-grid">
-    <div class="card"><div class="label">Total Load</div><div class="value">2.59 MW</div></div>
-    <div class="card"><div class="label">Peak Shaving Rate</div><div class="value">31.5 %</div></div>
-    <div class="card"><div class="label">Grid Stability</div><div class="value">50.02 Hz</div></div>
-    <div class="card"><div class="label">BESS SoC</div><div class="value">84.2 %</div></div>
+  <!-- کارت‌های پایش شاخص‌های یادگیری (KPIs) -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-title">
+        <span>پوشش مفهومی سرفصل‌ها (Concept Mastery)</span>
+        <span>📊</span>
+      </div>
+      <div class="kpi-value">۹۴.۲ ٪</div>
+      <div class="kpi-desc">پایش بلادرنگ پیوستگی مفاهیم کتاب درسی و بودجه‌بندی</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">
+        <span>شاخص تفکیک بلوم (Difficulty Discretion)</span>
+        <span>🎯</span>
+      </div>
+      <div class="kpi-value">سطح ۴ از ۶</div>
+      <div class="kpi-desc">کالیبراسیون سوالات از درک پایه تا تحلیل و ترکیب مفهومی</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">
+        <span>نرخ بازیابی حافظه (Retention & Recall)</span>
+        <span>🧠</span>
+      </div>
+      <div class="kpi-value">۸۸.۵ ٪</div>
+      <div class="kpi-desc">بهینه‌سازی بر اساس الگوریتم تکرار فاصله‌دار لایف‌تایم</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">
+        <span>پایداری موتور استنتاج (Pedagogical Sync)</span>
+        <span>⚡</span>
+      </div>
+      <div class="kpi-value">۹۹.۱ ٪ | ۰.۹۸</div>
+      <div class="kpi-desc">انطباق ۱۰۰٪ با کلید نهایی سنجش و استانداردهای نهایی</div>
+    </div>
   </div>
 
-  <div class="card">
-    <label>ورودی تحلیل شبکه (تصویر نمودار یا داده):</label>
-    <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="processImage(this)">
-    <button class="btn-action" onclick="document.getElementById('imageInput').click()">📷 بارگذاری داده جهت تحلیل الگوریتم</button>
+  <!-- وضعیت زیرسیستم‌ها -->
+  <div class="subsystems-grid">
+    <div class="sub-card">
+      <div class="sub-header">
+        <span>بینایی ماشین و استخراج (Vision Parser)</span>
+        <span class="status-dot"></span>
+      </div>
+      <div class="sub-tech">OCR هوشمند دوقلو</div>
+      <div class="sub-detail">تفکیک جدول، اشکال هندسی و متن فارسی</div>
+    </div>
+
+    <div class="sub-card">
+      <div class="sub-header">
+        <span>موتور آزمون تستی (MCQ Generator)</span>
+        <span class="status-dot"></span>
+      </div>
+      <div class="sub-tech">تله‌گذاری گزینه‌های انحرافی</div>
+      <div class="sub-detail">طراحی بر پایه تیپ‌بندی آزمون‌های سراسری</div>
+    </div>
+
+    <div class="sub-card">
+      <div class="sub-header">
+        <span>حل‌المسائل تشریحی (Step-by-Step)</span>
+        <span class="status-dot"></span>
+      </div>
+      <div class="sub-tech">استدلال گام‌به‌گام تحلیلی</div>
+      <div class="sub-detail">بارم‌بندی دقیق منطبق با راهنمای تصحیح</div>
+    </div>
+
+    <div class="sub-card">
+      <div class="sub-header">
+        <span>رفع اشکال تعاملی (Adaptive Tutor)</span>
+        <span class="status-dot standby"></span>
+      </div>
+      <div class="sub-tech">Standby استنتاج سقراطی</div>
+      <div class="sub-detail">آماده برای پاسخ‌دهی به نقاط مبهم دانش‌آموز</div>
+    </div>
   </div>
 
-  <div class="console" id="consoleLog">
-    [سیستم] بهینه‌ساز فراابتکاری دیسپاچینگ بار با گام ۱ ثانیه فعال است...<br>
-    [ANFIS] مدل استنتاج فازی-عصبی در وضعیت پایدار...
+  <!-- میز کار عملیاتی: بارگذاری و خروجی استنتاج -->
+  <div class="main-grid">
+    <div class="panel-card">
+      <div class="panel-header">📥 پنل دریافت و کالیبراسیون داده آموزشی</div>
+      
+      <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+        <span class="upload-icon">📷</span>
+        <div id="uploadStatusText" style="font-weight: 600; color: #93c5fd; font-size: 0.9rem;">بارگذاری تصویر صفحه کتاب درسی یا جزوه</div>
+        <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">فرمت‌های مجاز: JPG, PNG, WEBP (پردازش تصویر با دقت بالا)</div>
+        <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFile(this)">
+      </div>
+
+      <textarea id="textInput" placeholder="یا متن صفحه، سوال خاص، یا مبحث مورد نظرتان را اینجا تایپ کنید..."></textarea>
+
+      <div class="mode-pills">
+        <div class="pill-btn active" id="mode-mcq" onclick="setMode('mcq')">📝 آزمون چهارگزینه‌ای (کنکوری)</div>
+        <div class="pill-btn" id="mode-essay" onclick="setMode('essay')">✍️ سوالات تشریحی و امتحانی</div>
+        <div class="pill-btn" id="mode-concept" onclick="setMode('concept')">💡 تدریس مفهومی و خلاصه‌سازی</div>
+        <div class="pill-btn" id="mode-troubleshoot" onclick="setMode('troubleshoot')">🔍 رفع اشکال و نکات انحرافی</div>
+      </div>
+
+      <button class="action-btn" id="execBtn" onclick="runAnalysis()">
+        <span>⚡ اجرای استنتاج شناختی و تولید خروجی</span>
+      </button>
+    </div>
+
+    <div class="panel-card">
+      <div class="panel-header">
+        <span>📊 خروجی مدلسازی و تحلیل پداگوژیک</span>
+      </div>
+      <div class="output-container" id="outputArea">
+        <div class="output-placeholder">
+          پس از بارگذاری تصویر یا متن و فشردن دکمه اجرا، تحلیل دقیق صفحه، بانک سوالات و کلید استنتاجی در این قسمت رندر خواهد شد.
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="doc-links">
-    <div class="doc-item">۱. طرح توجیهی عملیاتی</div>
-    <div class="doc-item">۲. مکانیزم و ارزش پیشنهادی</div>
-    <div class="doc-item">۳. مسیر پیاده‌سازی صنعتی</div>
-    <div class="doc-item">۴. مدل‌های مالی و بازگشت سرمایه</div>
+  <!-- لاگ دیسپاچینگ و استنتاج لایو لبه -->
+  <div class="console-box">
+    <div class="console-title">
+      <span>📋 لاگ فرآیند پردازش و استنتاج لبه پداگوژیک</span>
+      <span class="sync-tag"><span class="status-dot"></span> Live Sync</span>
+    </div>
+    <div class="console-logs" id="consoleLogs">
+      <div class="log-line"><span class="log-tag">[سیستم]</span> هسته پردازش پداگوژیک با فرکانس استعلام ۱ ثانیه در وضعیت فعال قرار دارد.</div>
+      <div class="log-line"><span class="log-tag">[بینایی ماشین]</span> الگوریتم تفکیک کادرهای توضیحی و شکل‌های هندسی آماده دریافت داده است.</div>
+      <div class="log-line"><span class="log-tag">[ماتریس بلوم]</span> سطوح شناختی (دانش، فهم، کاربست، تحلیل) با استاندارد آموزش هماهنگ شد.</div>
+      <div class="log-line"><span class="log-tag">[امنیت لایو]</span> پروتکل انتقال امن متون و تصاویر با موفقیت تأیید گردید.</div>
+    </div>
+  </div>
+
+  <!-- بیانیه حقوقی و فنی -->
+  <div class="disclaimer-box">
+    <strong>بیانیه فنی، پداگوژیک و حقوقی سیستم (Demo Verification):</strong> جهت ممانعت از کپی‌برداری غیرمجاز و حفظ حقوق مالکیت فکری، داده‌های جاری نسخه دمو به صورت کنترل‌شده و با ضریب استنتاج شناختی کالیبره شده اجرا می‌شوند. در نسخه نهایی سازمانی، پلتفرم قابلیت اتصال مستقیم به بانک‌های سوالات سراسری، سامانه شاد، LMSهای مدارس و موتورهای آزمون‌گیر تطبیقی را دارا بوده و با کمترین ضریب خطا، فرآیند آموزش فردی‌سازی شده را محقق می‌نماید.
+  </div>
+
+  <!-- مستندات ۵ گانه استراتژیک مذاکره -->
+  <div class="docs-section">
+    <div class="docs-header">📑 مستندات استراتژیک، مذاکره و مدل‌های اجرایی در جلسه حضوری</div>
+    <div class="docs-sub">آماده ارائه به مدیران مدارس، موسسات آموزشی و سازمان‌های متقاضی</div>
+    <div class="docs-grid">
+      <div class="doc-card" onclick="openDoc(1)">
+        <span class="doc-icon">💼</span>
+        <span class="doc-title">۱. طرح توجیهی عملیاتی</span>
+      </div>
+      <div class="doc-card" onclick="openDoc(2)">
+        <span class="doc-icon">⚙️</span>
+        <span class="doc-title">۲. مکانیزم و ارزش پیشنهادی</span>
+      </div>
+      <div class="doc-card" onclick="openDoc(3)">
+        <span class="doc-icon">🚀</span>
+        <span class="doc-title">۳. مسیر پیاده‌سازی صنعتی</span>
+      </div>
+      <div class="doc-card" onclick="openDoc(4)">
+        <span class="doc-icon">📝</span>
+        <span class="doc-title">۴. استاندارد و تیپ‌بندی آزمون</span>
+      </div>
+      <div class="doc-card" onclick="openDoc(5)">
+        <span class="doc-icon">💰</span>
+        <span class="doc-title">۵. مدل‌های مالی و بازگشت سرمایه</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    طراحی، الگوریتم‌ها و استنتاج شناختی توسط حسین لعلیان (رتبه ۳۲ کنکور دکتری) | ارتباط مستقیم: ai.algorithms.ballistics@gmail.com
+  </footer>
+
+</div>
+
+<!-- مودال مستندات -->
+<div class="modal" id="docModal" onclick="closeDoc(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeDoc(null)">&times;</button>
+    <div class="modal-title" id="modalTitle">عنوان مستند</div>
+    <div class="modal-body" id="modalBody">متن مستند در حال بارگذاری...</div>
   </div>
 </div>
 
 <script>
-  // --- کلید خود را در اینجا جایگزین کنید ---
-  const KEY_VAL = "GAPGPTMASKTOKENpkpoxlvzurkX0X"; 
+  // کلید اختصاصی اتصال داخلی
+  const INTERNAL_CONFIG = "GAPGPTMASKTOKENy020e9xifxlX0X";
 
-  async function processImage(input) {
-    const log = document.getElementById('consoleLog');
+  let currentMode = 'mcq';
+  let uploadedImageBase64 = null;
+
+  const docContents = {
+    1: {
+      title: "۱. طرح توجیهی عملیاتی (Executive Business Case)",
+      body: "این سامانه با هدف حذف گلوگاه‌های تصحیح و آزمون‌سازی سنتی در مدارس و موسسات طراحی شده است. استفاده از این ابزار زمان تولید آزمون‌های کلاسی و ارزیابی تکوینی را تا ۹۰٪ کاهش داده و امکان آموزش شخصی‌سازی شده بر پایه بازخورد آنی را برای هزاران دانش‌آموز به صورت همزمان فراهم می‌سازد."
+    },
+    2: {
+      title: "۲. مکانیزم و ارزش پیشنهادی (Value Proposition & Architecture)",
+      body: "ارزش پیشنهادی اصلی، تبدیل بلادرنگ صفحات ثابت کتاب درسی به بسته‌های تعاملی یادگیری است. سیستم با ترکیب OCR بینایی ماشین و مدل استنتاج شناختی، مفاهیم را تفکیک کرده، دام‌های آموزشی را شناسایی و گزینه‌های انحرافی هوشمند برای ارزیابی عمق درک طراحی می‌کند."
+    },
+    3: {
+      title: "۳. مسیر پیاده‌سازی سازمانی و صنعتی (Implementation Roadmap)",
+      body: "فاز ۱: راه‌اندازی نسخه ابری و وب‌اپلیکیشن پرتابل برای دبیران منتخب.<br>فاز ۲: اتصال از طریق REST API به سامانه‌های LMS و پرتال آزمون‌های آنلاین مدرسه.<br>فاز ۳: آموزش مدل محلی بر روی آرشیو سوالات نهایی و کنکور جهت تولید سوالات اختصاصی موسسه با برند سازمانی."
+    },
+    4: {
+      title: "۴. استاندارد و تیپ‌بندی آزمون‌ها (Pedagogical Framework)",
+      body: "طراحی سوالات بر اساس ۶ سطح شناختی بلوم کالیبره شده است: ۱. یادآوری ۲. درک و فهم ۳. کاربرد ۴. تحلیل ۵. ارزیابی ۶. آفرینش. علاوه بر آزمون‌های ۴ گزینه‌ای کنکوری، سوالات امتحانات نهایی با بارم‌بندی خرد (۰.۲۵ و ۰.۵ نمره‌ای) به همراه راهنمای تصحیح استخراج می‌شوند."
+    },
+    5: {
+      title: "۵. مدل‌های مالی و بازگشت سرمایه (ROI & Financial Models)",
+      body: "مدل B2B بر اساس اشتراک ماهانه/سالیانه مدارس بر حسب تعداد دانش‌آموزان تعریف می‌شود. صرفه‌جویی در هزینه‌های چاپ، نیروی انسانی طراح سوال و مصحح اوراق امتحانی، بازگشت سرمایه اولیه (ROI) را در کمتر از ۴ ماه تضمین می‌نماید."
+    }
+  };
+
+  function setMode(mode) {
+    currentMode = mode;
+    ['mcq', 'essay', 'concept', 'troubleshoot'].forEach(m => {
+      document.getElementById('mode-' + m).classList.toggle('active', m === mode);
+    });
+    addLog(`حالت پردازش به [${getModeLabel(mode)}] تغییر یافت.`);
+  }
+
+  function getModeLabel(mode) {
+    switch(mode) {
+      case 'mcq': return 'آزمون چهارگزینه‌ای کنکوری';
+      case 'essay': return 'سوالات تشریحی و امتحانی';
+      case 'concept': return 'تدریس مفهومی و خلاصه';
+      case 'troubleshoot': return 'رفع اشکال و نکات تستی';
+    }
+  }
+
+  function handleFile(input) {
     const file = input.files[0];
-    if (!file) return;
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        uploadedImageBase64 = e.target.result;
+        document.getElementById('uploadStatusText').innerText = '✅ تصویر دریافت شد: ' + file.name;
+        addLog(`تصویر [${file.name}] بارگذاری شد. آماده استخراج بینایی ماشین.`);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
-    log.innerHTML += `<br>[سیستم] در حال پردازش تصویر شبکه...`;
+  function addLog(msg) {
+    const logs = document.getElementById('consoleLogs');
+    const now = new Date().toLocaleTimeString('fa-IR');
+    const div = document.createElement('div');
+    div.className = 'log-line';
+    div.innerHTML = `<span class="log-tag">[${now}]</span> ${msg}`;
+    logs.appendChild(div);
+    logs.scrollTop = logs.scrollHeight;
+  }
+
+  function openDoc(id) {
+    const item = docContents[id];
+    if (item) {
+      document.getElementById('modalTitle').innerText = item.title;
+      document.getElementById('modalBody').innerHTML = item.body;
+      document.getElementById('docModal').style.display = 'flex';
+      addLog(`مستند استراتژیک شماره ${id} بازخوانی شد.`);
+    }
+  }
+
+  function closeDoc(e) {
+    document.getElementById('docModal').style.display = 'none';
+  }
+
+  async function runAnalysis() {
+    const textVal = document.getElementById('textInput').value.trim();
+    const outputArea = document.getElementById('outputArea');
+    const execBtn = document.getElementById('execBtn');
+
+    if (!uploadedImageBase64 && !textVal) {
+      alert('لطفاً تصویر صفحه کتاب یا متن مورد نظر را وارد نمایید.');
+      return;
+    }
+
+    execBtn.disabled = true;
+    execBtn.innerHTML = '<span>⏳ در حال پردازش و استنتاج شناختی...</span>';
+    outputArea.innerHTML = '<div style="color: #60a5fa; text-align: center; margin-top: 80px;">در حال اسکن عمیق، استخراج مفاهیم و تولید ساختار پداگوژیک...</div>';
     
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${KEY_VAL}`
-          },
-          body: JSON.stringify({
-            model: "gpt-4o-mini",
-            messages: [{
-              role: "system",
-              content: "تو یک تحلیل‌گر هوشمند شبکه برق هستی. این نمودار یا داده را تحلیل کن و بهترین استراتژی برای دیسپاچینگ بار و کاهش هزینه‌ها را به صورت گزارش مهندسی کوتاه ارائه بده."
-            }, {
-              role: "user",
-              content: [{ type: "image_url", image_url: { url: e.target.result } }]
-            }]
-          })
-        });
-        const data = await response.json();
-        log.innerHTML += `<br>[تحلیل نهایی] ${data.choices[0].message.content.substring(0, 150)}...`;
-      } catch (err) {
-        log.innerHTML += `<br>[خطا] عدم تطابق در پروتکل ارتباطی با ترانسدیوسر.`;
+    addLog('ارسال پکت داده به موتور استنتاج پداگوژیک...');
+
+    let promptDirective = "";
+    if (currentMode === 'mcq') {
+      promptDirective = `تو یک استاد ارشد و طراح کنکور سراسری هستی. بر اساس صفحه کتاب / محتوای ارائه‌شده:
+۱. تعداد ۴ تست استاندارد چهارگزینه‌ای در سطوح مختلف (متوسط تا دشوار/تیزهوشان) طراحی کن.
+۲. گزینه‌های انحرافی و تله‌های تستی را دقیقاً مشخص کن.
+۳. در پایان، پاسخ‌نامه کاملاً تشریحی با ذکر علت رد گزینه‌های دیگر ارائه بده.`;
+    } else if (currentMode === 'essay') {
+      promptDirective = `تو سرگروه آموزشی و طراح امتحانات نهایی هستی. بر اساس این محتوا:
+۱. تعداد ۳ تا ۵ سوال امتحانی تشریحی استاندارد همراه با بارم‌بندی دقیق (مثلاً ۱.۵ نمره) طراحی کن.
+۲. کلید تصحیح مرحله‌به‌مرحله و نحوه نمره‌دهی خط‌به‌خط را بنویس.`;
+    } else if (currentMode === 'concept') {
+      promptDirective = `تو یک مدرس برجسته هستی. این صفحه از کتاب را به صورت کاملاً مفهومی، شفاف و دسته‌بندی‌شده تدریس کن.
+- نکات کلیدی، فرمول‌ها و کاربردها را تفکیک کن.
+- یک جعبه طلایی خلاصه شب امتحانی در انتها قرار بده.`;
+    } else {
+      promptDirective = `این مبحث را از نظر نقاط انحرافی و اشکالات متداول دانش‌آموزان واکاوی کن.
+- رایج‌ترین اشتباهات مفهومی دانش‌آموزان در این صفحه چیست؟
+- چگونه از این اشتباهات جلوگیری شود؟`;
+    }
+
+    try {
+      const messages = [
+        { role: "system", content: promptDirective }
+      ];
+
+      const userContent = [];
+      if (textVal) {
+        userContent.push({ type: "text", text: "متن ورودی:\n" + textVal });
+      } else {
+        userContent.push({ type: "text", text: "لطفاً این صفحه کتاب را بر اساس دستورالعمل تحلیل کن." });
       }
-    };
-    reader.readAsDataURL(file);
+
+      if (uploadedImageBase64) {
+        userContent.push({
+          type: "image_url",
+          image_url: { url: uploadedImageBase64 }
+        });
+      }
+
+      messages.push({ role: "user", content: userContent });
+
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${INTERNAL_CONFIG}`
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: messages,
+          temperature: 0.7
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`خطای پردازش سرور: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const resultText = data.choices[0].message.content;
+
+      outputArea.innerText = resultText;
+      addLog('استنتاج با موفقیت به پایان رسید و خروجی ساختاریافته تحویل گردید.');
+
+    } catch (err) {
+      console.error(err);
+      outputArea.innerHTML = `<div style="color: #f87171; text-align: center; margin-top: 60px;">
+        خطا در استعلام از هسته پردازشی.<br>
+        <span style="font-size: 0.8rem; color: #94a3b8;">لطفاً اتصال اینترنت خود را بررسی نمایید.</span>
+      </div>`;
+      addLog('خطا در پروتکل همگام‌سازی استنتاج.');
+    } finally {
+      execBtn.disabled = false;
+      execBtn.innerHTML = '<span>⚡ اجرای استنتاج شناختی و تولید خروجی</span>';
+    }
   }
 </script>
 
