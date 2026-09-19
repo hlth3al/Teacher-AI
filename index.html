@@ -1,197 +1,280 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>پنل هوش مصنوعی انجام‌دهنده خواسته‌های دانش‌آموز و دانشجوی مجازی | Teacher-AI</title>
-<style>
-:root {
-  --bg-main: #060d17;
-  --panel-bg: rgba(10, 24, 40, 0.92);
-  --border-ui: #1e3a5f;
-  --accent-cyan: #00f2ff;
-  --accent-gold: #f59e0b;
-  --accent-green: #10b981;
-  --accent-red: #ef4444;
-  --text-light: #f8fafc;
-  --text-dim: #94a3b8;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher-AI | سامانه هوشمند تحلیل صفحه کتاب و آزمون‌ساز</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #121826;
+      --border: #232d42;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --accent: #8b5cf6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Tahoma, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding: 20px 12px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    header { text-align: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    h1 { font-size: 1.6rem; color: #60a5fa; margin-bottom: 8px; }
+    .subtitle { color: var(--text-muted); font-size: 0.95rem; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-body { background-color: var(--bg-main); color: var(--text-light); font-size: 13px; padding: 15px; line-height: 1.6; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .card-title { font-size: 1.15rem; font-weight: 700; color: #38bdf8; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
 
-.header {
-  background: #091a2e; border: 1px solid var(--accent-cyan); border-radius: 8px;
-  padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 15px; box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);
-}
-.header h1 { font-size: 16px; color: var(--accent-cyan); }
-.badge {
-  background: rgba(16, 185, 129, 0.15); color: var(--accent-green);
-  border: 1px solid var(--accent-green); padding: 4px 10px; border-radius: 4px;
-  font-size: 11px; font-weight: bold;
-}
+    label { display: block; margin-bottom: 6px; font-size: 0.9rem; font-weight: 600; color: #cbd5e1; }
+    input[type="text"], input[type="password"], textarea, select {
+      width: 100%; padding: 10px 12px; background: #0f172a; border: 1px solid var(--border); border-radius: 8px; color: #fff; font-size: 0.95rem; margin-bottom: 14px;
+    }
+    input:focus, textarea:focus, select:focus { outline: 2px solid var(--primary); }
 
-.grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-@media (max-width: 768px) { .grid-container { grid-template-columns: 1fr; } }
+    .mode-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .mode-btn {
+      background: #1e293b; border: 1px solid var(--border); padding: 12px; border-radius: 8px; cursor: pointer; text-align: center; color: var(--text); font-size: 0.9rem; transition: 0.2s;
+    }
+    .mode-btn.active { background: #1d4ed8; border-color: #60a5fa; font-weight: bold; }
 
-.card { background: var(--panel-bg); border: 1px solid var(--border-ui); border-radius: 8px; padding: 15px; }
-.card-title { font-size: 14px; font-weight: bold; color: var(--accent-cyan); margin-bottom: 12px; border-bottom: 1px solid var(--border-ui); padding-bottom: 6px; }
+    .file-dropzone {
+      border: 2px dashed var(--border); border-radius: 8px; padding: 18px; text-align: center; cursor: pointer; background: #0b1120; margin-bottom: 14px; transition: 0.2s;
+    }
+    .file-dropzone:hover { border-color: var(--primary); }
+    #previewImg { max-width: 100%; max-height: 250px; border-radius: 8px; margin-top: 10px; display: none; margin-inline: auto; }
 
-.metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-.metric-box { background: #081626; border: 1px solid var(--border-ui); padding: 10px; border-radius: 6px; }
-.metric-box span { font-size: 11px; color: var(--text-dim); display: block; }
-.metric-box strong { font-size: 14px; color: #fff; display: block; margin-top: 4px; }
+    button.submit-btn {
+      width: 100%; background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; border: none; padding: 14px; font-size: 1.05rem; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s;
+    }
+    button.submit-btn:hover { opacity: 0.92; }
+    button.submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-.btn {
-  background: #0f2742; color: #fff; border: 1px solid #1e4976; padding: 10px;
-  border-radius: 6px; cursor: pointer; width: 100%; margin-bottom: 8px;
-  text-align: right; font-size: 12px; transition: 0.2s;
-}
-.btn:hover { border-color: var(--accent-cyan); background: #173d66; }
-.btn-danger { border-color: var(--accent-red); color: #fca5a5; }
+    .output-box {
+      background: #090d16; border: 1px solid #1e293b; border-radius: 8px; padding: 18px; min-height: 120px; white-space: pre-wrap; font-size: 0.95rem; line-height: 1.8; color: #f1f5f9;
+    }
 
-.console {
-  background: #030a12; border: 1px solid var(--border-ui); border-radius: 6px;
-  padding: 10px; height: 130px; overflow-y: auto; font-family: monospace;
-  font-size: 11px; color: #38bdf8;
-}
+    .badge { display: inline-block; padding: 3px 8px; font-size: 0.75rem; border-radius: 4px; background: #1e293b; color: #38bdf8; border: 1px solid #334155; }
+    .status-bar { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
 
-.accordion-wrapper { margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-.acc-btn { 
-  background: #0b1e33; color: #f8fafc; border: 1px solid #1e3a5f; border-right: 4px solid var(--accent-cyan); 
-  padding: 12px 15px; border-radius: 6px; cursor: pointer; width: 100%; text-align: right; font-size: 13px; font-weight: bold; 
-  display: flex; justify-content: space-between; align-items: center; transition: 0.2s;
-}
-.acc-btn:hover { background: #122f50; border-color: var(--accent-cyan); }
-.acc-content { 
-  display: none; background: #061322; border: 1px solid #162e4a; border-top: none; 
-  border-radius: 0 0 6px 6px; padding: 15px 18px; font-size: 12.5px; line-height: 1.85; color: #cbd5e1; 
-}
-.acc-content h4 { color: var(--accent-cyan); margin-bottom: 6px; font-size: 13px; }
-
-.footer-card { background: #071422; border: 1px solid var(--border-ui); padding: 15px 20px; border-radius: 6px; margin-top: 15px; }
-.footer-card code { color: var(--accent-gold); font-size: 13px; font-weight: bold; }
-</style>
+    /* نگهداشت مشخصات نویسنده و سند قبلی */
+    .docs-section { font-size: 0.9rem; color: #94a3b8; border-top: 1px solid var(--border); padding-top: 20px; margin-top: 30px; }
+    .docs-section h3 { color: #cbd5e1; margin-bottom: 10px; }
+  </style>
 </head>
 <body>
 
-<div class="header">
-  <div>
-    <h1>🎓 پلتفرم هوش مصنوعی انجام‌دهنده خواسته‌های دانش‌آموز و دانشجوی مجازی</h1>
-    <div style="font-size: 11px; color: var(--text-dim); margin-top: 4px;">موتور محاسباتی لبه، حل هوشمند تکالیف و پروژه‌ها، رفع اشکال مفهومی و دستیار آکادمیک خودکار</div>
-  </div>
-  <div class="badge">SYSTEM READY / ONLINE</div>
-</div>
+<div class="container">
+  <header>
+    <h1>🎓 پلتفرم هوش مصنوعی یادگیری Teacher-AI</h1>
+    <p class="subtitle">موتور تحلیل هوشمند صفحه کتاب درسی و تولید سوالات تشریحی و تستی مفهومی</p>
+  </header>
 
-<div class="grid-container">
+  <!-- پیکربندی کلید API -->
   <div class="card">
-    <div class="card-title">داشبورد وضعیت تقاضا و پردازش یادگیری</div>
-    <div class="metrics-grid">
-      <div class="metric-box"><span>وضعیت موتور استنتاج:</span><strong style="color: var(--accent-green);">فعال (Real-Time Edge)</strong></div>
-      <div class="metric-box"><span>پاسخگویی به درخواست‌ها:</span><strong>کمتر از ۰.۴ ثانیه</strong></div>
-      <div class="metric-box"><span>سطح پوشش درسی:</span><strong style="color: var(--accent-cyan);">پایه‌های تحصیلی و دانشگاهی</strong></div>
-      <div class="metric-box"><span>دقت اعتبارسنجی علمی:</span><strong>۹۹.۴٪ تأیید تطبیقی</strong></div>
+    <div class="card-title">⚙️ تنظیمات اتصال به مدل هوش مصنوعی</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <div>
+        <label>ارائه‌دهنده سرویس (Provider):</label>
+        <select id="apiProvider" onchange="toggleProviderSettings()">
+          <option value="openai">OpenAI (GPT-4o / GPT-4o-mini)</option>
+          <option value="openrouter">OpenRouter (پشتیبانی از Claude, Gemini, GPT)</option>
+        </select>
+      </div>
+      <div>
+        <label>کلید اختصاصی API Key:</label>
+        <input type="password" id="apiKey" placeholder="sk-..." />
+      </div>
+    </div>
+    <div style="font-size: 0.8rem; color: #64748b;">
+      * کلید شما فقط در مرورگر ذخیره می‌شود و مستقیماً به سرور OpenAI/OpenRouter ارسال می‌گردد.
     </div>
   </div>
+
+  <!-- بخش اصلی عملیات کاربر -->
   <div class="card">
-    <div class="card-title">کنسول فرامین عملیاتی دستیار مجازی</div>
-    <button class="btn" onclick="triggerAction('SOLVE_TASK')">⚡ پردازش و حل فوری مسئله تحلیلی / پروژه دانشجویی</button>
-    <button class="btn" onclick="triggerAction('EXPLAIN_CONCEPT')">📖 تدوین نقشه یادگیری مفهومی و رفع اشکال عمیق</button>
-    <button class="btn btn-danger" onclick="triggerAction('RESET_SESSION')">🔄 پاکسازی حافظه موقت و آغاز سرفصل جدید</button>
-    <div class="console" id="consoleLog"><div>[سامانه] دستیار هوشمند آماده دریافت و پاسخگویی به درخواست‌های تحصیلی است.</div></div>
-  </div>
-</div>
-
-<!-- بخش ۵ دکمه آکاردئونی متناسب‌شده برای پنل Teacher-AI -->
-<div class="accordion-wrapper">
-  <!-- دکمه ۱ -->
-  <div>
-    <button class="acc-btn" onclick="toggleAccordion(1)"><span>📌 دکمه ۱: این دکمه را بفشار تا متصل شوی به طرح توجیهی عملیاتی این پلتفرم!</span><span id="icon-1">▼</span></button>
-    <div class="acc-content" id="acc-1">
-      <h4>کاهش فوری اتلاف وقت تحصیلی و مدیریت بحران یادگیری: معرفی پنل Teacher-AI</h4>
-      <p>دانش‌آموزان و دانشجویان کشور امروز با دو چالش آموزشی و تحصیلی جدی مواجهند:<br>
-      ۱. اتلاف زمان و سردرگمی در حل مسائل پیچیده ناشی از کمبود دسترسی به اساتید مجرب در ساعات غیررسمی.<br>
-      ۲. هزینه‌های سرسام‌آور کلاس‌های خصوصی، پروژه‌محور و خرید پاسخ‌نامه‌های ناقص و ناکارآمد.<br>
-      <strong>پیاده‌سازی مغز متفکر نرم‌افزاری:</strong> این سامانه به عنوان هسته متفکر هوش مصنوعی، فرایند درک مطلب، حل گام‌به‌گام تکالیف، شبیه‌سازی کدهای برنامه‌نویسی و پروژه‌های دانشجویی را در هر ساعت از شبانه‌روز با کمترین هزینه و بالاترین سرعت تثبیت می‌کند.<br>
-      <strong>این پلتفرم چه کاری انجام می‌دهد؟</strong> حذف خطاهای مفهومی یادگیری به صورت Real-Time؛ به محض ثبت سوال توسط کاربر، مناسب‌ترین و ساده‌ترین الگوریتم یادگیری فعال شده تا نیاز آموزشی بدون اتکا به منابع خارجی برطرف گردد.</p>
+    <div class="card-title">📖 بارگذاری محتوای صفحه کتاب</div>
+    
+    <div class="file-dropzone" onclick="document.getElementById('imageInput').click()">
+      <span id="uploadPrompt">📷 برای آپلود عکس صفحه کتاب کلیک کنید (یا از دوربین عکس بگیرید)</span>
+      <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="handleImage(this)">
+      <img id="previewImg" alt="پیش‌نمایش صفحه کتاب" />
     </div>
-  </div>
 
-  <!-- دکمه ۲ -->
-  <div>
-    <button class="acc-btn" onclick="toggleAccordion(2)"><span>⚙️ دکمه ۲: این دکمه را بفشار تا متصل شوی به مکانیزم کاری و ارزش پیشنهادی سامانه!</span><span id="icon-2">▼</span></button>
-    <div class="acc-content" id="acc-2">
-      <h4>دیده‌بانی یکپارچه و تخصیص بهینه منابع علمی:</h4>
-      <p><strong>مسئله روز آموزش:</strong> افت راندمان تحصیلی، سردرگمی در حل مسائل پروژه‌ای و عدم تسلط مفهومی بر مباحث پایه.<br>
-      <strong>راهکار سامانه ما:</strong><br>
-      • <strong>دیده‌بانی یکپارچه:</strong> پایش پیوسته سطح درک کاربر، شناسایی نقاط ضعف و مدل‌سازی در لحظه مسیر حل مسئله.<br>
-      • <strong>حذف گپ یادگیری:</strong> جبران خودکار عقب‌افتادگی‌های درسی از طریق ارائه راه‌حل‌های تشریحی و تدریس متناسب با سطح هوش کاربر.<br>
-      • <strong>دیسپاچینگ آموزشی:</strong> ارجاع درخواست‌ها به بهترین ماژول محاسباتی (ریاضی، فیزیک، مهندسی، برنامه‌نویسی و زبان) جهت ارائه سریع‌ترین پاسخ با کمترین میزان خطا.<br>
-      • <strong>ارتباط مستقیم و تعاملی:</strong> قابلیت اتصال به سامانه‌های LMS دانشگاهی، مدارس و شبکه‌های ابری از طریق API استاندارد جهت ارزیابی خودکار تمرینات.</p>
+    <label>یا چسباندن لینک عکس اینترنتی / متن صفحه:</label>
+    <input type="text" id="imageUrl" placeholder="https://example.com/ketab-page.jpg" oninput="handleUrlInput(this.value)" />
+    <textarea id="textContent" rows="3" placeholder="اگر عکس ندارید، متن یا مبحث کتاب را اینجا بنویسید..."></textarea>
+
+    <label>هدف شما از این صفحه چیست؟</label>
+    <div class="mode-selector">
+      <div class="mode-btn active" id="btnModeEssay" onclick="setMode('essay')">
+        📝 سوالات تشریحی + آموزش و نحوه رسیدن به جواب
+      </div>
+      <div class="mode-btn" id="btnModeQuiz" onclick="setMode('quiz')">
+        🎯 سوالات چهارگزینه‌ای (تستی) + پاسخ تشریحی و تله‌های تستی
+      </div>
     </div>
+
+    <label>دستور یا پایه تحصیلی خاص (اختیاری):</label>
+    <input type="text" id="customPrompt" placeholder="مثلاً: سطح دهم تجربی، ساده توضیح بده، تمرکز روی فرمول‌ها باشد" />
+
+    <button class="submit-btn" id="runBtn" onclick="processPage()">🚀 تحلیل صفحه و تولید محتوای آموزشی</button>
   </div>
 
-  <!-- دکمه ۳ -->
-  <div>
-    <button class="acc-btn" onclick="toggleAccordion(3)"><span>🧭 دکمه ۳: این دکمه را بفشار تا متصل شوی به مسیر عملیاتی این پنل!</span><span id="icon-3">▼</span></button>
-    <div class="acc-content" id="acc-3">
-      <h4>مسیر اجرای الگوریتم‌های آموزشی هوشمند:</h4>
-      <p>• <strong>دیده‌بانی چندمنظوره:</strong> سیستم به صورت بلادرنگ ساختار درخواست تحصیلی، نوع داده‌های ورودی (متن، فرمول، کد یا مسئله ساختاریافته) را تجزیه و تحلیل می‌کند.<br>
-      • <strong>الگوریتم کاهش زمان سردرگمی:</strong> زمانی که دانشجو یا دانش‌آموز در مرحله حل مسئله متوقف می‌شود، سیستم گره‌های یادگیری را شناسایی کرده و مستقیماً راهبرد عبور از آن را ارائه می‌دهد.<br>
-      • <strong>تخصیص بهینه منابع شناختی:</strong> تعیین دقیق اینکه برای هر پرسش، از کدام شیوه تفهیم (نمایش گرافیکی، اثبات ریاضی، کدنویسی، یا زبان ساده) استفاده شود تا زمان یادگیری به کمترین میزان ممکن برسد.<br>
-      • <strong>خروجی آماده استفاده:</strong> این پنل صرفاً یک ربات متنی نیست؛ کدهای تولیدی، نمودارها و فرمول‌های رندرشده قابلیت استفاده مستقیم در پروژه‌های آکادمیک و گزارش‌های تحقیقاتی را دارند.</p>
+  <!-- خروجی پردازش هوش مصنوعی -->
+  <div class="card">
+    <div class="status-bar">
+      <span>پاسخ دریافتی هوش مصنوعی:</span>
+      <span id="statusIndicator">آماده دریافت درخواست</span>
     </div>
+    <div class="output-box" id="outputContent">نتیجه تحلیل، سوالات و آموزش گام‌به‌گام در این قسمت درج می‌شود...</div>
   </div>
 
-  <!-- دکمه ۴ -->
-  <div>
-    <button class="acc-btn" onclick="toggleAccordion(4)"><span>📝 دکمه ۴: این دکمه را بفشار تا متصل شوی به نکات کلیدی قرارداد و تعهدات فنی!</span><span id="icon-4">▼</span></button>
-    <div class="acc-content" id="acc-4">
-      <h4>شفافیت فنی و تعهدات قراردادی سامانه:</h4>
-      <p>۱. <strong>محدوده مسئولیت (Disclaimer):</strong> عملکرد پاسخ‌دهی پلتفرم منوط به صحت اطلاعات ورودی، کیفیت صورت مسئله و چارچوب مطرح‌شده توسط کاربر است.<br>
-      ۲. <strong>محرمانگی داده‌ها (NDA):</strong> تمامی سوالات، پایان‌نامه‌ها، تمرین‌ها و اطلاعات تحصیلی ثبت‌شده در پنل کاملاً محرمانه تلقی شده و حریم خصوصی علمی دانشجو و دانشگاه حفظ می‌گردد.<br>
-      ۳. <strong>فاز پایلوت و اعتبارسنجی:</strong> امکان توافق برای یک دوره تست آزمایشی با مدارس یا موسسات آموزش عالی همراه با شاخص‌های مشخص (ارزیابی درصد قبولی، سرعت پاسخگویی و رضایت کاربران).</p>
-    </div>
+  <!-- حفظ سوابق و توضیحات رسمی قبلی پنل -->
+  <div class="docs-section">
+    <h3>سند ماموریت و معماری Teacher-AI</h3>
+    <p>این سامانه به عنوان هسته هوشمند رفع اشکال مفهومی دانش‌آموزان و دانشجویان توسعه یافته تا فرآیند درک عمیق متون آموزشی، تبدیل محتوای خام کتاب به بانک سوالات استاندارد و شبیه‌سازی تدریس خصوصی را به صورت Real-time ممکن سازد.</p>
+    <br>
+    <p>طراحی و توسعه مهندسی: <strong>حسین لعلیان؛ رتبه ۳۲ کنکور دکتری</strong></p>
+    <p>رایانامه رسمی: <code>ai.algorithms.ballistics@gmail.com</code></p>
   </div>
-
-  <!-- دکمه ۵ -->
-  <div>
-    <button class="acc-btn" onclick="toggleAccordion(5)"><span>💼 دکمه ۵: بفشار این دکمه را تا متصل شوی به مدل‌های پیشنهادی ما!</span><span id="icon-5">▼</span></button>
-    <div class="acc-content" id="acc-5">
-      <h4>مدل‌های استقرار، توسعه و همکاری تجاری:</h4>
-      <p><strong>مدل اول (اشتراک و پایلوت ارزیابی بازدهی):</strong><br>
-      استقرار سامانه برای دانشگاه‌ها و مراکز آموزشی به صورت پایلوت، با محاسبه هزینه بر اساس شاخص بهبود راندمان تحصیلی و کاهش مراجعات حضوری برای رفع اشکال.<br>
-      <strong>مدل دوم (فروش لایسنس سازمانی):</strong><br>
-      واگذاری کامل لایسنس سامانه Teacher-AI به دانشگاه‌ها، مدارس هوشمند و آموزشگاه‌های آنلاین همراه با پشتیبانی سالیانه، اتصال به پرتال آموزشی و سفارشی‌سازی پایگاه دانش.</p>
-    </div>
-  </div>
-</div>
-
-<div class="footer-card">
-  <div style="font-size: 12px; margin-bottom: 5px;">طراحی و توسعه مهندسی: <strong>حسین لعلیان؛ رتبه ۳۲ کنکور دکتری</strong></div>
-  <div>رایانامه رسمی: <code>ai.algorithms.ballistics@gmail.com</code></div>
 </div>
 
 <script>
-function triggerAction(type) {
-  const log = document.getElementById('consoleLog');
-  const time = new Date().toLocaleTimeString('fa-IR');
-  log.innerHTML += `<div>[${time}] پردازش درخواست ${type} با موفقیت اجرا شد.</div>`;
-  log.scrollTop = log.scrollHeight;
-}
+  let selectedMode = 'essay';
+  let base64Image = null;
 
-function toggleAccordion(id) {
-  const content = document.getElementById('acc-' + id);
-  const icon = document.getElementById('icon-' + id);
-  if (content.style.display === 'block') {
-    content.style.display = 'none';
-    icon.innerText = '▼';
-  } else {
-    content.style.display = 'block';
-    icon.innerText = '▲';
+  // بازیابی کلید ذخیره شده
+  window.onload = function() {
+    const savedKey = localStorage.getItem('teacher_ai_key');
+    if (savedKey) document.getElementById('apiKey').value = savedKey;
+  };
+
+  function setMode(mode) {
+    selectedMode = mode;
+    document.getElementById('btnModeEssay').classList.toggle('active', mode === 'essay');
+    document.getElementById('btnModeQuiz').classList.toggle('active', mode === 'quiz');
   }
-}
+
+  function handleImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      base64Image = e.target.result;
+      const preview = document.getElementById('previewImg');
+      preview.src = base64Image;
+      preview.style.display = 'block';
+      document.getElementById('uploadPrompt').innerText = 'عکس بارگذاری شد (برای تغییر مجدد کلیک کنید): ' + file.name;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function handleUrlInput(val) {
+    if (val.startsWith('http')) {
+      base64Image = val; // به عنوان URL استفاده می‌شود
+    }
+  }
+
+  async function processPage() {
+    const apiKey = document.getElementById('apiKey').value.trim();
+    const provider = document.getElementById('apiProvider').value;
+    const textContent = document.getElementById('textContent').value.trim();
+    const customPrompt = document.getElementById('customPrompt').value.trim();
+    const outBox = document.getElementById('outputContent');
+    const status = document.getElementById('statusIndicator');
+    const runBtn = document.getElementById('runBtn');
+
+    if (!apiKey) {
+      alert('لطفاً API Key خود را وارد کنید.');
+      return;
+    }
+    localStorage.setItem('teacher_ai_key', apiKey);
+
+    if (!base64Image && !textContent) {
+      alert('لطفاً حداقل یک عکس از صفحه کتاب بارگذاری کنید، یا لینک آن را داده یا متن صفحه را وارد نمایید.');
+      return;
+    }
+
+    runBtn.disabled = true;
+    status.innerText = 'درحال ارتباط با مغز هوش مصنوعی و خواندن صفحه...';
+    outBox.innerText = 'لطفاً صبور باشید، هوش مصنوعی در حال خواندن صفحه و طراحی سوالات است...';
+
+    // ساخت دستور دقیق (Prompt) متناسب با درخواست شما
+    let systemInstruction = "";
+    if (selectedMode === 'essay') {
+      systemInstruction = `شما یک معلم و استاد درجه‌یک آموزشی هستید. صفحه کتاب ارائه‌شده را با دقت بخوانید.
+وظیفه شما:
+۱. استخراج مفاهیم کلیدی این صفحه.
+۲. طراحی حداقل ۳ تا ۵ سوال تشریحی مهم امتحانی از درون خطوط و مفاهیم همین صفحه.
+۳. ارائه پاسخ تشریحی کامل برای هر سوال، همراه با «توضیح مرحله‌به‌مرحله چگونگی رسیدن به این پاسخ و راه‌حل» تا دانش‌آموز متوجه شود چرا و چگونه به این جواب رسیدیم.`;
+    } else {
+      systemInstruction = `شما یک طراح سوال آزمون‌های استاندارد و کنکور هستید. صفحه کتاب ارائه‌شده را تحلیل کنید.
+وظیفه شما:
+۱. طراحی ۴ تا ۶ سوال چهارگزینه‌ای (تستی) استاندارد و مفهومی از متن و فرمول‌های همین صفحه.
+۲. مشخص کردن گزینه صحیح برای هر سوال.
+۳. توضیح کامل و تشریحی درباره چگونگی حل و چرایی درستی آن گزینه و دلیل نادرستی گزینه‌های دیگر (تله‌های تستی).`;
+    }
+
+    if (customPrompt) {
+      systemInstruction += `\nنکات اضافه کاربر: ${customPrompt}`;
+    }
+
+    // بدنه پیام ارسالی
+    const userContent = [];
+    if (textContent) {
+      userContent.push({ type: "text", text: `متن یا توضیحات دانش‌آموز:\n${textContent}` });
+    }
+    if (base64Image) {
+      userContent.push({
+        type: "image_url",
+        image_url: { url: base64Image }
+      });
+    }
+
+    try {
+      let endpoint = "https://api.openai.com/v1/chat/completions";
+      let model = "gpt-4o-mini"; // سریع و ارزان با بینایی تصویر
+
+      if (provider === "openrouter") {
+        endpoint = "https://openrouter.ai/api/v1/chat/completions";
+        model = "google/gemini-flash-1.5"; // رایگان یا بسیار ارزان
+      }
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: [
+            { role: "system", content: systemInstruction },
+            { role: "user", content: userContent }
+          ],
+          temperature: 0.5
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error.message || JSON.stringify(data.error));
+      }
+
+      const reply = data.choices[0].message.content;
+      outBox.innerText = reply;
+      status.innerText = '✅ پردازش با موفقیت انجام شد';
+    } catch (err) {
+      outBox.innerText = 'خطا در برقراری ارتباط یا پردازش تصویر:\n' + err.message + '\n\nنکته: در صورت استفاده از اینترنت ایران ممکن است دامنه api.openai.com نیاز به DNS شکن یا پراکسی داشته باشد.';
+      status.innerText = '❌ بروز خطا';
+    } finally {
+      runBtn.disabled = false;
+    }
+  }
 </script>
+
 </body>
 </html>
