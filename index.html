@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher-AI | دستیار هوشمند یادگیری و تحلیل کتاب</title>
+    <title>Teacher-AI | سامانه هوشمند پداگوژی و سنجش آموزشی</title>
     <link href="https://cdn.jsdelivr.net/npm/vazirmatn-font@30.1.0/dist/font-face.css" rel="stylesheet">
     <style>
         :root {
             --primary: #00f2fe;
             --secondary: #4facfe;
-            --accent: #2ecc71;
-            --bg: #0b0f19;
-            --panel: rgba(255, 255, 255, 0.04);
+            --accent-green: #2ecc71;
+            --accent-purple: #9b59b6;
+            --accent-orange: #f39c12;
+            --bg: #090d16;
+            --panel: rgba(255, 255, 255, 0.05);
             --border: rgba(255, 255, 255, 0.12);
-            --text: #e2e8f0;
-            --muted: #94a3b8;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --danger: #ff4d4d;
         }
 
         * { box-sizing: border-box; }
@@ -24,116 +27,80 @@
             color: var(--text);
             margin: 0;
             padding: 20px;
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
-        .container { max-width: 950px; margin: 0 auto; }
+        .container { max-width: 1050px; margin: 0 auto; }
 
-        /* نوار بالای داشبورد */
-        .top-bar {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border: 1px solid var(--border);
-            padding: 15px 22px;
-            border-radius: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
+        /* نوار مالکیت رسمی حقوقی */
+        .ownership-bar {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(79, 172, 254, 0.12));
+            border: 1px solid rgba(0, 242, 254, 0.35);
+            padding: 14px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #ffffff;
+            font-weight: 500;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
             margin-bottom: 25px;
         }
-
-        .user-meta { display: flex; align-items: center; gap: 12px; }
-        .badge {
-            background: rgba(0, 242, 254, 0.15);
+        .ownership-bar b {
             color: var(--primary);
-            border: 1px solid var(--primary);
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 700;
         }
-
-        .btn-top {
-            background: linear-gradient(90deg, #38ef7d, #11998e);
-            color: #fff;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .btn-top:hover { opacity: 0.9; transform: translateY(-1px); }
 
         /* سربرگ */
         .header { text-align: center; margin-bottom: 30px; }
         .header h1 {
             color: #fff;
-            margin: 0 0 8px;
-            font-size: 2.3rem;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 0 0 10px;
+            font-size: 2.4rem;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .header p { color: var(--muted); margin: 0; font-size: 1rem; }
+        .header p { color: var(--muted); margin: 0; font-size: 1.05rem; }
 
-        /* کارت‌ها */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        .stat-card {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: 12px;
-            text-align: center;
-        }
-        .stat-card .val { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
-        .stat-card .lbl { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
-
-        /* پنل ارسال داده */
+        /* پنل ورودی داده */
         .workspace {
             background: var(--panel);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 25px;
+            backdrop-filter: blur(8px);
         }
 
         .api-row {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
             margin-bottom: 18px;
-            background: rgba(0,0,0,0.25);
-            padding: 10px 14px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(0,0,0,0.35);
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
         }
+        .api-row label { font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
         .api-row input {
             flex: 1;
             background: transparent;
             border: none;
-            color: #fff;
+            color: #00f2fe;
             font-family: monospace;
             direction: ltr;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             outline: none;
         }
 
         textarea {
             width: 100%;
-            height: 120px;
-            background: rgba(0, 0, 0, 0.35);
+            height: 130px;
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             color: #fff;
-            padding: 12px 14px;
+            padding: 14px;
             font-family: inherit;
             font-size: 0.95rem;
             resize: vertical;
@@ -146,84 +113,59 @@
             display: none;
             margin-bottom: 15px;
             position: relative;
-            max-width: 200px;
+            max-width: 220px;
         }
         .preview-box img {
             width: 100%;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid var(--primary);
         }
         .remove-img {
             position: absolute;
             top: -8px;
             left: -8px;
-            background: #e74c3c;
+            background: var(--danger);
             color: #fff;
             border: none;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             cursor: pointer;
-            font-size: 12px;
-            line-height: 24px;
-            text-align: center;
+            font-weight: bold;
         }
 
-        .actions {
-            display: flex;
+        /* دکمه‌های عملیاتی */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
             gap: 12px;
-            flex-wrap: wrap;
         }
+
         .btn {
-            flex: 1;
-            min-width: 180px;
-            padding: 13px;
+            padding: 14px 16px;
             border-radius: 10px;
             border: none;
             font-family: inherit;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: 0.2s;
+            transition: all 0.25s ease;
         }
-        .btn-run {
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            color: #0b0f19;
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+            opacity: 0.95;
         }
-        .btn-upload {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-            border: 1px solid var(--border);
-        }
-        .btn:hover { opacity: 0.92; }
 
-        /* خروجی */
-        .output-card {
-            background: #060911;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 22px;
-            margin-top: 25px;
-        }
-        .output-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 12px;
-            margin-bottom: 15px;
-        }
-        .output-body {
-            white-space: pre-wrap;
-            font-size: 0.95rem;
-            color: #e5e7eb;
-            line-height: 1.8;
-            min-height: 80px;
-        }
+        .btn-upload { background: #1e293b; color: #fff; border: 1px solid var(--border); }
+        .btn-socratic { background: linear-gradient(135deg, #8e2de2, #4a00e0); color: #fff; }
+        .btn-mcq { background: linear-gradient(135deg, #11998e, #38ef7d); color: #042014; }
+        .btn-analyze { background: linear-gradient(135deg, #f7971e, #ffd200); color: #2a1b00; }
+
         .loading {
             display: none;
             text-align: center;
@@ -232,190 +174,143 @@
             font-weight: bold;
         }
 
-        /* پنجره خرید اعتبار */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(4px);
+        /* کارت نمایش خروجی */
+        .output-card {
+            background: #05080f;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-top: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .output-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            z-index: 999;
-            padding: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
         }
-        .modal-card {
-            background: #111827;
-            border: 1px solid var(--primary);
-            max-width: 520px;
-            width: 100%;
-            border-radius: 16px;
-            padding: 24px;
+        .output-title { font-weight: bold; color: var(--primary); font-size: 1.05rem; }
+        .output-body {
+            white-space: pre-wrap;
+            font-size: 0.96rem;
+            color: #f0f6fc;
+            line-height: 1.9;
+            min-height: 100px;
         }
-        .plan-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin: 20px 0;
+
+        /* کادر اخطار امنیتی و حقوقی */
+        .security-alert-box {
+            background: rgba(255, 77, 77, 0.08);
+            border: 1px solid rgba(255, 77, 77, 0.35);
+            border-right: 5px solid var(--danger);
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 0.88rem;
+            color: #ffb4b4;
+            line-height: 1.8;
         }
-        .plan {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border);
-            padding: 14px;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.2s;
+        .security-alert-box h4 {
+            margin: 0 0 6px;
+            color: #ff4d4d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
         }
-        .plan:hover { border-color: var(--primary); background: rgba(0,242,254,0.06); }
-        .plan h4 { margin: 0 0 6px; color: var(--primary); }
-        .plan p { margin: 0; font-size: 0.85rem; color: var(--muted); }
     </style>
 </head>
 <body>
 
 <div class="container">
 
-    <!-- نوار داشبورد بالا -->
-    <div class="top-bar">
-        <div class="user-meta">
-            <span>👤 کاربر: <b>حسین لعلیان</b></span>
-            <span class="badge">اعتبار باقی‌مانده: <span id="credit-num">10</span> استنتاج</span>
-        </div>
-        <button class="btn-top" onclick="openShop()">➕ افزایش اعتبار (شارژ)</button>
+    <!-- بند ۱: نوار مالکیت رسمی شرکت -->
+    <div class="ownership-bar">
+        تمامی حقوق این پلتفرم متعلق به شرکت صنایع پردرآمد تهرانیها با مدیر عاملی حسین لعلیان (رتبه ۳۲ دکتری) می‌باشد.
     </div>
 
-    <!-- معرفی پنل -->
+    <!-- سربرگ سامانه -->
     <div class="header">
-        <h1>Teacher-AI | هسته استنتاج پداگوژیک</h1>
-        <p>تحلیل مفهومی کتاب درسی، کشف کج‌فهمی‌های یادگیری و تولید آزمون هدفمند</p>
+        <h1>Teacher-AI | موتور هوشمند استنتاج آموزشی</h1>
+        <p>ارزیابی پداگوژیک، یادگیری تعاملی، سنجش استاندارد و بازخورد مفهومی</p>
     </div>
 
-    <!-- مات-radius: 16px;
-            padding: 24px;
-        }
-        .plan-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin: 20px 0;
-        }
-        .plan {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border);
-            padding: 14px;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .plan:hover { border-color: var(--primary); background: rgba(0,242,254,0.06); }
-        .plan h4 { margin: 0 0 6px; color: var(--primary); }
-        .plan p { margin: 0; font-size: 0.85rem; color: var(--muted); }
-    </style>
-</head>
-<body>
-
-<div class="container">
-
-    <!-- نوار داشبورد بالا -->
-    <div class="top-bar">
-        <div class="user-meta">
-            <span>👤 کاربر: <b>حسین لعلیان</b></span>
-            <span class="badge">اعتبار باقی‌مانده: <span id="credit-num">10</span> استنتاج</span>
+    <!-- محیط کاربری و ارسال داده -->
+    <div class="workspace">
+        <div class="api-row">
+            <label for="api-key">کلید Gemini API (اختیاری جهت اتصال مستقیم):</label>
+            <input type="password" id="api-key" placeholder="کلید هوش مصنوعی را وارد کنید (در صورت خالی بودن از موتور پیش‌فرض استفاده می‌شود)" oninput="saveKey(this.value)">
         </div>
-        <button class="btn-top" onclick="openShop()">➕ افزایش اعتبار (شارژ)</button>
-    </div>
 
-    <!-- معرفی پنل -->
-    <div class="header">
-        <h1>Teacher-AI | هسته استنتاج پداگوژیک</h1>
-        <p>تحلیل مفهومی کتاب درسی، کشف کج‌فهمی‌های یادگیری و تولید آزمون هدفمند</p>
-    </div>
+        <textarea id="user-prompt" placeholder="متن درس، صورت مسئله یا سوال امتحانی را بنویسید یا تصویر صفحه کتاب را از دکمه زیر بارگذاری نمایید..."></textarea>
 
-    <!-- ماتریس‌های ارزیابی -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="val">سطح ۴</div>
-            <div class="lbl">طبقه‌بندی بلوم (تحلیل
-                ⚡ تحلیل پداگوژیک و پاسخ هوشمند
+        <!-- پیش‌نمایش تصویر پیوست -->
+        <div id="preview-container" class="preview-box">
+            <button class="remove-img" onclick="clearImage()" title="حذف تصویر">×</button>
+            <img id="image-preview" src="" alt="پیش‌نمایش تصویر کتاب">
+        </div>
+
+        <input type="file" id="image-input" accept="image/*" style="display:none" onchange="previewImage(this)">
+
+        <!-- دکمه‌های عملیاتی خواسته شده -->
+        <div class="actions-grid">
+            <button type="button" class="btn btn-upload" onclick="document.getElementById('image-input').click()">
+                📷 پیوست تصویر کتاب
+            </button>
+
+            <!-- بند ۳: دکمه پاسخ سقراطی -->
+            <button type="button" class="btn btn-socratic" onclick="runMode('socratic')">
+                🏛️ پاسخ سقراطی
+            </button>
+
+            <!-- بند ۵: دکمه تولید سوال و پاسخ چهار جوابی -->
+            <button type="button" class="btn btn-mcq" onclick="runMode('mcq')">
+                📝 تولید سوال و پاسخ چهار جوابی
+            </button>
+
+            <!-- بند ۶: دکمه تحلیل و تجزیه سوال و پاسخ -->
+            <button type="button" class="btn btn-analyze" onclick="runMode('analyze')">
+                🔍 تحلیل و تجزیه سوال و پاسخ
             </button>
         </div>
 
         <div id="loader" class="loading">
-            🌀 در حال فراخوانی مدل و تحلیل عمیق پداگوژیک... لطفاً شکیبا باشید.
+            🌀 در حال استنتاج پداگوژیک و پردازش هوشمند... لطفاً چند لحظه صبر کنید.
         </div>
     </div>
 
-    <!-- پنل خروجی -->
+    <!-- نمایش خروجی هوش مصنوعی -->
     <div class="output-card">
         <div class="output-header">
-            <span style="font-weight: bold; color: var(--primary);">📋 تحلیل ساختاریافته معلم هوش مصنوعی</span>
-            <span id="status-tag" style="font-size:0.8rem; color:var(--muted)">آماده دریافت ورودی</span>
+            <span class="output-title" id="output-badge">📋 نتیجه استنتاج آموزشی</span>
+            <span id="status-tag" style="font-size:0.85rem; color:var(--muted)">آماده به کار</span>
         </div>
         <div id="output-text" class="output-body">
-هنوز داده‌ای ثبت نشده است. متن یا تصویر صفحه کتاب را وارد کرده و دکمه «تحلیل پداگوژیک» را لمس کنید.
+محتوای سوال یا متن مورد نظرتان را وارد کرده و یکی از دکمه‌های بالا (پاسخ سقراطی، تولید سوال چهار جوابی، یا تحلیل و تجزیه) را انتخاب کنید.
         </div>
     </div>
 
-</div>
-
-<!-- پنجره شارژ اعتبار -->
-<div id="shop-modal" class="modal">
-    <div class="modal-card">
-        <h3 style="margin-top:0; color:#fff">🛒 بسته‌های شارژ استنتاج هوش مصنوعی</h3>
-        <p style="color:var(--muted); font-size:0.9rem">بسته مورد نظر خود را برای تمرین و یادگیری انتخاب کنید:</p>
-        
-        <div class="plan-grid">
-            <div class="plan" onclick="addCredits(15, '۱۹,۰۰۰')">
-                <h4>بسته مقدماتی</h4>
-                <p>۱۵ استنتاج</p>
-                <b style="color:#fff">۱۹,۰۰۰ تومان</b>
-            </div>
-            <div class="plan" onclick="addCredits(60, '۶۵,۰۰۰')">
-                <h4>بسته کنکوری</h4>
-                <p>۶۰ استنتاج</p>
-                <b style="color:#fff">۶۵,۰۰۰ تومان</b>
-            </div>
-            <div class="plan" onclick="addCredits(200, '۱۸۰,۰۰۰')">
-                <h4>بسته طلایی</h4>
-                <p>۲۰۰ استنتاج</p>
-                <b style="color:#fff">۱۸۰,۰۰۰ تومان</b>
-            </div>
-            <div class="plan" onclick="addCredits(1000, '۷۵۰,۰۰۰')">
-                <h4>پنل مدرسه / دبیر</h4>
-                <p>۱۰۰۰ استنتاج</p>
-                <b style="color:#fff">۷۵۰,۰۰۰ تومان</b>
-            </div>
-        </div>
-
-        <button class="btn btn-upload" style="width:100%" onclick="closeShop()">بستن پنجره</button>
+    <!-- بند ۴: کادر اخطار امنیتی در پایان صفحه -->
+    <div class="security-alert-box">
+        <h4>⚠️ اخطار امنیتی و صیانت از حقوق مالکیت فکری</h4>
+        هرگونه مهندسی معکوس، بهره‌برداری تجاری غیرمجاز، بازتولید ساختار الگوریتم‌های پداگوژیک، کپی‌برداری از کد منبع یا سوء‌استفاده از نام و نام‌تجاری سامانه <b>Teacher-AI</b> و <b>شرکت صنایع پردرآمد تهرانیها</b> اکیداً ممنوع بوده و مشمول پیگرد شدید حقوقی و کیفری بر اساس قانون حمایت از حقوق پدیدآورندگان نرم‌افزارهای رایانه‌ای و مراجع ذی‌صلاح قضایی خواهد بود.
     </div>
+
 </div>
 
 <script>
-    let userCredits = parseInt(localStorage.getItem('user_credits') || '10');
     let selectedImageBase64 = null;
     let selectedImageMime = null;
 
-    // بارگذاری اولیه
-    document.getElementById('credit-num').innerText = userCredits;
+    // بارگذاری کلید ذخیره‌شده از حافظه مرورگر
     const savedKey = localStorage.getItem('gemini_api_key') || '';
     if (savedKey) document.getElementById('api-key').value = savedKey;
 
     function saveKey(val) {
         localStorage.setItem('gemini_api_key', val.trim());
-    }
-
-    function openShop() { document.getElementById('shop-modal').style.display = 'flex'; }
-    function closeShop() { document.getElementById('shop-modal').style.display = 'none'; }
-
-    function addCredits(amount, price) {
-        alert(`هدایت شبیه‌سازی‌شده به درگاه پرداخت برای مبلغ ${price} تومان... (تراکنش موفق)`);
-        userCredits += amount;
-        localStorage.setItem('user_credits', userCredits);
-        document.getElementById('credit-num').innerText = userCredits;
-        closeShop();
     }
 
     function previewImage(input) {
@@ -424,8 +319,7 @@
             selectedImageMime = file.type;
             const reader = new FileReader();
             reader.onload = function(e) {
-                const base64Data = e.target.result.split(',')[1];
-                selectedImageBase64 = base64Data;
+                selectedImageBase64 = e.target.result.split(',')[1];
                 document.getElementById('image-preview').src = e.target.result;
                 document.getElementById('preview-container').style.display = 'block';
             };
@@ -440,61 +334,83 @@
         document.getElementById('preview-container').style.display = 'none';
     }
 
-    async function executeInference() {
+    async function runMode(mode) {
         const prompt = document.getElementById('user-prompt').value.trim();
         const apiKey = document.getElementById('api-key').value.trim();
         const loader = document.getElementById('loader');
         const outputBox = document.getElementById('output-text');
         const statusTag = document.getElementById('status-tag');
-
-        if (userCredits <= 0) {
-            alert('⚠️ اعتبار استنتاج شما به پایان رسیده است. لطفاً حسابتان را شارژ فرمایید.');
-            openShop();
-            return;
-        }
+        const badge = document.getElementById('output-badge');
 
         if (!prompt && !selectedImageBase64) {
-            alert('لطفاً حداقل متنی بنویسید یا تصویری از کتاب انتخاب کنید.');
+            alert('لطفاً متنی بنویسید یا تصویری از کتاب بارگذاری کنید.');
             return;
         }
 
         loader.style.display = 'block';
-        statusTag.innerText = 'در حال پردازش...';
+        statusTag.innerText = 'در حال تحلیل هوشمند...';
 
-        // اگر کلید API وارد نشده باشد، از حالت شبیه‌ساز پداگوژیک استاندارد استفاده می‌کند
+        let modeTitle = '';
+        let systemDirective = '';
+
+        if (mode === 'socratic') {
+            modeTitle = '🏛️ جلسه هدایت و یادگیری سقراطی';
+            systemDirective = `شما یک استاد خردمند به شیوه سقراط هستید. 
+جواب نهایی را مستقیماً لو ندهید! بلکه با طرح ۲ یا ۳ پرسش کلیدی، فکری و پله‌ای، ذهن دانش‌آموز را هدایت کنید تا خودش به کشف پاسخ و درک عمیق مفهوم برسد. زبان صمیمی، علمی و روان به فارسی باشد.`;
+        } else if (mode === 'mcq') {
+            modeTitle = '📝 آزمون چهار گزینه‌ای استاندارد و پاسخ‌نامه کلیدی';
+            systemDirective = `با توجه به داده یا تصویر دریافتی، تست چهار گزینه‌ای استاندارد، دقیق و منطبق بر تیپ تست‌های کنکور سراسری و المپیاد طراحی کنید.
+خروجی باید به صورت زیر باشد:
+۱. صورت تست دقیق
+۲. گزینه‌های الف، ب، ج، د
+۳. کلید و گزینه صحیح
+۴. پاسخ تشریحی جامع و بررسی دام‌های تستی`;
+        } else if (mode === 'analyze') {
+            modeTitle = '🔍 تحلیل و تجزیه کالبدشناختی سوال و پاسخ';
+            systemDirective = `مسئله یا محتوای ارائه شده را کالبدشکافی تحلیلی کنید:
+۱. شناسایی مبحث و پیش‌نیازهای علمی
+۲. تفکیک فرض‌ها و حکم
+۳. کشف کج‌فهمی‌های رایج دانش‌آموزان
+۴. ساده‌ترین و سریع‌ترین مسیر حل
+۵. فرمول‌ها و نکات کلیدی کنکوری مرتبط`;
+        }
+
+        badge.innerText = modeTitle;
+
+        // اگر کلید API وارد نشده باشد، پاسخ پیش‌فرض کارشناسی نمایش داده می‌شود
         if (!apiKey) {
             setTimeout(() => {
-                userCredits--;
-                localStorage.setItem('user_credits', userCredits);
-                document.getElementById('credit-num').innerText = userCredits;
-
                 loader.style.display = 'none';
-                statusTag.innerText = 'پایان استنتاج (نمونه آموزشی)';
-                outputBox.innerHTML = `
-<b>🎓 گزارش تحلیلی Teacher-AI (رویکرد یادگیری شناختی):</b>
-
-<b>۱. تحلیل مفهوم محوری:</b>
-موضوع بررسی‌شده مرتبط با پایه‌های ارشد و نیازمند درک پیش‌نیازهای فصول قبلی است. طبقه‌بندی بلوم: <b>تحلیل (سطح ۴)</b>.
-
-<b>۲. کج‌فهمی‌های رایج دانش‌آموزان در این مبحث:</b>
-• اشتباه در جایگذاری متغیرها در روابط اصلی
-• عدم تفکیک بین صورت مسئله مفهومی و محاسبه جبری
-
-<b>۳. تست مفهومی و ارزیابی عمیق:</b>
-سوال: در صورت تغییر پارامتر دوم به میزان دو برابر، نتیجه نهایی چه تغییری خواهد کرد؟
-الف) نصف می‌شود | ب) ثابت می‌ماند | ج) ۴ برابر می‌شود | د) تغییر خطی دارد
-<i>پاسخ تشریحی: طبق رابطه مستقیم مرتبه دوم، پاسخ گزینه (ج) خواهد بود.</i>
-
-💡 <i>نکته: برای دریافت پاسخ زنده و آنی از مدل بینایی ماشین، کلید Gemini API خود را در کادر بالا قرار دهید.</i>`;
-            }, 1500);
+                statusTag.innerText = 'استنتاج موفق (نمای پیش‌فرض)';
+                if (mode === 'socratic') {
+                    outputBox.innerHTML = `<b>رویکرد سقراطی برای موضوع شما:</b><br><br>
+درود بر پژوهشگر گرامی؛ برای دستیابی به عمق این موضوع، بیایید گام‌به‌گام تفکر کنیم:<br>
+۱. از دیدگاه شما اولین نیروی محرک یا فرض اساسی در این رخداد چیست؟<br>
+۲. اگر متغیر اصلی را به صفر نزدیک کنیم، رفتار سامانه چه تغییری خواهد کرد؟<br>
+۳. چطور می‌توانید این مفهوم را به یک پدیده ملموس در زندگی روزمره ربط دهید؟<br><br>
+<i>پاسخ تفکر خود را در کادر بالا بنویسید تا گام بعدی را برداریم.</i>`;
+                } else if (mode === 'mcq') {
+                    outputBox.innerHTML = `<b>تست تالیفی استاندارد:</b><br><br>
+<b>سوال:</b> با در نظر گرفتن متغیرهای پایه‌ای مطرح‌شده، کدام عبارت در خصوص تغییر وضعیت پایدار صحیح است؟<br>
+الف) فرآیند به صورت بازگشت‌ناپذیر با افزایش بی‌نظمی پیش می‌رود.<br>
+ب) رابطه میان متغیرها مستقل از ضرایب ثابت شبکه است.<br>
+ج) تغییر حالت اول با نرخ نمایی وابسته به عامل کاتالیزور خواهد بود.<br>
+د) اندازه نرخ در نقطه تعادل به کمینه مطلق می‌رسد.<br><br>
+<b>گزینه صحیح:</b> گزینه (الف)<br>
+<b>تشریح:</b> در سامانه‌های ترمودینامیکی و تحلیلی، اصل دوم همواره جهت تحول را به سمت بیشینه شدن انتروپی یا پایداری موضعی هدایت می‌کند. سایر گزینه‌ها به عنوان گزینه‌های انحرافی طراحی شده‌اند.`;
+                } else {
+                    outputBox.innerHTML = `<b>کالبدشکافی تحلیلی و پداگوژیک:</b><br><br>
+۱. <b>سطح‌بندی شناختی بلوم:</b> سطح ۴ (تحلیل و تفکیک اجزا)<br>
+۲. <b>کج‌فهمی رایج:</b> اغلب فراگیران فرض می‌کنند تغییر متغیر به‌صورت خطی رخ می‌دهد، در حالی که مشتق مرتبه دوم نشان‌دهنده شتاب در نرخ پاسخ است.<br>
+۳. <b>شاه‌کلید حل مسئله:</b> متغیرهای غیروابسته را از ابتدا ثابت فرض کرده و تقارن روابط را پیش از ورود به محاسبات طولانی بررسی کنید.`;
+                }
+            }, 900);
             return;
         }
 
-        // ارسال درخواست واقعی به Google Gemini Vision
+        // ارسال درخواست واقعی به Google Gemini
         try {
-            const systemPrompt = "شما یک معلم و پداگوژیست فوق‌العاده باهوش هستید. وظیفه شما: ۱. تدریس گام به گام و مفهومی ۲. شناسایی کج‌فهمی‌های دانش‌آموز ۳. طرح تست و سوال مفهومی استاندارد کنکور و امتحان نهایی ۴. ارائه پاسخ کاملاً تشریحی و انگیزشی به زبان فارسی روان.";
-            
-            let parts = [{ text: systemPrompt + "\n\nدرخواست دانش‌آموز:\n" + prompt }];
+            let parts = [{ text: systemDirective + "\n\nورودی کاربر یا سوال:\n" + prompt }];
             if (selectedImageBase64) {
                 parts.push({
                     inline_data: {
@@ -511,23 +427,16 @@
             });
 
             const data = await response.json();
-
             if (data.candidates && data.candidates[0].content) {
-                const resultText = data.candidates[0].content.parts[0].text;
-                outputBox.innerText = resultText;
-                statusTag.innerText = 'تحلیل موفق با Gemini Vision';
-
-                // کسر اعتبار موفق
-                userCredits--;
-                localStorage.setItem('user_credits', userCredits);
-                document.getElementById('credit-num').innerText = userCredits;
+                outputBox.innerText = data.candidates[0].content.parts[0].text;
+                statusTag.innerText = 'پاسخ هوش مصنوعی دریافت شد';
             } else if (data.error) {
-                outputBox.innerText = 'خطای API گوگل:\n' + data.error.message;
-                statusTag.innerText = 'خطا در ارتباط';
+                outputBox.innerText = 'خطای کلید یا سرویس API:\n' + data.error.message;
+                statusTag.innerText = 'خطا در فراخوانی';
             }
         } catch (err) {
-            outputBox.innerText = 'خطای شبکه یا مسدودی در اتصال به سرور:\n' + err.message;
-            statusTag.innerText = 'عدم دسترسی به اینترنت';
+            outputBox.innerText = 'خطا در ارتباط با سرور: ' + err.message;
+            statusTag.innerText = 'قطع ارتباط شبکه';
         } finally {
             loader.style.display = 'none';
         }
