@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher-AI | سامانه هوشمند پداگوژی و سنجش آموزشی</title>
+    <title>Teacher-AI | پلتفرم انجام دهنده خواسته های دانش آموز،دانشجو و پشت کنکوریهای مجازی توسط هوش مصنوعی</title>
     <link href="https://cdn.jsdelivr.net/npm/vazirmatn-font@30.1.0/dist/font-face.css" rel="stylesheet">
     <style>
         :root {
@@ -53,7 +53,7 @@
         .header h1 {
             color: #fff;
             margin: 0 0 8px;
-            font-size: 2.3rem;
+            font-size: 2.1rem;
             background: linear-gradient(90deg, #00f2fe, #4facfe);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -152,7 +152,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
-        /* افکت نوری و روشنایی هنگام هاور و کلیک */
         .btn:hover {
             transform: translateY(-2px);
             filter: brightness(1.2);
@@ -315,10 +314,10 @@
         تمامی حقوق این پلتفرم متعلق به شرکت صنایع پردرآمد تهرانیها با مدیر عاملی حسین لعلیان (رتبه ۳۲ دکتری) می‌باشد.
     </div>
 
-    <!-- سربرگ سامانه -->
+    <!-- سربرگ سامانه با عنوان جدید -->
     <div class="header">
-        <h1>Teacher-AI | سامانه هوشمند سنجش آموزشی</h1>
-        <p>موتور پیشرفته استنتاج پداگوژیک، آزمون‌ساز و حل مسئله مفهومی</p>
+        <h1>Teacher-AI</h1>
+        <p>پلتفرم انجام دهنده خواسته های دانش آموز،دانشجو و پشت کنکوریهای مجازی توسط هوش مصنوعی</p>
     </div>
 
     <!-- دکمه هدایت به خرید بسته -->
@@ -340,7 +339,7 @@
 
         <input type="file" id="image-input" accept="image/*" style="display:none" onchange="previewImage(this)">
 
-        <!-- دکمه‌های عملیاتی پنج‌گانه مجهز به صدا و روشنایی -->
+        <!-- دکمه‌های عملیاتی مجهز به صدا و روشنایی -->
         <div class="actions-grid">
             <button type="button" class="btn btn-upload" onclick="triggerUpload(); playSoftBeep();">
                 📷 پیوست تصویر کتاب
@@ -403,13 +402,13 @@
         </p>
 
         <div class="packages-grid" id="packages-container">
-            <!-- بسته‌ها به صورت خودکار از ۲ تا ۱۰۰ میلیون تومان لود می‌شوند -->
+            <!-- بسته‌ها از ۲ تا ۱۰۰ میلیون تومان -->
         </div>
     </div>
 </div>
 
 <script>
-    /* ۱. تولید صدای بوق یواش و گوش‌نواز (Soft Beep) بدون فایل خارجی با Web Audio API */
+    /* صدای بوق یواش (Soft Beep) بدون نیاز به فایل خارجی */
     let audioCtx = null;
     function playSoftBeep() {
         try {
@@ -421,10 +420,10 @@
             }
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            osc.type = 'sine'; // موج سینوسی بسیار نرم
-            osc.frequency.setValueAtTime(680, audioCtx.currentTime); // تن ملایم و گرم
-            gain.gain.setValueAtTime(0.04, audioCtx.currentTime); // صدای یواش و کنترل‌شده
-            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08); // برش سریع بعد از ۸ صدم ثانیه
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(680, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
             osc.connect(gain);
             gain.connect(audioCtx.destination);
             osc.start();
@@ -458,7 +457,7 @@
         document.getElementById('preview-container').style.display = 'none';
     }
 
-    /* پنجره خرید بسته‌ها (از ۲ میلیون تا ۱۰۰ میلیون تومان) */
+    /* لیست بسته‌های ۲ تا ۱۰۰ میلیون تومان */
     const packagePrices = [
         2, 3, 4, 5, 6, 7, 8, 9, 10,
         15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100
@@ -494,7 +493,7 @@
         closeModal();
     }
 
-    /* پردازش دکمه‌ها و حل تضمینی مسئله */
+    /* عملکرد دکمه‌ها */
     function runMode(mode) {
         let prompt = document.getElementById('user-prompt').value.trim();
         const loader = document.getElementById('loader');
@@ -507,7 +506,7 @@
         }
 
         loader.style.display = 'block';
-        statusTag.innerText = 'در حال پردازش هوشمند...';
+        statusTag.innerText = 'در حال استنتاج پداگوژیک...';
 
         setTimeout(() => {
             loader.style.display = 'none';
