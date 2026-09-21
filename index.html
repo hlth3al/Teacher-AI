@@ -3,310 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher-AI | پنل هوشمند یادگیری</title>
+    <title>Teacher-AI | دستیار هوشمند یادگیری و تحلیل کتاب</title>
     <link href="https://cdn.jsdelivr.net/npm/vazirmatn-font@30.1.0/dist/font-face.css" rel="stylesheet">
     <style>
         :root {
             --primary: #00f2fe;
             --secondary: #4facfe;
-            --bg: #0a0e17;
-            --card: rgba(255, 255, 255, 0.05);
-            --text: #e0e6ed;
+            --accent: #2ecc71;
+            --bg: #0b0f19;
+            --panel: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.12);
+            --text: #e2e8f0;
+            --muted: #94a3b8;
         }
 
+        * { box-sizing: border-box; }
         body {
             font-family: 'Vazirmatn', sans-serif;
             background: var(--bg);
             color: var(--text);
             margin: 0;
             padding: 20px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; }
+        .container { max-width: 950px; margin: 0 auto; }
 
-        /* بخش جدید: داشبورد اعتبار کاربر */
-        .user-dashboard {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            padding: 15px 25px;
-            border-radius: 15px;
+        /* نوار بالای داشبورد */
+        .top-bar {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1px solid var(--border);
+            padding: 15px 22px;
+            border-radius: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
             margin-bottom: 25px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
-        .credit-info { display: flex; align-items: center; gap: 15px; }
-        .credit-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 5px 15px;
+        .user-meta { display: flex; align-items: center; gap: 12px; }
+        .badge {
+            background: rgba(0, 242, 254, 0.15);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 4px 14px;
             border-radius: 20px;
-            font-weight: bold;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.9rem;
+            font-weight: 700;
         }
 
-        .buy-btn {
-            background: #fff;
-            color: #b21f1f;
+        .btn-top {
+            background: linear-gradient(90deg, #38ef7d, #11998e);
+            color: #fff;
             border: none;
-            padding: 8px 20px;
+            padding: 8px 18px;
             border-radius: 8px;
             cursor: pointer;
+            font-family: inherit;
             font-weight: bold;
-            transition: 0.3s;
+            transition: 0.2s;
         }
+        .btn-top:hover { opacity: 0.9; transform: translateY(-1px); }
 
-        /* بخش کارت‌های اصلی */
-        .header { text-align: center; margin-bottom: 40px; }
-        .header h1 { color: var(--primary); font-size: 2.5rem; margin-bottom: 5px; }
+        /* سربرگ */
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 {
+            color: #fff;
+            margin: 0 0 8px;
+            font-size: 2.3rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header p { color: var(--muted); margin: 0; font-size: 1rem; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .card {
-            background: var(--card);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
+        /* کارت‌ها */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 12px;
             text-align: center;
         }
+        .stat-card .val { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
+        .stat-card .lbl { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
 
-        /* پنل ورودی */
-        .input-panel {
-            background: rgba(255,255,255,0.03);
-            padding: 30px;
-            border-radius: 20px;
-            margin: 30px 0;
-            border: 1px dashed var(--secondary);
+        /* پنل ارسال داده */
+        .workspace {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 25px;
+        }
+
+        .api-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 18px;
+            background: rgba(0,0,0,0.25);
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .api-row input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: monospace;
+            direction: ltr;
+            font-size: 0.85rem;
+            outline: none;
         }
 
         textarea {
             width: 100%;
             height: 120px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid #333;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border);
             border-radius: 10px;
-            color: white;
-            padding: 15px;
+            color: #fff;
+            padding: 12px 14px;
             font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+            outline: none;
             margin-bottom: 15px;
-            resize: none;
+        }
+        textarea:focus { border-color: var(--secondary); }
+
+        .preview-box {
+            display: none;
+            margin-bottom: 15px;
+            position: relative;
+            max-width: 200px;
+        }
+        .preview-box img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--primary);
+        }
+        .remove-img {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 12px;
+            line-height: 24px;
+            text-align: center;
         }
 
-        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
-        .action-btn {
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn {
             flex: 1;
-            padding: 12px;
+            min-width: 180px;
+            padding: 13px;
             border-radius: 10px;
             border: none;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.95rem;
             cursor: pointer;
-            font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: 0.3s;
+            transition: 0.2s;
         }
-
-        .btn-primary { background: var(--secondary); color: white; }
-        .btn-upload { background: #2ecc71; color: white; }
-
-        /* بخش فروشگاه اعتبار (Modal) */
-        #shop-modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #151921;
-            width: 90%;
-            max-width: 600px;
-            padding: 30px;
-            border-radius: 20px;
-            z-index: 1000;
-            border: 1px solid var(--primary);
+        .btn-run {
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            color: #0b0f19;
         }
-
-        .package-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .package {
-            border: 1px solid #333;
-            padding: 15px;
-            border-radius: 12px;
-            cursor: pointer;
-            text-align: center;
-            transition: 0.3s;
+        .btn-upload {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid var(--border);
         }
-        .package:hover { border-color: var(--primary); background: rgba(0,242,254,0.05); }
-        .package h4 { margin: 0; color: var(--primary); }
-        .package span { font-size: 0.8rem; color: #888; }
+        .btn:hover { opacity: 0.92; }
 
         /* خروجی */
-        .output-box {
-            background: #000;
-            border-left: 4px solid var(--primary);
-            padding: 20px;
-            border-radius: 0 10px 10px 0;
-            min-height: 100px;
+        .output-card {
+            background: #060911;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            margin-top: 25px;
+        }
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+        .output-body {
             white-space: pre-wrap;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            line-height: 1.8;
+            min-height: 80px;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: var(--primary);
+            font-weight: bold;
         }
 
-        .loader { display: none; color: var(--primary); font-weight: bold; margin: 10px 0; }
+        /* پنجره خرید اعتبار */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 15px;
+        }
+        .modal-card {
+            background: #111827;
+            border: 1px solid var(--primary);
+            max-width: 520px;
+            width: 100%;
+            border-radius: 16px;
+            padding: 24px;
+        }
+        .plan-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .plan {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            padding: 14px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .plan:hover { border-color: var(--primary); background: rgba(0,242,254,0.06); }
+        .plan h4 { margin: 0 0 6px; color: var(--primary); }
+        .plan p { margin: 0; font-size: 0.85rem; color: var(--muted); }
     </style>
 </head>
 <body>
 
 <div class="container">
-    
-    <!-- داشبورد حساب کاربری -->
-    <div class="user-dashboard">
-        <div class="credit-info">
-            <span>👤 کاربر: حسین لعلیان</span>
-            <div class="credit-badge">اعتبار: <span id="credit-count">10</span> سوال</div>
+
+    <!-- نوار داشبورد بالا -->
+    <div class="top-bar">
+        <div class="user-meta">
+            <span>👤 کاربر: <b>حسین لعلیان</b></span>
+            <span class="badge">اعتبار باقی‌مانده: <span id="credit-num">10</span> استنتاج</span>
         </div>
-        <button class="buy-btn" onclick="toggleShop()">➕ خرید اعتبار (شارژ)</button>
+        <button class="btn-top" onclick="openShop()">➕ افزایش اعتبار (شارژ)</button>
     </div>
 
+    <!-- معرفی پنل -->
     <div class="header">
-        <h1>⚡ Teacher-AI</h1>
-        <p>مرکز فرماندهی یادگیری تطبیقی و استنتاج پداگوژیک</p>
+        <h1>Teacher-AI | هسته استنتاج پداگوژیک</h1>
+        <p>تحلیل مفهومی کتاب درسی، کشف کج‌فهمی‌های یادگیری و تولید آزمون هدفمند</p>
     </div>
 
-    <!-- آمار و شاخص‌ها -->
-    <div class="grid">
-        <div class="card">
-            <h3>📊 پوشش مفاهیم</h3>
-            <div style="font-size: 2rem; color: var(--primary);">۹۴.۲٪</div>
+    <!-- مات-radius: 16px;
+            padding: 24px;
+        }
+        .plan-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .plan {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            padding: 14px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .plan:hover { border-color: var(--primary); background: rgba(0,242,254,0.06); }
+        .plan h4 { margin: 0 0 6px; color: var(--primary); }
+        .plan p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- نوار داشبورد بالا -->
+    <div class="top-bar">
+        <div class="user-meta">
+            <span>👤 کاربر: <b>حسین لعلیان</b></span>
+            <span class="badge">اعتبار باقی‌مانده: <span id="credit-num">10</span> استنتاج</span>
         </div>
-        <div class="card">
-            <h3>🎯 شاخص بلوم</h3>
-            <div style="font-size: 1.5rem;">سطح ۴ از ۶</div>
+        <button class="btn-top" onclick="openShop()">➕ افزایش اعتبار (شارژ)</button>
+    </div>
+
+    <!-- معرفی پنل -->
+    <div class="header">
+        <h1>Teacher-AI | هسته استنتاج پداگوژیک</h1>
+        <p>تحلیل مفهومی کتاب درسی، کشف کج‌فهمی‌های یادگیری و تولید آزمون هدفمند</p>
+    </div>
+
+    <!-- ماتریس‌های ارزیابی -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="val">سطح ۴</div>
+            <div class="lbl">طبقه‌بندی بلوم (تحلیل
+                ⚡ تحلیل پداگوژیک و پاسخ هوشمند
+            </button>
         </div>
-        <div class="card">
-            <h3>🧠 بازیابی حافظه</h3>
-            <div style="font-size: 1.5rem; color: #2ecc71;">۸۸.۵٪</div>
+
+        <div id="loader" class="loading">
+            🌀 در حال فراخوانی مدل و تحلیل عمیق پداگوژیک... لطفاً شکیبا باشید.
         </div>
     </div>
 
-    <!-- پنل عملیاتی -->
-    <div class="input-panel">
-        <h3>📥 ورودی داده پداگوژیک</h3>
-        <textarea id="user-input" placeholder="سوال خود را بنویسید یا تصویر صفحه کتاب را آپلود کنید..."></textarea>
-        
-        <div class="btn-group">
-            <input type="file" id="file-input" style="display:none" onchange="handleFile(this)">
-            <button class="action-btn btn-upload" onclick="document.getElementById('file-input').click()">📸 آپلود تصویر کتاب</button>
-            <button class="action-btn btn-primary" onclick="startInference()">⚡ اجرای استنتاج شناختی</button>
+    <!-- پنل خروجی -->
+    <div class="output-card">
+        <div class="output-header">
+            <span style="font-weight: bold; color: var(--primary);">📋 تحلیل ساختاریافته معلم هوش مصنوعی</span>
+            <span id="status-tag" style="font-size:0.8rem; color:var(--muted)">آماده دریافت ورودی</span>
         </div>
-        <div id="loader" class="loader">🌀 در حال تحلیل لایه‌های شناختی و اتصال به API...</div>
-    </div>
-
-    <!-- نمایش خروجی -->
-    <div class="card" style="text-align: right;">
-        <h3>📊 خروجی مدلسازی و تحلیل</h3>
-        <div id="output" class="output-box">
-            منتظر ورود داده... (پس از تحلیل، تست‌ها و پاسخ تشریحی اینجا ظاهر می‌شوند)
+        <div id="output-text" class="output-body">
+هنوز داده‌ای ثبت نشده است. متن یا تصویر صفحه کتاب را وارد کرده و دکمه «تحلیل پداگوژیک» را لمس کنید.
         </div>
-    </div>
-
-    <!-- لاگ سیستم -->
-    <div style="margin-top: 30px; font-size: 0.85rem; opacity: 0.6;">
-        📋 لاگ Live Sync: <span id="log-status">آماده دریافت داده...</span>
     </div>
 
 </div>
 
-<!-- مودال خرید شارژ (شبیه رایتل/آپ) -->
-<div id="shop-modal">
-    <h3 style="text-align:center">🛒 شارژ حساب هوشمند</h3>
-    <p style="text-align:center; font-size: 0.9rem;">بسته مورد نظر خود را انتخاب کنید:</p>
-    
-    <div class="package-grid">
-        <div class="package" onclick="buy(10, 19000)">
-            <h4>بسته برنزی</h4>
-            <p>۱۰ اعتبار</p>
-            <span>۱۹,۰۰۰ تومان</span>
+<!-- پنجره شارژ اعتبار -->
+<div id="shop-modal" class="modal">
+    <div class="modal-card">
+        <h3 style="margin-top:0; color:#fff">🛒 بسته‌های شارژ استنتاج هوش مصنوعی</h3>
+        <p style="color:var(--muted); font-size:0.9rem">بسته مورد نظر خود را برای تمرین و یادگیری انتخاب کنید:</p>
+        
+        <div class="plan-grid">
+            <div class="plan" onclick="addCredits(15, '۱۹,۰۰۰')">
+                <h4>بسته مقدماتی</h4>
+                <p>۱۵ استنتاج</p>
+                <b style="color:#fff">۱۹,۰۰۰ تومان</b>
+            </div>
+            <div class="plan" onclick="addCredits(60, '۶۵,۰۰۰')">
+                <h4>بسته کنکوری</h4>
+                <p>۶۰ استنتاج</p>
+                <b style="color:#fff">۶۵,۰۰۰ تومان</b>
+            </div>
+            <div class="plan" onclick="addCredits(200, '۱۸۰,۰۰۰')">
+                <h4>بسته طلایی</h4>
+                <p>۲۰۰ استنتاج</p>
+                <b style="color:#fff">۱۸۰,۰۰۰ تومان</b>
+            </div>
+            <div class="plan" onclick="addCredits(1000, '۷۵۰,۰۰۰')">
+                <h4>پنل مدرسه / دبیر</h4>
+                <p>۱۰۰۰ استنتاج</p>
+                <b style="color:#fff">۷۵۰,۰۰۰ تومان</b>
+            </div>
         </div>
-        <div class="package" onclick="buy(50, 69000)">
-            <h4>بسته نقره‌ای</h4>
-            <p>۵۰ اعتبار</p>
-            <span>۶۹,۰۰۰ تومان</span>
-        </div>
-        <div class="package" onclick="buy(200, 189000)">
-            <h4>بسته طلایی</h4>
-            <p>۲۰۰ اعتبار</p>
-            <span>۱۸۹,۰۰۰ تومان</span>
-        </div>
-        <div class="package" style="border-color: #f1c40f;" onclick="buy(2000, 1500000)">
-            <h4 style="color: #f1c40f;">پنل سازمانی</h4>
-            <p>۲۰۰۰ اعتبار</p>
-            <span>۱,۵۰۰,۰۰۰ تومان</span>
-        </div>
+
+        <button class="btn btn-upload" style="width:100%" onclick="closeShop()">بستن پنجره</button>
     </div>
-    <button class="action-btn" style="width:100%; margin-top:20px; background:#444; color:#fff" onclick="toggleShop()">انصراف</button>
 </div>
 
 <script>
-    let credits = 10;
-    const GEMINI_API_KEY = "کلید_خود_را_اینجا_بگذارید"; // در نسخه نهایی از بک‌اند استفاده شود
+    let userCredits = parseInt(localStorage.getItem('user_credits') || '10');
+    let selectedImageBase64 = null;
+    let selectedImageMime = null;
 
-    function toggleShop() {
-        const modal = document.getElementById('shop-modal');
-        modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+    // بارگذاری اولیه
+    document.getElementById('credit-num').innerText = userCredits;
+    const savedKey = localStorage.getItem('gemini_api_key') || '';
+    if (savedKey) document.getElementById('api-key').value = savedKey;
+
+    function saveKey(val) {
+        localStorage.setItem('gemini_api_key', val.trim());
     }
 
-    function buy(amount, price) {
-        alert(`هدایت به درگاه پرداخت برای مبلغ ${price.toLocaleString()} تومان...`);
-        // در دنیای واقعی اینجا به زرین‌پال وصل می‌شوید
-        credits += amount;
-        document.getElementById('credit-count').innerText = credits;
-        toggleShop();
+    function openShop() { document.getElementById('shop-modal').style.display = 'flex'; }
+    function closeShop() { document.getElementById('shop-modal').style.display = 'none'; }
+
+    function addCredits(amount, price) {
+        alert(`هدایت شبیه‌سازی‌شده به درگاه پرداخت برای مبلغ ${price} تومان... (تراکنش موفق)`);
+        userCredits += amount;
+        localStorage.setItem('user_credits', userCredits);
+        document.getElementById('credit-num').innerText = userCredits;
+        closeShop();
     }
 
-    async function startInference() {
-        const input = document.getElementById('user-input').value;
-        const output = document.getElementById('output');
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            selectedImageMime = file.type;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Data = e.target.result.split(',')[1];
+                selectedImageBase64 = base64Data;
+                document.getElementById('image-preview').src = e.target.result;
+                document.getElementById('preview-container').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function clearImage() {
+        selectedImageBase64 = null;
+        selectedImageMime = null;
+        document.getElementById('image-input').value = '';
+        document.getElementById('preview-container').style.display = 'none';
+    }
+
+    async function executeInference() {
+        const prompt = document.getElementById('user-prompt').value.trim();
+        const apiKey = document.getElementById('api-key').value.trim();
         const loader = document.getElementById('loader');
+        const outputBox = document.getElementById('output-text');
+        const statusTag = document.getElementById('status-tag');
 
-        if (credits <= 0) {
-            alert("⚠️ اعتبار شما تمام شده است! لطفاً حساب خود را شارژ کنید.");
-            toggleShop();
+        if (userCredits <= 0) {
+            alert('⚠️ اعتبار استنتاج شما به پایان رسیده است. لطفاً حسابتان را شارژ فرمایید.');
+            openShop();
             return;
         }
 
-        if (!input) {
-            alert("لطفاً سوال یا متنی وارد کنید.");
+        if (!prompt && !selectedImageBase64) {
+            alert('لطفاً حداقل متنی بنویسید یا تصویری از کتاب انتخاب کنید.');
             return;
         }
-
-        // کسر اعتبار
-        credits--;
-        document.getElementById('credit-count').innerText = credits;
 
         loader.style.display = 'block';
-        output.innerText = "در حال پردازش...";
+        statusTag.innerText = 'در حال پردازش...';
 
-        try {
-            // شبیه‌سازی اتصال به API (در اینجا شما تابع اصلی fetch خود را می‌گذارید)
+        // اگر کلید API وارد نشده باشد، از حالت شبیه‌ساز پداگوژیک استاندارد استفاده می‌کند
+        if (!apiKey) {
             setTimeout(() => {
-                loader.style.display = 'none';
-                output.innerHTML = `
-                    <b>✅ تحلیل با موفقیت انجام شد:</b><br>
-                    ۱. تحلیل سطح بلوم: سطح ۳ (کاربست)<br>
-                    ۲. پیشنهاد تست: سوال تستی از مبحث مربوطه تولید شد...<br>
-                    ۳. پاسخ تشریحی: طبق استاندارد آموزش و پرورش استخراج گردید.
-                `;
-                document.getElementById('log-status').innerText = "استنتاج با موفقیت پایان یافت. [کد ۲۰۰]";
-            }, 2000);
-        } catch (error) {
-            loader.style.display = 'none';
-            output.innerText = "خطا در برقراری ارتباط با هسته هوش مصنوعی.";
-        }
-    }
+                userCredits--;
+                localStorage.setItem('user_credits', userCredits);
+                document.getElementById('credit-num').innerText = userCredits;
 
-    function handleFile(input) {
-        if (input.files && input.files[0]) {
-            document.getElementById('user-input').value = "فایل انتخاب شد: " + input.files[0].name + "\nدر حال آماده‌سازی برای پردازش تصویر...";
+                loader.style.display = 'none';
+                statusTag.innerText = 'پایان استنتاج (نمونه آموزشی)';
+                outputBox.innerHTML = `
+<b>🎓 گزارش تحلیلی Teacher-AI (رویکرد یادگیری شناختی):</b>
+
+<b>۱. تحلیل مفهوم محوری:</b>
+موضوع بررسی‌شده مرتبط با پایه‌های ارشد و نیازمند درک پیش‌نیازهای فصول قبلی است. طبقه‌بندی بلوم: <b>تحلیل (سطح ۴)</b>.
+
+<b>۲. کج‌فهمی‌های رایج دانش‌آموزان در این مبحث:</b>
+• اشتباه در جایگذاری متغیرها در روابط اصلی
+• عدم تفکیک بین صورت مسئله مفهومی و محاسبه جبری
+
+<b>۳. تست مفهومی و ارزیابی عمیق:</b>
+سوال: در صورت تغییر پارامتر دوم به میزان دو برابر، نتیجه نهایی چه تغییری خواهد کرد؟
+الف) نصف می‌شود | ب) ثابت می‌ماند | ج) ۴ برابر می‌شود | د) تغییر خطی دارد
+<i>پاسخ تشریحی: طبق رابطه مستقیم مرتبه دوم، پاسخ گزینه (ج) خواهد بود.</i>
+
+💡 <i>نکته: برای دریافت پاسخ زنده و آنی از مدل بینایی ماشین، کلید Gemini API خود را در کادر بالا قرار دهید.</i>`;
+            }, 1500);
+            return;
+        }
+
+        // ارسال درخواست واقعی به Google Gemini Vision
+        try {
+            const systemPrompt = "شما یک معلم و پداگوژیست فوق‌العاده باهوش هستید. وظیفه شما: ۱. تدریس گام به گام و مفهومی ۲. شناسایی کج‌فهمی‌های دانش‌آموز ۳. طرح تست و سوال مفهومی استاندارد کنکور و امتحان نهایی ۴. ارائه پاسخ کاملاً تشریحی و انگیزشی به زبان فارسی روان.";
+            
+            let parts = [{ text: systemPrompt + "\n\nدرخواست دانش‌آموز:\n" + prompt }];
+            if (selectedImageBase64) {
+                parts.push({
+                    inline_data: {
+                        mime_type: selectedImageMime || "image/jpeg",
+                        data: selectedImageBase64
+                    }
+                });
+            }
+
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: parts }] })
+            });
+
+            const data = await response.json();
+
+            if (data.candidates && data.candidates[0].content) {
+                const resultText = data.candidates[0].content.parts[0].text;
+                outputBox.innerText = resultText;
+                statusTag.innerText = 'تحلیل موفق با Gemini Vision';
+
+                // کسر اعتبار موفق
+                userCredits--;
+                localStorage.setItem('user_credits', userCredits);
+                document.getElementById('credit-num').innerText = userCredits;
+            } else if (data.error) {
+                outputBox.innerText = 'خطای API گوگل:\n' + data.error.message;
+                statusTag.innerText = 'خطا در ارتباط';
+            }
+        } catch (err) {
+            outputBox.innerText = 'خطای شبکه یا مسدودی در اتصال به سرور:\n' + err.message;
+            statusTag.innerText = 'عدم دسترسی به اینترنت';
+        } finally {
+            loader.style.display = 'none';
         }
     }
 </script>
