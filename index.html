@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher-AI | پلتفرم انجام دهنده خواسته های دانش آموز،دانشجو و پشت کنکوریهای مجازی توسط هوش مصنوعی</title>
+    <title>پلتفرم انجام دهنده خواسته های دانش آموز،دانشجو و پشت کنکوریهای مجازی توسط هوش مصنوعی</title>
     <link href="https://cdn.jsdelivr.net/npm/vazirmatn-font@30.1.0/dist/font-face.css" rel="stylesheet">
     <style>
         :root {
@@ -52,8 +52,9 @@
         .header { text-align: center; margin-bottom: 25px; }
         .header h1 {
             color: #fff;
-            margin: 0 0 8px;
-            font-size: 2.1rem;
+            margin: 0 0 12px;
+            font-size: 1.7rem;
+            line-height: 1.6;
             background: linear-gradient(90deg, #00f2fe, #4facfe);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -127,7 +128,7 @@
             font-weight: bold;
         }
 
-        /* دکمه‌ها و سیستم روشنایی (Glow) */
+        /* دکمه‌ها و افکت روشنایی (Glow) */
         .actions-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -203,7 +204,7 @@
             min-height: 90px;
         }
 
-        /* کادر اخطار امنیتی */
+        /* کادر اخطار حقوقی */
         .security-alert-box {
             background: rgba(255, 77, 77, 0.08);
             border: 1px solid rgba(255, 77, 77, 0.35);
@@ -314,10 +315,10 @@
         تمامی حقوق این پلتفرم متعلق به شرکت صنایع پردرآمد تهرانیها با مدیر عاملی حسین لعلیان (رتبه ۳۲ دکتری) می‌باشد.
     </div>
 
-    <!-- سربرگ سامانه با عنوان جدید -->
+    <!-- سربرگ سامانه با متن جدید درخواستی -->
     <div class="header">
-        <h1>Teacher-AI</h1>
-        <p>پلتفرم انجام دهنده خواسته های دانش آموز،دانشجو و پشت کنکوریهای مجازی توسط هوش مصنوعی</p>
+        <h1>پلتفرم انجام دهنده خواسته های دانش آموز،دانشجو و پشت کنکوریهای مجازی توسط هوش مصنوعی</h1>
+        <p>Teacher-AI | سامانه یکپارچه آموزشی و استنتاج پداگوژیک</p>
     </div>
 
     <!-- دکمه هدایت به خرید بسته -->
@@ -334,7 +335,7 @@
         <!-- پیش‌نمایش تصویر پیوست -->
         <div id="preview-container" class="preview-box">
             <button class="remove-img" onclick="clearImage(); playSoftBeep();" title="حذف تصویر">×</button>
-            <img id="image-preview" src="" alt="پیش‌نمایش تصویر کتاب">
+            <img id="image-preview" src="" alt="پیش‌نمایش تصویر برگه یا کتاب">
         </div>
 
         <input type="file" id="image-input" accept="image/*" style="display:none" onchange="previewImage(this)">
@@ -378,14 +379,14 @@
             <span id="status-tag" style="font-size:0.85rem; color:var(--muted)">آماده پردازش</span>
         </div>
         <div id="output-text" class="output-body">
-یکی از دکمه‌های بالا را برای استنتاج انتخاب کنید. سیستم با صدای بوق ملایم و روشنایی شروع به پردازش خواهد کرد.
+یکی از دکمه‌های بالا را برای استنتاج انتخاب کنید. سیستم با صدای بوق ملایم و افکت روشنایی شروع به پردازش خواهد کرد.
         </div>
     </div>
 
     <!-- کادر اخطار امنیتی در پایین صفحه -->
     <div class="security-alert-box">
         <h4>⚠️ اخطار امنیتی و صیانت از حقوق مالکیت فکری</h4>
-        هرگونه مهندسی معکوس، بهره‌برداری تجاری غیرمجاز، بازتولید ساختار الگوریتم‌های پداگوژیک، کپی‌برداری از کد منبع یا سوء‌استفاده از نام و نام‌تجاری سامانه <b>Teacher-AI</b> و <b>شرکت صنایع پردرآمد تهرانیها</b> اکیداً ممنوع بوده و مشمول پیگرد شدید حقوقی و کیفری بر اساس قانون حمایت از حقوق پدیدآورندگان نرم‌افزارهای رایانه‌ای و مراجع ذی‌صلاح قضایی خواهد بود.
+        هرگونه مهندسی معکوس، بهره‌برداری تجاری غیرمجاز، بازتولید ساختار الگوریتم‌های پداگوژیک، کپی‌برداری از کد منبع یا سوء‌استفاده از نام و نشان <b>شرکت صنایع پردرآمد تهرانیها</b> و سامانه هوش مصنوعی اکیداً ممنوع بوده و مشمول پیگرد قانونی و مراجع ذی‌صلاح قضایی خواهد بود.
     </div>
 
 </div>
@@ -402,13 +403,13 @@
         </p>
 
         <div class="packages-grid" id="packages-container">
-            <!-- بسته‌ها از ۲ تا ۱۰۰ میلیون تومان -->
+            <!-- بسته‌ها از ۲ تا ۱۰۰ میلیون تومان به صورت خودکار لود می‌شوند -->
         </div>
     </div>
 </div>
 
 <script>
-    /* صدای بوق یواش (Soft Beep) بدون نیاز به فایل خارجی */
+    /* ایجاد صدای بوق ملایم (Soft Beep) بدون فایل خارجی با Web Audio API */
     let audioCtx = null;
     function playSoftBeep() {
         try {
@@ -433,7 +434,7 @@
         }
     }
 
-    /* مدیریت تصویر */
+    /* مدیریت و پیش‌نمایش تصویر */
     let selectedImageBase64 = null;
     function triggerUpload() {
         document.getElementById('image-input').click();
@@ -457,7 +458,7 @@
         document.getElementById('preview-container').style.display = 'none';
     }
 
-    /* لیست بسته‌های ۲ تا ۱۰۰ میلیون تومان */
+    /* بسته‌های اعتباری از ۲ تا ۱۰۰ میلیون تومان */
     const packagePrices = [
         2, 3, 4, 5, 6, 7, 8, 9, 10,
         15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100
@@ -489,11 +490,11 @@
         if (e.target.id === 'packages-modal') closeModal();
     }
     function selectPackage(price) {
-        alert(`درخواست خرید «بسته ${price} میلیون تومانی» ثبت شد.\nجهت فعال‌سازی با مدیریت شرکت صنایع پردرآمد تهرانیها (حسین لعلیان) هماهنگ فرمایید.`);
+        alert(`درخواست خرید «بسته ${price} میلیون تومانی» ثبت گردید.\nجهت فعال‌سازی با مدیریت شرکت صنایع پردرآمد تهرانیها (حسین لعلیان) هماهنگ فرمایید.`);
         closeModal();
     }
 
-    /* عملکرد دکمه‌ها */
+    /* عملکرد دکمه‌های تخصصی */
     function runMode(mode) {
         let prompt = document.getElementById('user-prompt').value.trim();
         const loader = document.getElementById('loader');
