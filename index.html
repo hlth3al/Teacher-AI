@@ -219,12 +219,17 @@
           ۱) <b>پرداخت مجازی (آنلاین):</b> پرداخت مستقیم و آنلاین به حساب شرکت و فعال‌سازی دسترسی پس از تأیید.<br>
           ۲) <b>پرداخت خارج از محیط اینترنت (آفلاین):</b> در صورت پرداخت کارت‌به‌کارت/فیش بانکی، لطفاً <b>تصویر رسید پرداخت</b> را ارسال کنید تا دسترسی شما متصل شود.
 
-          <div style="text-align:center;">
-            <!-- گیرنده مستقیم ایمیل شماست و فرستنده دست نخورده و باز می‌ماند -->
+          <div style="text-align:center; margin-top:10px;">
+            <!-- لینک میل‌تو با پارامتر مقصد -->
             <a class="mail" href="mailto:AI.Algorithms.Ballistics@gmail.com?subject=ارسال%20تصویر%20رسید%20پرداخت%20بسته%20Teacher-AI">
-              ✉️ ارسال تصویر رسید به ایمیل شرکت (باز شدن Gmail)
+              ✉️ باز کردن ایمیل (ارسال رسید به شرکت)
             </a>
-            <div class="small" style="margin-top:6px;">ایمیل رسمی دریافت رسید:<br><code>AI.Algorithms.Ballistics@gmail.com</code></div>
+            <br>
+            <!-- دکمه کپی سریع برای اطمینان صددرصدی در موبایل -->
+            <button class="btn" style="background:#ff9ff3; margin:8px auto 0; padding:10px 16px; font-size:13px;" onclick="copyEmail()">
+              📋 کپی کردن دقیق آدرس ایمیل (برای اطمینان در گیرنده)
+            </button>
+            <div class="small" style="margin-top:6px;">گیرنده رسمی:<br><code>AI.Algorithms.Ballistics@gmail.com</code></div>
           </div>
         </div>
       </div>
@@ -278,6 +283,15 @@
       if(b){ b.classList.add("glow"); setTimeout(()=>b.classList.remove("glow"),280); }
     }
     function setMsg(m){ document.getElementById("systemMessage").textContent = m; }
+
+    function copyEmail(){
+      playSoftBeep();
+      navigator.clipboard.writeText("AI.Algorithms.Ballistics@gmail.com").then(()=>{
+        setMsg("✅ آدرس ایمیل (AI.Algorithms.Ballistics@gmail.com) کپی شد. در بخش گیرنده (به) پیست کنید.");
+      }).catch(()=>{
+        setMsg("آدرس ایمیل شرکت: AI.Algorithms.Ballistics@gmail.com");
+      });
+    }
 
     async function askAI(userText){
       setMsg("🌀 وصل به هوش مصنوعی...");
@@ -338,10 +352,9 @@
       glow(btn); playSoftBeep();
       if(!lastAnswer){ setMsg("هنوز پاسخی دریافت نشده. اول یک پرسش بفرستید."); return; }
       if(!("speechSynthesis" in window)){ setMsg(lastAnswer); return; }
-      try{
-        speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(lastAnswer);
-        const fa = speechSynthesis.getVoices().find(v=>v.lang && v.lang.toLowerCase().startsWith("fa"));
+      trySynthesis.speak(u);
+        setMsg("🔊 در حال پخش پاسخ با صدای محصل...");
+      }catch(e){ = speechSynthesis.getVoices().find(v=>v.lang && v.lang.toLowerCase().startsWith("fa"));
         if(fa) u.voice = fa;
         u.lang = fa ? fa.lang : "fa-IR";
         speechSynthesis.speak(u);
