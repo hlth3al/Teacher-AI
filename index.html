@@ -3,31 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher-AI | سامانه یکپارچه آموزشی</title>
+    <title>Teacher-AI | سامانه یکپارچه آموزشی و استنتاج پداگوژیک</title>
     <style>
         :root { --main-blue: #1e3a8a; --accent-gold: #d97706; --soft-bg: #f8fafc; }
         body { font-family: Tahoma, sans-serif; background: #eef2f6; margin: 0; padding: 20px; direction: rtl; }
         .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        
         .header { text-align: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 25px; }
         .header h1 { color: var(--main-blue); font-size: 24px; margin-bottom: 10px; }
         .header p { color: #64748b; font-size: 14px; }
         .ceo-badge { background: #fff7ed; border: 1px solid var(--accent-gold); color: #92400e; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 12px; }
-
-        .vip-banner { background: var(--main-blue); color: white; padding: 15px; border-radius: 12px; text-align: center; font-weight: bold; margin-bottom: 25px; cursor: pointer; }
+        .vip-banner { background: var(--main-blue); color: white; padding: 15px; border-radius: 12px; text-align: center; font-weight: bold; margin-bottom: 20px; }
         
-        textarea { width: 100%; height: 120px; border: 2px solid #cbd5e1; border-radius: 12px; padding: 15px; font-size: 16px; outline: none; margin-bottom: 15px; }
+        textarea { width: 100%; box-sizing: border-box; height: 130px; border: 2px solid #cbd5e1; border-radius: 12px; padding: 15px; font-size: 15px; outline: none; margin-bottom: 15px; }
         textarea:focus { border-color: var(--main-blue); }
 
         .btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
-        .btn-action { padding: 15px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; transition: 0.3s; }
+        .btn-action { padding: 14px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; color: white; font-size: 14px; transition: 0.2s; }
         .btn-exam { background: #3b82f6; }
         .btn-socratic { background: #8b5cf6; }
         .btn-quiz { background: #10b981; }
         .btn-analyze { background: #f59e0b; }
-        .btn-action:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-action:hover { opacity: 0.9; transform: scale(1.01); }
 
-        #output { background: #f1f5f9; padding: 20px; border-radius: 12px; min-height: 150px; white-space: pre-wrap; line-height: 1.8; }
+        #output { background: #f1f5f9; padding: 20px; border-radius: 12px; min-height: 150px; white-space: pre-wrap; line-height: 1.8; font-size: 15px; color: #1e293b; border: 1px solid #e2e8f0; }
         
         .footer { font-size: 11px; color: #94a3b8; text-align: center; margin-top: 30px; line-height: 1.6; }
         .warning { color: #b91c1c; font-weight: bold; border-top: 1px solid #e2e8f0; margin-top: 20px; padding-top: 10px; font-size: 11px; }
@@ -38,7 +36,7 @@
 <div class="container">
     <div class="header">
         <h1>Teacher-AI | سامانه یکپارچه آموزشی و استنتاج پداگوژیک</h1>
-        <p>پلتفرم انجام دهنده خواسته های دانش آموز، دانشجو و پشت کنکوریهای مجازی توسط هوش مصنوعی</p>
+        <p>پلتفرم انجام دهنده خواسته‌های دانش‌آموز، دانشجو و پشت‌کنکوری‌های مجازی توسط هوش مصنوعی</p>
         <span class="ceo-badge">مدیرعاملی: حسین لعلیان (رتبه ۳۲ دکتری)</span>
     </div>
 
@@ -53,7 +51,7 @@
         <button class="btn-action btn-analyze" onclick="process('analyze')">🔍 تحلیل و تجزیه سوال</button>
     </div>
 
-    <div id="output">آماده پردازش... یکی از گزینه‌های بالا را انتخاب کنید. سیستم با صدای بوق ملایم شروع به پردازش خواهد کرد.</div>
+    <div id="output">آماده پردازش... صورت سوال را بنویسید و یکی از دکمه‌های بالا را بزنید. سیستم با صدای بوق ملایم شروع به کار خواهد کرد.</div>
 
     <div class="footer">
         تمامی حقوق این پلتفرم متعلق به شرکت صنایع پردرآمد تهرانیها با مدیر عاملی حسین لعلیان (رتبه ۳۲ دکتری) می‌باشد.<br>
@@ -62,40 +60,73 @@
 </div>
 
 <script>
-    const API_KEY = "GAPGPTMASKTOKENsor7vk6rrkX0X";
-    
+    // کلید OpenRouter در همین خط قرار داده شد:
+    const API_KEY = "GAPGPTMASKTOKEN9x27lsbew3vX0X";
+
     function beep() {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        osc.frequency.value = 600;
-        osc.connect(audioCtx.destination);
-        osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            osc.frequency.value = 600;
+            osc.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+        } catch(e) {}
     }
 
     async function process(mode) {
-        const input = document.getElementById('userInput').value;
+        const input = document.getElementById('userInput').value.trim();
         const out = document.getElementById('output');
-        if (!input) return alert("لطفاً سوال خود را بنویسید");
+
+        if (!input) {
+            alert("لطفاً ابتدا سوال خود را بنویسید.");
+            return;
+        }
 
         beep();
         out.innerText = "🌀 در حال پردازش و استنتاج آموزشی...";
         
-        let systemMsg = "You are a professional teacher. Provide academic answers in Persian.";
-        if (mode === 'socratic') systemMsg = "You are a teacher using the Socratic method, guiding the student to the answer.";
+        let systemMsg = "شما معلم و استاد دانشگاه مسلط بر محتوای درسی و کنکور هستید. پاسخ دقیق، استاندارد و با نگارش فارسی کامل ارائه دهید.";
+        if (mode === 'socratic') {
+            systemMsg = "به شیوه سقراطی پاسخ دهید؛ با پرسش‌های گام‌به‌گام دانش‌آموز را به سمت کشف پاسخ هدایت کنید.";
+        } else if (mode === 'quiz') {
+            systemMsg = "بر اساس متن، یک سوال استاندارد چهارگزینه‌ای با کلید و توضیح گزینه‌ها طرح کنید.";
+        } else if (mode === 'analyze') {
+            systemMsg = "سوال را به صورت ریشه‌ای تحلیل، ابعاد پنهان، پیش‌نیازها و دام‌های تستی آن را تشریح کنید.";
+        }
 
         try {
             const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                 method: "POST",
-                headers: { "Authorization": `Bearer ${API_KEY}`, "Content-Type": "application/json" },
+                headers: {
+                    "Authorization": `Bearer ${API_KEY}`,
+                    "HTTP-Referer": window.location.href,
+                    "X-Title": "Teacher-AI",
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify({
                     model: "meta-llama/llama-3.3-70b-instruct:free",
-                    messages: [{ role: "system", content: systemMsg }, { role: "user", content: input }]
+                    messages: [
+                        { role: "system", content: systemMsg },
+                        { role: "user", content: input }
+                    ]
                 })
             });
+
             const data = await res.json();
-            out.innerText = data.choices[0].message.content;
+
+            if (!res.ok) {
+                const errDetail = data?.error?.message || ("کد خطا: " + res.status);
+                out.innerText = "❌ خطا در دریافت پاسخ:\n" + errDetail;
+                return;
+            }
+
+            if (data.choices && data.choices[0] && data.choices[0].message) {
+                out.innerText = data.choices[0].message.content;
+            } else {
+                out.innerText = "پاسخی از مدل دریافت نشد.";
+            }
         } catch (e) {
-            out.innerText = "خطای اتصال!";
+            out.innerText = "❌ خطای شبکه یا فیلترینگ:\n" + e.message;
         }
     }
 </script>
