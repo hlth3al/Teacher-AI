@@ -1,240 +1,109 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teacher-AI | معلم مجازی</title>
-  <meta name="description" content="سامانه هوشمند آموزشی Teacher-AI">
-  <style>
-    :root{
-      --bg:#07111f;
-      --panel:#0d1b2e;
-      --panel2:#11243b;
-      --text:#edf6ff;
-      --muted:#9db1c8;
-      --primary:#38bdf8;
-      --primary2:#2563eb;
-      --green:#34d399;
-      --border:rgba(148,163,184,.2);
-      --shadow:0 24px 70px rgba(0,0,0,.32);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      color:var(--text);
-      font-family:Tahoma,Arial,sans-serif;
-      background:
-        radial-gradient(circle at 15% 0%,rgba(37,99,235,.28),transparent 34rem),
-        radial-gradient(circle at 100% 10%,rgba(14,165,233,.18),transparent 30rem),
-        var(--bg);
-    }
-    button,textarea{font:inherit}
-    .wrap{width:min(100% - 28px,980px);margin:22px auto}
-    .hero{
-      position:relative;overflow:hidden;text-align:center;padding:34px 22px 28px;
-      border:1px solid var(--border);border-radius:28px 28px 0 0;
-      background:linear-gradient(135deg,#102a4c,#081525 75%);
-      box-shadow:var(--shadow)
-    }
-    .hero:after{
-      content:"";position:absolute;width:220px;height:220px;border-radius:50%;
-      background:rgba(56,189,248,.13);filter:blur(10px);left:-80px;top:-100px
-    }
-    .logo{
-      width:68px;height:68px;margin:auto auto 15px;border-radius:22px;
-      display:grid;place-items:center;font-size:34px;
-      background:linear-gradient(135deg,var(--primary),var(--primary2));
-      box-shadow:0 10px 35px rgba(56,189,248,.32)
-    }
-    h1{margin:0;font-size:clamp(21px,4vw,32px);letter-spacing:-.5px}
-    .subtitle{margin:12px auto 0;max-width:680px;color:var(--muted);line-height:2;font-size:14px}
-    .badge{
-      display:inline-block;margin-top:15px;padding:7px 14px;border-radius:999px;
-      color:#fde68a;background:rgba(245,158,11,.12);
-      border:1px solid rgba(245,158,11,.45);font-size:12px
-    }
-    .app{
-      padding:22px;background:rgba(13,27,46,.94);
-      border:1px solid var(--border);border-top:0;border-radius:0 0 28px 28px;
-      box-shadow:var(--shadow)
-    }
-    .status{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:12px 15px;margin-bottom:17px;border-radius:14px;
-      background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);
-      color:#bbf7d0;font-size:13px
-    }
-    .dot{width:9px;height:9px;border-radius:50%;background:var(--green);display:inline-block;margin-left:7px;box-shadow:0 0 13px var(--green)}
-    .label{display:block;margin:0 0 9px;color:#dbeafe;font-size:14px;font-weight:bold}
-    textarea{
-      width:100%;min-height:155px;resize:vertical;padding:16px;
-      color:var(--text);background:#081525;border:1px solid var(--border);
-      border-radius:16px;outline:0;line-height:2;font-size:15px
-    }
-    textarea:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(56,189,248,.1)}
-    .hint{margin-top:8px;color:var(--muted);font-size:12px}
-    .modes{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}
-    .mode{
-      border:1px solid var(--border);border-radius:16px;padding:15px;
-      color:var(--text);background:linear-gradient(135deg,#132a45,#0d1d31);
-      cursor:pointer;text-align:right;transition:.2s
-    }
-    .mode:hover{transform:translateY(-2px);border-color:var(--primary);box-shadow:0 10px 24px rgba(37,99,235,.18)}
-    .mode strong{display:block;font-size:14px;margin-bottom:7px}
-    .mode small{display:block;color:var(--muted);font-size:11px;line-height:1.8}
-    .send{
-      width:100%;border:0;border-radius:15px;padding:15px;cursor:pointer;
-      color:white;font-weight:bold;font-size:15px;
-      background:linear-gradient(135deg,var(--primary2),#0891b2);
-      box-shadow:0 10px 25px rgba(37,99,235,.25);transition:.2s
-    }
-    .send:hover{filter:brightness(1.1);transform:translateY(-1px)}
-    .send:disabled{opacity:.6;cursor:wait}
-    .answer{
-      margin-top:20px;border:1px solid var(--border);border-radius:18px;
-      overflow:hidden;background:#081525
-    }
-    .answer-head{padding:13px 16px;background:rgba(56,189,248,.09);font-size:13px;font-weight:bold}
-    #output{min-height:150px;padding:18px;white-space:pre-wrap;line-height:2;font-size:15px;color:#e2e8f0}
-    .footer{text-align:center;color:var(--muted);font-size:11px;line-height:2;margin-top:22px}
-    @media(max-width:600px){
-      .wrap{width:min(100% - 16px,980px);margin:8px auto}
-      .hero{padding:27px 15px 23px;border-radius:22px 22px 0 0}
-      .app{padding:15px;border-radius:0 0 22px 22px}
-      .modes{grid-template-columns:1fr}
-      .status{align-items:flex-start;flex-direction:column}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher-AI | سامانه معلم مجازی هوشمند</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background: #f4f6f9; margin: 0; padding: 20px; direction: rtl; text-align: right; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; font-size: 24px; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .chat-box { height: 400px; border: 1px solid #ddd; border-radius: 8px; padding: 15px; overflow-y: scroll; background: #fafafa; margin-bottom: 15px; }
+        .message { margin-bottom: 12px; padding: 10px 14px; border-radius: 8px; line-height: 1.6; max-width: 80%; }
+        .user { background: #d4efdf; margin-right: auto; text-align: right; }
+        .ai { background: #ebf5fb; margin-left: auto; text-align: left; }
+        .input-group { display: flex; gap: 10px; }
+        input[type="text"] { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
+        button { background: #3498db; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #2980b9; }
+        .footer { margin-top: 20px; font-size: 12px; color: #7f8c8d; text-align: center; }
+    </style>
 </head>
 <body>
-  <main class="wrap">
-    <section class="hero">
-      <div class="logo">🎓</div>
-      <h1>Teacher-AI | معلم مجازی</h1>
-      <p class="subtitle">
-        دستیار هوشمند آموزشی برای پاسخ تشریحی، یادگیری سقراطی، طراحی تست و تحلیل عمیق پرسش‌ها
-      </p>
-      <span class="badge">مدیرعامل: حسین لعلیان · رتبه ۳۲ دکتری</span>
-    </section>
 
-    <section class="app">
-      <div class="status">
-        <span><span class="dot"></span>سامانه آماده پاسخ‌گویی است</span>
-        <span id="modeText">حالت: پاسخ تشریحی</span>
-      </div>
+<div class="container">
+    <h1>Teacher-AI | سامانه یکپارچه آموزشی و استنتاج پداگوژیک</h1>
+    <p>مدیرعامل: حسین لعلیان (رتبه ۳۲ دکتری) - شرکت صنایع پردرآمد تهرانیها</p>
 
-      <label class="label" for="question">سؤال یا متن آموزشی خود را وارد کنید</label>
-      <textarea id="question" placeholder="مثلاً: مهم‌ترین موانع و مشکلات داخلی نظام مشروطه را توضیح دهید."></textarea>
-      <div class="hint">هرچه صورت سؤال و پایهٔ تحصیلی را دقیق‌تر بنویسید، پاسخ آموزشی بهتر خواهد بود.</div>
+    <div class="chat-box" id="chatBox">
+        <div class="message ai">سلام! من معلم مجازی شما هستم. سوال درسی‌تان را بپرسید تا راهنمایی‌تان کنم.</div>
+    </div>
 
-      <div class="modes">
-        <button class="mode" data-mode="exam">
-          <strong>📘 پاسخ تشریحی</strong>
-          <small>پاسخ کامل، مرحله‌به‌مرحله و مناسب امتحان</small>
-        </button>
-        <button class="mode" data-mode="socratic">
-          <strong>💡 یادگیری سقراطی</strong>
-          <small>هدایت گام‌به‌گام برای کشف پاسخ توسط دانش‌آموز</small>
-        </button>
-        <button class="mode" data-mode="quiz">
-          <strong>📝 ساخت تست</strong>
-          <small>تولید سؤال چهارگزینه‌ای با پاسخ و تحلیل گزینه‌ها</small>
-        </button>
-        <button class="mode" data-mode="analyze">
-          <strong>🔎 تحلیل سؤال</strong>
-          <small>بررسی مفهوم، پیش‌نیازها و نکات مهم سؤال</small>
-        </button>
-      </div>
+    <div class="input-group">
+        <input type="text" id="userInput" placeholder="سوال خود را اینجا بنویسید..." onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()">ارسال</button>
+    </div>
 
-      <button class="send" id="send">✨ دریافت پاسخ هوشمند</button>
-
-      <section class="answer">
-        <div class="answer-head">📋 پاسخ Teacher-AI</div>
-        <div id="output">سؤال خود را بنویسید، حالت آموزشی را انتخاب کنید و روی «دریافت پاسخ هوشمند» بزنید.</div>
-      </section>
-
-      <div class="footer">
-        Teacher-AI برای کمک به یادگیری طراحی شده است؛ پاسخ‌ها را با کتاب درسی و منابع معتبر بررسی کنید.
-      </div>
-    </section>
-  </main>
+    <div class="footer">
+        تمامی حقوق متعلق به شرکت صنایع پردرآمد تهرانیها می‌باشد.
+    </div>
+</div>
 
 <script>
-  /*
-   * این آدرس را بعد از ساخت Cloudflare Worker جایگزین کنید.
-   * کلید OpenRouter نباید داخل این فایل عمومی قرار بگیرد.
-   */
-  const API_URL = "https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev";
+    // کلید OpenRouter شما
+    const API_KEY = "GAPGPTMASKTOKENeq6tg9ps5zvX1X";
+    const URL = "https://openrouter.ai/api/v1/chat/completions";
 
-  let selectedMode = "exam";
-  const question = document.getElementById("question");
-  const output = document.getElementById("output");
-  const send = document.getElementById("send");
-  const modeText = document.getElementById("modeText");
+    let messages = [
+        { role: "system", content: "You are an expert, polite, and helpful virtual teacher for students in Iran, speaking in Persian." }
+    ];
 
-  const modeNames = {
-    exam: "پاسخ تشریحی",
-    socratic: "یادگیری سقراطی",
-    quiz: "ساخت تست",
-    analyze: "تحلیل سؤال"
-  };
+    async function sendMessage() {
+        const inputField = document.getElementById("userInput");
+        const chatBox = document.getElementById("chatBox");
+        const text = inputField.value.trim();
+        if (!text) return;
 
-  document.querySelectorAll(".mode").forEach(btn => {
-    btn.addEventListener("click", () => {
-      selectedMode = btn.dataset.mode;
-      modeText.textContent = "حالت: " + modeNames[selectedMode];
-      document.querySelectorAll(".mode").forEach(x => x.style.borderColor = "");
-      btn.style.borderColor = "var(--primary)";
-    });
-  });
+        // نمایش پیام کاربر
+        chatBox.innerHTML += `<div class="message user">${text}</div>`;
+        inputField.value = "";
+        chatBox.scrollTop = chatBox.scrollHeight;
 
-  send.addEventListener("click", async () => {
-    const text = question.value.trim();
+        messages.push({ role: "user", content: text });
 
-    if (!text) {
-      output.textContent = "لطفاً ابتدا سؤال یا متن آموزشی را وارد کنید.";
-      question.focus();
-      return;
+        // پیام در حال بارگذاری
+        const loadingId = "loading_" + Date.now();
+        chatBox.innerHTML += `<div id="${loadingId}" class="message ai">در حال استنتاج پداگوژیک...</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            const response = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${API_KEY}`,
+                    "HTTP-Referer": "https://hlth3al.github.io/Teacher-AI/",
+                    "X-Title": "Teacher-AI",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    model: "meta-llama/llama-3.3-70b-instruct:free",
+                    messages: messages
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById(loadingId).remove();
+
+            if (response.ok && data.choices && data.choices.length > 0) {
+                const reply = data.choices[0].message.content;
+                chatBox.innerHTML += `<div class="message ai">${reply}</div>`;
+                messages.push({ role: "assistant", content: reply });
+            } else {
+                chatBox.innerHTML += `<div class="message ai" style="color:red;">خطا در دریافت پاسخ از هوش مصنوعی.</div>`;
+            }
+        } catch (error) {
+            document.getElementById(loadingId).remove();
+            chatBox.innerHTML += `<div class="message ai" style="color:red;">خطای اتصال اینترنت.</div>`;
+        }
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    if (API_URL.includes("YOUR-WORKER")) {
-      output.textContent =
-        "اتصال هنوز تنظیم نشده است. ابتدا API_URL را با آدرس Worker خود جایگزین کنید.";
-      return;
+    function handleKeyPress(e) {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
     }
-
-    send.disabled = true;
-    send.textContent = "⏳ در حال تحلیل و آماده‌سازی پاسخ...";
-    output.textContent = "Teacher-AI در حال بررسی سؤال شماست...";
-
-    try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question: text,
-          mode: selectedMode
-        })
-      });
-
-      const data = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        throw new Error(data.error || `خطای سرور: ${response.status}`);
-      }
-
-      output.textContent = data.answer || "پاسخ معتبری دریافت نشد.";
-    } catch (error) {
-      output.textContent =
-        "❌ اتصال برقرار نشد.\n\n" +
-        "جزئیات: " + error.message +
-        "\n\nاگر این پیام ادامه داشت، اتصال Worker یا وضعیت سرویس را بررسی کنید.";
-    } finally {
-      send.disabled = false;
-      send.textContent = "✨ دریافت پاسخ هوشمند";
-    }
-  });
 </script>
+
 </body>
 </html>
