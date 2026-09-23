@@ -1,258 +1,79 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>معلم هوشمند مجازی | Teacher-AI</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
-  <style>
-    :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --accent: #38bdf8;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #334155;
-      --success: #10b981;
-      --danger: #ef4444;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1.5rem;
-    }
-    .container {
-      width: 100%;
-      max-width: 850px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    header {
-      text-align: center;
-      background: var(--card);
-      padding: 1.5rem;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-    }
-    h1 { color: var(--accent); font-size: 1.6rem; margin-bottom: 0.5rem; }
-    .badge {
-      display: inline-block;
-      background: rgba(56, 189, 248, 0.15);
-      color: var(--accent);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-    }
-    .card {
-      background: var(--card);
-      padding: 1.5rem;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-    }
-    label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
-    textarea {
-      width: 100%;
-      background: #090d16;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      padding: 0.8rem;
-      font-size: 1rem;
-      height: 120px;
-      outline: none;
-      margin-bottom: 1rem;
-      resize: vertical;
-    }
-    textarea:focus { border-color: var(--accent); }
-    .btn-group {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 0.8rem;
-      margin-bottom: 1rem;
-    }
-    button.action-btn {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 0.8rem 1rem;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.95rem;
-      transition: 0.2s;
-    }
-    button.action-btn:hover { background: #1d4ed8; }
-    .status {
-      display: none;
-      padding: 0.8rem;
-      border-radius: 8px;
-      text-align: center;
-      margin-bottom: 1rem;
-      font-weight: bold;
-      background: rgba(56, 189, 248, 0.1);
-      color: var(--accent);
-      border: 1px solid var(--accent);
-    }
-    .output {
-      background: #090d16;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.2rem;
-      min-height: 120px;
-      white-space: pre-wrap;
-      line-height: 1.8;
-      font-size: 0.95rem;
-    }
-    .legal {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      padding: 1rem;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      color: #fca5a5;
-      line-height: 1.6;
-    }
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-    }
-    .plan-card {
-      background: #090d16;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem;
-      text-align: center;
-    }
-    .plan-card h4 { color: var(--accent); margin-bottom: 0.5rem; }
-    .plan-card .price { font-size: 1.2rem; font-weight: bold; color: var(--success); margin: 0.5rem 0; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher-AI</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background-color: #f4f7f6; margin: 0; padding: 15px; }
+        .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; margin-top: 0; }
+        #chatBox { height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-bottom: 15px; border-radius: 8px; background: #fafafa; }
+        .message { margin-bottom: 12px; padding: 10px; border-radius: 8px; line-height: 1.5; }
+        .user { background: #dcf8c6; text-align: right; margin-left: 20px; }
+        .ai { background: #e8e8e8; text-align: right; margin-right: 20px; color: #333; }
+        .input-group { display: flex; gap: 5px; }
+        input { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
 </head>
 <body>
 
 <div class="container">
-  <header>
-    <h1>Teacher-AI | سامانه یکپارچه آموزشی و استنتاج پداگوژیک</h1>
-    <div class="badge">مدیر عامل: حسین لعلیان (رتبه ۳۲ کنکور دکتری) - شرکت صنایع پردرآمد تهرانیها</div>
-  </header>
-
-  <div class="card">
-    <label for="promptInput">📝 سوال، مبحث درسی یا مسئله آزمون را وارد فرمایید:</label>
-    <textarea id="promptInput" placeholder="مثال: روش حل معادلات دیفرانسیل مرتبه اول، یا قانون القای فارادی..."></textarea>
-
-    <div class="btn-group">
-      <button class="action-btn" onclick="askAI('explain')">💡 پاسخ تشریحی</button>
-      <button class="action-btn" onclick="askAI('socratic')">🧠 تحلیل گام‌به‌گام</button>
-      <button class="action-btn" onclick="askAI('quiz')">📋 ساخت آزمون تستی</button>
-      <button class="action-btn" onclick="askAI('solve')">🔬 حل فرمولی دقیق</button>
+    <h2>Teacher-AI</h2>
+    <div id="chatBox"></div>
+    <div class="input-group">
+        <input type="text" id="userInput" placeholder="سوال خود را بنویسید...">
+        <button onclick="sendMessage()">ارسال</button>
     </div>
-
-    <div id="statusIndicator" class="status">🌀 در حال استنتاج پداگوژیک و پردازش سوال... لطفاً چند لحظه صبر کنید.</div>
-
-    <label>📋 نتیجه استنتاج آموزشی هوش مصنوعی:</label>
-    <div id="outputBox" class="output">آماده پردازش. سوال خود را در کادر بالا بنویسید و روی یکی از گزینه‌ها کلیک فرمایید.</div>
-  </div>
-
-  <div class="legal">
-    <strong>⚠️ اخطار امنیتی و صیانت از حقوق مالکیت فکری:</strong><br>
-    تمامی حقوق این پلتفرم متعلق به <b>شرکت صنایع پردرآمد تهرانیها</b> با مدیریت عاملی <b>حسین لعلیان (رتبه ۳۲ دکتری)</b> می‌باشد. هرگونه کپی‌برداری مشمول پیگرد مراجع ذی‌صلاح خواهد بود.
-  </div>
-
-  <div class="card">
-    <h3 style="margin-bottom:1rem; color:var(--accent);">🛒 بسته‌های اعتباری هوش مصنوعی مدارس و داوطلبان</h3>
-    <div class="plans">
-      <div class="plan-card">
-        <h4>پلن پایه دانش‌آموزی</h4>
-        <div class="price">۱۹۰,۰۰۰ تومان</div>
-        <p style="font-size:0.85rem; color:var(--text-muted);">۵۰ پرسش و رفع اشکال تشریحی</p>
-      </div>
-      <div class="plan-card">
-        <h4>پلن کنکور و ارشد</h4>
-        <div class="price">۳۹۰,۰۰۰ تومان</div>
-        <p style="font-size:0.85rem; color:var(--text-muted);">استنتاج نامحدود + آزمون‌ساز</p>
-      </div>
-      <div class="plan-card">
-        <h4>پلن پژوهشی و دکتری</h4>
-        <div class="price">۷۹۰,۰۰۰ تومان</div>
-        <p style="font-size:0.85rem; color:var(--text-muted);">تحلیل مقالات و حل مسائل پیشرفته</p>
-      </div>
-    </div>
-  </div>
 </div>
 
 <script>
-  function playBeep() {
-    try {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(650, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.12);
-    } catch(e) {}
-  }
+    // کلید شما در اینجا تنظیم شده است
+    const API_KEY = "GAPGPTMASKTOKENntdmqh8v4eX1X";
+    const chatBox = document.getElementById("chatBox");
+    const userInput = document.getElementById("userInput");
 
-  async function askAI(mode) {
-    const prompt = GAPGPTMASKTOKEN43w4q6wm68X0X"promptInput").value.trim();
-    const outputBox = GAPGPTMASKTOKEN43w4q6wm68X1X"outputBox");
-    const status = GAPGPTMASKTOKEN43w4q6wm68X2X"statusIndicator");
-
-    if (!prompt) {
-      alert("لطفاً ابتدا سوال خود را بنویسید.");
-      return;
+    function appendMsg(text, isUser) {
+        chatBox.innerHTML += `<div class="message ${isUser ? 'user' : 'ai'}">${isUser ? 'شما: ' : 'AI: '}${text}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    playBeep();
-    status.style.display = "block";
-    outputBox.innerText = "⏳ در حال ارتباط مستقیم با پردازشگر و استنتاج پاسخ...";
-
-    let systemRole = "به عنوان استاد و هیئت علمی شرکت صنایع پردرآمد تهرانیها، به زبان فارسی، علمی و دقیق پاسخ دهید. ";
-    if (mode === 'explain') systemRole += "پاسخ کامل تشریحی همراه با مثال آموزشی ارائه دهید.";
-    if (mode === 'socratic') systemRole += "موضوع را به شیوه تحلیلی و گام به گام تا نتیجه شرح دهید.";
-    if (mode === 'quiz') systemRole += "۴ تست استاندارد با گزینه‌ها و پاسخ تشریحی طرح فرمایید.";
-    if (mode === 'solve') systemRole += "فرمول‌ها و محاسبات دقیق ریاضی و فیزیکی را مرحله‌به‌مرحله بیاورید.";
-
-    const fullPrompt = systemRole + "\n\nسوال یا موضوع کاربر:\n" + prompt;
-
-    try {
-      // استفاده از سرویس مستقیم پولینیشنز بدون نیاز به هیچ کلید یا احراز هویت
-      const response = await fetch("https://text.pollinations.ai/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          messages: [
-            { role: "user", content: fullPrompt }
-          ],
-          model: "openai",
-          seed: Math.floor(Math.random() * 1000)
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error("پاسخی از پردازشگر دریافت نشد (کد: " + response.status + ")");
-      }
-
-      const reply = await response.text();
-      outputBox.innerText = reply;
-    } catch (err) {
-      outputBox.innerHTML = "<span style='color:#ef4444;'>❌ " + err.message + "</span><br><br><small style='color:#94a3b8;'>نکته: در صورتی که اینترنت دسترسی به سرورهای خارجی را محدود کرده، فیلترشکن (Psiphon) خود را روشن و مجدداً دکمه را بزنید.</small>";
-    } finally {
-      status.style.display = "none";
+    async function sendMessage() {
+        const text = userInput.value.trim();
+        if (!text) return;
+        
+        appendMsg(text, true);
+        userInput.value = "";
+        
+        try {
+            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${API_KEY}`,
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "https://github.com/hlth3al/Teacher-AI",
+                    "X-Title": "Teacher-AI"
+                },
+                body: JSON.stringify({
+                    "model": "google/gemma-2-9b-it:free",
+                    "messages": [{"role": "user", "content": text}]
+                })
+            });
+            
+            const data = await response.json();
+            if (data.choices) {
+                appendMsg(data.choices[0].message.content, false);
+            } else {
+                appendMsg("خطا: " + JSON.stringify(data.error), false);
+            }
+        } catch (e) {
+            appendMsg("خطای اتصال. لطفا اینترنت خود را چک کنید.", false);
+        }
     }
-  }
+
+    // ارسال با اینتر
+    userInput.addEventListener("keypress", (e) => { if(e.key === "Enter") sendMessage(); });
 </script>
 </body>
 </html>
