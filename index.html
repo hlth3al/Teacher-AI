@@ -46,7 +46,6 @@
   .sub{ margin:12px 0 0; font-weight:800; line-height:1.9; background:#fff3bf;
     border:2px dashed #f59f00; border-radius:16px; padding:12px 14px; }
 
-  /* ===== مغز هوش مصنوعی نورافشان (تزریق‌شده در کد) ===== */
   .brain-stage{
     position:relative; height:230px; margin-top:14px;
     border-radius:20px; overflow:hidden;
@@ -110,7 +109,6 @@
   .text-input{ width:100%; padding:12px 14px; border:3px solid var(--stroke);
     border-radius:16px; font-size:15px; font-weight:800; background:#fff; }
 
-  /* ۲: دکمه‌های بسته در زیر دکمه وصل شدن (بدون کادر بزرگ بالا) */
   .packs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
     gap:10px; margin-top:12px; }
   .pack{ background:#fff; border:2px solid var(--stroke); border-radius:14px;
@@ -120,7 +118,6 @@
   .pack:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--stroke),
     0 0 18px rgba(255,255,0,.9); filter:brightness(1.15); }
 
-  /* توضیحات پائین بسته‌ها */
   .packs-note{ margin-top:12px; background:rgba(255,255,255,.9);
     border:2px solid var(--stroke); border-radius:16px; padding:12px 14px;
     line-height:1.9; font-weight:800; font-size:14px; }
@@ -149,7 +146,8 @@
         تمامی حقوق این پلتفرم متعلق به شرکت صنایع پردرآمد تهرانیها با مدیر عاملی حسین لعلیان (رتبه ۳۲ کنکور دکتری) می‌باشد.
       </div>
 
-      <div class="title">Teacher-AI | پلتفرم یکپارچه آموزشی و استنتاجbadge">● وضعیت: آماده پرد      <!-- ۱: مغز نورافشان -->
+      <div class="title">Teacher-AI | پلتفرم یکپارچه آموزشی و استنتاج</div>
+      
       <div class="brain-stage" id="brainStage">
         <div class="brain">🧠</div>
         <div class="brain-title">⚡ مغز هوش مصنوعی Teacher-AI — آنلاین و نورافشان ⚡</div>
@@ -182,11 +180,9 @@
 
         <button class="btn c9" onclick="sendTextAnswer(this)">📝 ارسال پرسش متنی</button>
 
-        <!-- ۲: دکمه وصل شدن -->
         <button class="btn c6" onclick="openPricing()">⚡ وصل شدن + انتخاب بسته</button>
       </div>
 
-      <!-- ۲: دکمه‌های بسته در زیر دکمه وصل شدن -->
       <div class="packs">
         <div class="pack" onclick="pickPack(this)">۲,۰۰۰,۰۰۰ تومان</div>
         <div class="pack" onclick="pickPack(this)">۵,۰۰۰,۰۰۰ تومان</div>
@@ -202,7 +198,6 @@
         ۲) <b>پرداخت خارج از محیط اینترنت (آفلاین):</b> در صورت پرداخت کارت‌به‌کارت/فیش بانکی، لطفاً <b>تصویر رسید پرداخت</b> را ارسال کنید تا دسترسی شما متصل شود.
 
         <div style="text-align:center;">
-          <!-- ۳: گیرنده = ایمیل شرکت، فرستنده خالی -->
           <a class="mail" href="mailto:AI.Algorithms.Ballistics@gmail.com">
             ✉️ ارسال تصویر رسید به ایمیل شرکت (باز شدن Gmail)
           </a>
@@ -222,17 +217,11 @@
   </div>
 
   <script>
-    /* ==========================================================
-       ⭐⭐⭐ جای کلید OpenRouter اینجاست ⭐⭐⭐
-       کلید را فقط بین دو کوتیشن بگذار. مثال:
-       const AI_API_KEY = "GAPGPTMASKTOKENb29vdhle0pdX0X";
-       ========================================================== */
     const AI_API_KEY = "";
     const AI_MODEL   = "google/gemma-2-9b-it:free";
 
     let lastAnswer = "";
 
-    /* نورافشانی مغز: پرتوهای متحرک */
     (function(){
       const stage = document.getElementById("brainStage");
       for(let i=0;i<14;i++){
@@ -245,7 +234,6 @@
       }
     })();
 
-    /* ۱: بوق ملایم + افکت نور */
     function playSoftBeep(){
       try{
         const C = window.AudioContext || window.webkitAudioContext;
@@ -268,10 +256,6 @@
     function setMsg(m){ document.getElementById("systemMessage").textContent = m; }
 
     async function askAI(userText){
-      if(!AI_API_KEY){
-        setMsg("⛔ کلید API هنوز گذاشته نشده است. (متغیر AI_API_KEY در ابتدای اسکریپت خالی است)");
-        return;
-      }
       setMsg("🌀 وصل به هوش مصنوعی...");
       playSoftBeep();
       try{
@@ -310,7 +294,6 @@
       askAI(q);
     }
 
-    /* سوال با صدای محصل */
     function askByVoice(){
       playSoftBeep();
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -327,7 +310,6 @@
       rec.onerror = (e)=>{ setMsg("❌ خطای ضبط صدا: " + e.error); };
     }
 
-    /* پاسخ با صدای محصل — بدون اتصال به بسته‌ها */
     function speakAnswer(btn){
       glow(btn); playSoftBeep();
       if(!lastAnswer){ setMsg("هنوز پاسخی دریافت نشده. اول یک پرسش بفرستید."); return; }
@@ -343,14 +325,12 @@
       }catch(e){ setMsg(lastAnswer); }
     }
 
-    /* انتخاب صفحه کتاب و جزوه از گالری */
     function filePicked(input){
       playSoftBeep();
       if(!input.files || !input.files[0]){ return; }
       setMsg("📎 فایل انتخاب شد: " + input.files[0].name);
     }
 
-    /* بسته‌ها + باز شدن بخش */
     function pickPack(el){
       playSoftBeep();
       el.style.outline = "3px solid #00b894";
