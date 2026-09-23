@@ -110,19 +110,20 @@
   .text-input{ width:100%; padding:12px 14px; border:3px solid var(--stroke);
     border-radius:16px; font-size:15px; font-weight:800; background:#fff; }
 
-  .pricing{ background:linear-gradient(135deg,#ffeaa7,#fab1a0);
-    border:3px solid #e17055; border-radius:20px; padding:16px; }
-  .pricing .box{ margin-top:10px; background:rgba(255,255,255,.88);
-    border:2px solid var(--stroke); border-radius:16px;
-    padding:12px 14px; line-height:1.9; font-weight:800; font-size:14px; }
+  /* ۲: دکمه‌های بسته در زیر دکمه وصل شدن (بدون کادر بزرگ بالا) */
   .packs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:10px; margin:12px 0; }
+    gap:10px; margin-top:12px; }
   .pack{ background:#fff; border:2px solid var(--stroke); border-radius:14px;
     padding:10px; text-align:center; font-weight:900; font-size:13px;
     box-shadow:0 4px 0 var(--stroke); cursor:pointer;
     transition:transform .1s, box-shadow .1s, filter .1s; }
   .pack:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--stroke),
     0 0 18px rgba(255,255,0,.9); filter:brightness(1.15); }
+
+  /* توضیحات پائین بسته‌ها */
+  .packs-note{ margin-top:12px; background:rgba(255,255,255,.9);
+    border:2px solid var(--stroke); border-radius:16px; padding:12px 14px;
+    line-height:1.9; font-weight:800; font-size:14px; }
 
   .mail{ display:inline-block; margin-top:10px; text-decoration:none;
     background:#fff; border:2px solid var(--stroke); box-shadow:0 4px 0 var(--stroke);
@@ -148,9 +149,7 @@
         تمامی حقوق این پلتفرم متعلق به شرکت صنایع پردرآمد تهرانیها با مدیر عاملی حسین لعلیان (رتبه ۳۲ کنکور دکتری) می‌باشد.
       </div>
 
-      <div class="title">Teacher-AI | پلتفرم یکپارچه آموزشی و استنتاج پداگوژیک</div>
-
-      <!-- ۱: مغز هوش مصنوعی نورافشان با انیمیشن -->
+      <div class="title">Teacher-AI | پلتفرم یکپارچه آموزشی و استنتاجbadge">● وضعیت: آماده پرد      <!-- ۱: مغز نورافشان -->
       <div class="brain-stage" id="brainStage">
         <div class="brain">🧠</div>
         <div class="brain-title">⚡ مغز هوش مصنوعی Teacher-AI — آنلاین و نورافشان ⚡</div>
@@ -174,50 +173,45 @@
         <button class="btn c4" onclick="promptAI('سوالات زیر را تجزیه و تحلیل کن:', this)">🔍 تجزیه و تحلیل سوالات</button>
         <button class="btn c5" onclick="promptAI('تله‌های (دام‌های) سوالات تستی زیر را پیدا و توضیح بده:', this)">🪤 تله سوالات تستی</button>
 
-        <!-- ۷: نام دقیق دکمه‌های صوتی -->
         <button class="btn c7" onclick="askByVoice()">🎙️ سوال با صدای محصل</button>
         <button class="btn c8" onclick="speakAnswer(this)">🔊 پاسخ با صدای محصل</button>
 
-        <!-- ۶: انتخاب کتاب / جزوه / عکس (اتصال به گالری) -->
-        <button class="btn c11"="btn c11" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button>
+        <button class="btn c11" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button>
         <input type="file" id="filePick" accept="image/*,application/pdf" style="display:none"
                onchange="filePicked(this)" />
 
         <button class="btn c9" onclick="sendTextAnswer(this)">📝 ارسال پرسش متنی</button>
+
+        <!-- ۲: دکمه وصل شدن -->
         <button class="btn c6" onclick="openPricing()">⚡ وصل شدن + انتخاب بسته</button>
       </div>
 
-      <input class="text-input" id="textQ" type="text"
-             placeholder="سوال یا خواسته خود را اینجا بنویسید..." />
-    </div>
+      <!-- ۲: دکمه‌های بسته در زیر دکمه وصل شدن -->
+      <div class="packs">
+        <div class="pack" onclick="pickPack(this)">۲,۰۰۰,۰۰۰ تومان</div>
+        <div class="pack" onclick="pickPack(this)">۵,۰۰۰,۰۰۰ تومان</div>
+        <div class="pack" onclick="pickPack(this)">۱۰,۰۰۰,۰۰۰ تومان</div>
+        <div class="pack" onclick="pickPack(this)">۲۰,۰۰۰,۰۰۰ تومان</div>
+        <div class="pack" onclick="pickPack(this)">۵۰,۰۰۰,۰۰۰ تومان</div>
+        <div class="pack" onclick="pickPack(this)">۱۰۰,۰۰۰,۰۰۰ تومان</div>
+      </div>
 
-    <!-- ۴: بسته‌های اعتباری از ۲ تا ۱۰۰ میلیون تومان -->
-    <div class="card pricing" id="pricing">
-      <h3>🛒 خرید بسته‌های اعتباری هوش مصنوعی</h3>
-      <div class="box">
-        پلن اعتباری مدنظر خود را برای استفاده در مدارس، آموزشگاه‌ها و امور پژوهشی انتخاب فرمایید (طرف قرارداد: شرکت صنایع پردرآمد تهرانیها).
-
-        <div class="packs">
-          <div class="pack" onclick="pickPack(this)">۲,۰۰۰,۰۰۰ تومان</div>
-          <div class="pack" onclick="pickPack(this)">۵,۰۰۰,۰۰۰ تومان</div>
-          <div class="pack" onclick="pickPack(this)">۱۰,۰۰۰,۰۰۰ تومان</div>
-          <div class="pack" onclick="pickPack(this)">۲۰,۰۰۰,۰۰۰ تومان</div>
-          <div class="pack" onclick="pickPack(this)">۵۰,۰۰۰,۰۰۰ تومان</div>
-          <div class="pack" onclick="pickPack(this)">۱۰۰,۰۰۰,۰۰۰ تومان</div>
-        </div>
-
+      <div class="packs-note">
         <b>روش‌های پرداخت هزینه بسته:</b><br>
         ۱) <b>پرداخت مجازی (آنلاین):</b> پرداخت مستقیم و آنلاین به حساب شرکت و فعال‌سازی دسترسی پس از تأیید.<br>
         ۲) <b>پرداخت خارج از محیط اینترنت (آفلاین):</b> در صورت پرداخت کارت‌به‌کارت/فیش بانکی، لطفاً <b>تصویر رسید پرداخت</b> را ارسال کنید تا دسترسی شما متصل شود.
 
         <div style="text-align:center;">
-          <!-- ۳: گیرنده = ایمیل شرکت، فرستنده خالی (خود کاربر) -->
+          <!-- ۳: گیرنده = ایمیل شرکت، فرستنده خالی -->
           <a class="mail" href="mailto:AI.Algorithms.Ballistics@gmail.com">
             ✉️ ارسال تصویر رسید به ایمیل شرکت (باز شدن Gmail)
           </a>
           <div class="small">ایمیل رسمی دریافت رسید:<br><code>AI.Algorithms.Ballistics@gmail.com</code></div>
         </div>
       </div>
+
+      <input class="text-input" id="textQ" type="text"
+             placeholder="سوال یا خواسته خود را اینجا بنویسید..." />
     </div>
 
     <div class="card warn">
@@ -230,8 +224,8 @@
   <script>
     /* ==========================================================
        ⭐⭐⭐ جای کلید OpenRouter اینجاست ⭐⭐⭐
-       کلید را فقط بین دو کوتیشن بگذار، مثال:
-       const AI_API_KEY = "sk-or-v1-xxxxxxxxxxxx";
+       کلید را فقط بین دو کوتیشن بگذار. مثال:
+       const AI_API_KEY = "GAPGPTMASKTOKENb29vdhle0pdX0X";
        ========================================================== */
     const AI_API_KEY = "";
     const AI_MODEL   = "google/gemma-2-9b-it:free";
@@ -251,7 +245,7 @@
       }
     })();
 
-    /* ۲: بوق ملایم + افکت نور دکمه‌ها */
+    /* ۱: بوق ملایم + افکت نور */
     function playSoftBeep(){
       try{
         const C = window.AudioContext || window.webkitAudioContext;
@@ -268,10 +262,11 @@
         setTimeout(()=>{ try{ctx.close();}catch(e){} }, 250);
       }catch(e){}
     }
-    function glow(b){ if(b){ b.classList.add("glow"); setTimeout(()=>b.classList.remove("glow"),280);} }
+    function glow(b){
+      if(b){ b.classList.add("glow"); setTimeout(()=>b.classList.remove("glow"),280); }
+    }
     function setMsg(m){ document.getElementById("systemMessage").textContent = m; }
 
-    /* اتصال واقعی به هوش مصنوعی */
     async function askAI(userText){
       if(!AI_API_KEY){
         setMsg("⛔ کلید API هنوز گذاشته نشده است. (متغیر AI_API_KEY در ابتدای اسکریپت خالی است)");
@@ -315,7 +310,7 @@
       askAI(q);
     }
 
-    /* ۷: سوال با صدای محصل (ضبط از میکروفون) */
+    /* سوال با صدای محصل */
     function askByVoice(){
       playSoftBeep();
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -330,7 +325,9 @@
         askAI(txt);
       };
       rec.onerror = (e)=>{ setMsg("❌ خطای ضبط صدا: " + e.error); };
-    مح    /* ۷: پاسخ با صدای محصل (فقط پخش صدا — بدون اتصال به بسته‌ها) */
+    }
+
+    /* پاسخ با صدای محصل — بدون اتصال به بسته‌ها */
     function speakAnswer(btn){
       glow(btn); playSoftBeep();
       if(!lastAnswer){ setMsg("هنوز پاسخی دریافت نشده. اول یک پرسش بفرستید."); return; }
@@ -346,15 +343,14 @@
       }catch(e){ setMsg(lastAnswer); }
     }
 
-    /* ۶: انتخاب صفحه کتاب و جزوه از گالری */
+    /* انتخاب صفحه کتاب و جزوه از گالری */
     function filePicked(input){
       playSoftBeep();
       if(!input.files || !input.files[0]){ return; }
-      const f = input.files[0];
-      setMsg("📎 فایل انتخاب شد: " + f.name + " — آماده ارسال به هوش مصنوعی پس از گذاشتن کلید.");
+      setMsg("📎 فایل انتخاب شد: " + input.files[0].name);
     }
 
-    /* ۴: انتخاب بسته + باز شدن بخش بسته‌ها */
+    /* بسته‌ها + باز شدن بخش */
     function pickPack(el){
       playSoftBeep();
       el.style.outline = "3px solid #00b894";
@@ -362,10 +358,8 @@
     }
     function openPricing(){
       playSoftBeep();
-      const p = document.getElementById("pricing");
-      p.scrollIntoView({behavior:"smooth", block:"start"});
-      p.style.border = "3px solid #00b894";
-      setTimeout(()=>{ p.style.border = "3px solid #e17055"; }, 1200);
+      const p = document.querySelector(".packs");
+      if(p) p.scrollIntoView({behavior:"smooth", block:"start"});
     }
   </script>
 </body>
