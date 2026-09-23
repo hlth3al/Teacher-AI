@@ -107,10 +107,25 @@
   .c11{ background:#7efff5; }
 
   .text-input{ width:100%; padding:12px 14px; border:3px solid var(--stroke);
-    border-radius:16px; font-size:15px; font-weight:800; background:#fff; }
+    border-radius:16px; font-size:15px; font-weight:800; background:#fff; margin-top:12px; }
+
+  /* بخش پنهان و نهفته بسته‌ها داخل دکمه */
+  #pricingSection{
+    display:none;
+    background:#ffffff;
+    border:3px dashed #ff6b81;
+    border-radius:18px;
+    padding:16px;
+    margin-top:14px;
+    animation:fadeIn 0.3s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity:0; transform:translateY(-10px); }
+    to { opacity:1; transform:translateY(0); }
+  }
 
   .packs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:10px; margin-top:12px; }
+    gap:10px; margin-top:10px; }
   .pack{ background:#fff; border:2px solid var(--stroke); border-radius:14px;
     padding:10px; text-align:center; font-weight:900; font-size:13px;
     box-shadow:0 4px 0 var(--stroke); cursor:pointer;
@@ -118,12 +133,12 @@
   .pack:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--stroke),
     0 0 18px rgba(255,255,0,.9); filter:brightness(1.15); }
 
-  .packs-note{ margin-top:12px; background:rgba(255,255,255,.9);
+  .packs-note{ margin-top:12px; background:rgba(255,255,255,.95);
     border:2px solid var(--stroke); border-radius:16px; padding:12px 14px;
     line-height:1.9; font-weight:800; font-size:14px; }
 
   .mail{ display:inline-block; margin-top:10px; text-decoration:none;
-    background:#fff; border:2px solid var(--stroke); box-shadow:0 4px 0 var(--stroke);
+    background:#ffeaa7; border:2px solid var(--stroke); box-shadow:0 4px 0 var(--stroke);
     border-radius:14px; padding:10px 14px; font-weight:900; }
 
   .warn{ background:#ff7675; border:2px solid #d63031; border-radius:18px;
@@ -180,28 +195,37 @@
 
         <button class="btn c9" onclick="sendTextAnswer(this)">📝 ارسال پرسش متنی</button>
 
-        <button class="btn c6" onclick="openPricing()">⚡ وصل شدن + انتخاب بسته</button>
+        <!-- دکمه اتصال که بسته‌ها در دل آن نهفته است -->
+        <button class="btn c6" onclick="togglePricing(this)">⚡ وصل شدن + انتخاب بسته</button>
       </div>
 
-      <div class="packs">
-        <div class="pack" onclick="pickPack(this)">۲,۰۰۰,۰۰۰ تومان</div>
-        <div class="pack" onclick="pickPack(this)">۵,۰۰۰,۰۰۰ تومان</div>
-        <div class="pack" onclick="pickPack(this)">۱۰,۰۰۰,۰۰۰ تومان</div>
-        <div class="pack" onclick="pickPack(this)">۲۰,۰۰۰,۰۰۰ تومان</div>
-        <div class="pack" onclick="pickPack(this)">۵۰,۰۰۰,۰۰۰ تومان</div>
-        <div class="pack" onclick="pickPack(this)">۱۰۰,۰۰۰,۰۰۰ تومان</div>
-      </div>
+      <!-- تمام موضوع و ساختار بسته‌ها که به صورت نهفته زیرمجموعه دکمه بالا شده است -->
+      <div id="pricingSection">
+        <div style="font-weight:900; font-size:16px; margin-bottom:10px; text-align:center;">
+          📦 لیست بسته‌های آموزشی و اعتباری Teacher-AI
+        </div>
+        
+        <div class="packs">
+          <div class="pack" onclick="pickPack(this)">۲,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack" onclick="pickPack(this)">۵,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack" onclick="pickPack(this)">۱۰,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack" onclick="pickPack(this)">۲۰,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack" onclick="pickPack(this)">۵۰,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack" onclick="pickPack(this)">۱۰۰,۰۰۰,۰۰۰ تومان</div>
+        </div>
 
-      <div class="packs-note">
-        <b>روش‌های پرداخت هزینه بسته:</b><br>
-        ۱) <b>پرداخت مجازی (آنلاین):</b> پرداخت مستقیم و آنلاین به حساب شرکت و فعال‌سازی دسترسی پس از تأیید.<br>
-        ۲) <b>پرداخت خارج از محیط اینترنت (آفلاین):</b> در صورت پرداخت کارت‌به‌کارت/فیش بانکی، لطفاً <b>تصویر رسید پرداخت</b> را ارسال کنید تا دسترسی شما متصل شود.
+        <div class="packs-note">
+          <b>روش‌های پرداخت هزینه بسته:</b><br>
+          ۱) <b>پرداخت مجازی (آنلاین):</b> پرداخت مستقیم و آنلاین به حساب شرکت و فعال‌سازی دسترسی پس از تأیید.<br>
+          ۲) <b>پرداخت خارج از محیط اینترنت (آفلاین):</b> در صورت پرداخت کارت‌به‌کارت/فیش بانکی، لطفاً <b>تصویر رسید پرداخت</b> را ارسال کنید تا دسترسی شما متصل شود.
 
-        <div style="text-align:center;">
-          <a class="mail" href="mailto:AI.Algorithms.Ballistics@gmail.com">
-            ✉️ ارسال تصویر رسید به ایمیل شرکت (باز شدن Gmail)
-          </a>
-          <div class="small">ایمیل رسمی دریافت رسید:<br><code>AI.Algorithms.Ballistics@gmail.com</code></div>
+          <div style="text-align:center;">
+            <!-- گیرنده مستقیم ایمیل شماست و فرستنده دست نخورده و باز می‌ماند -->
+            <a class="mail" href="mailto:AI.Algorithms.Ballistics@gmail.com?subject=ارسال%20تصویر%20رسید%20پرداخت%20بسته%20Teacher-AI">
+              ✉️ ارسال تصویر رسید به ایمیل شرکت (باز شدن Gmail)
+            </a>
+            <div class="small" style="margin-top:6px;">ایمیل رسمی دریافت رسید:<br><code>AI.Algorithms.Ballistics@gmail.com</code></div>
+          </div>
         </div>
       </div>
 
@@ -334,12 +358,19 @@
     function pickPack(el){
       playSoftBeep();
       el.style.outline = "3px solid #00b894";
-      setMsg("✅ بسته " + el.textContent + " انتخاب شد. طبق روش‌های پرداخت، رسید را به ایمیل شرکت بفرستید.");
+      setMsg("✅ بسته " + el.textContent + " انتخاب شد. تصویر رسید را به ایمیل شرکت ارسال فرمایید.");
     }
-    function openPricing(){
-      playSoftBeep();
-      const p = document.querySelector(".packs");
-      if(p) p.scrollIntoView({behavior:"smooth", block:"start"});
+
+    /* پنهان/آشکار کردن نهفته بسته‌ها با کلیک روی دکمه */
+    function togglePricing(btn){
+      glow(btn); playSoftBeep();
+      const sec = document.getElementById("pricingSection");
+      if(sec.style.display === "none" || sec.style.display === ""){
+        sec.style.display = "block";
+        sec.scrollIntoView({behavior:"smooth", block:"start"});
+      } else {
+        sec.style.display = "none";
+      }
     }
   </script>
 </body>
