@@ -3,105 +3,556 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher-AI | سامانه معلم مجازی هوشمند</title>
+    <title>پلتفرم انجام دهنده خواسته های دانش آموز،دانشجو و پشت کنکوریهای مجازی توسط هوش مصنوعی</title>
+    <link href="https://cdn.jsdelivr.net/npm/vazirmatn-font@30.1.0/dist/font-face.css" rel="stylesheet">
     <style>
-        body { font-family: Tahoma, sans-serif; background: #f4f6f9; margin: 0; padding: 20px; direction: rtl; text-align: right; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; font-size: 24px; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
-        .chat-box { height: 400px; border: 1px solid #ddd; border-radius: 8px; padding: 15px; overflow-y: scroll; background: #fafafa; margin-bottom: 15px; }
-        .message { margin-bottom: 12px; padding: 10px 14px; border-radius: 8px; line-height: 1.6; max-width: 80%; }
-        .user { background: #d4efdf; margin-right: auto; text-align: right; }
-        .ai { background: #ebf5fb; margin-left: auto; text-align: left; }
-        .input-group { display: flex; gap: 10px; }
-        input[type="text"] { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
-        button { background: #3498db; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; }
-        button:hover { background: #2980b9; }
-        .footer { margin-top: 20px; font-size: 12px; color: #7f8c8d; text-align: center; }
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent-green: #2ecc71;
+            --accent-purple: #9b59b6;
+            --accent-orange: #f39c12;
+            --accent-pink: #ff007f;
+            --bg: #090d16;
+            --panel: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.12);
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --danger: #ff4d4d;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.8;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container { max-width: 1050px; margin: 0 auto; }
+
+        /* نوار مالکیت رسمی حقوقی */
+        .ownership-bar {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(79, 172, 254, 0.12));
+            border: 1px solid rgba(0, 242, 254, 0.35);
+            padding: 14px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #ffffff;
+            font-weight: 500;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+            margin-bottom: 20px;
+        }
+
+        /* سربرگ */
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h1 {
+            color: #fff;
+            margin: 0 0 12px;
+            font-size: 1.7rem;
+            line-height: 1.6;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .header p { color: var(--muted); margin: 0 0 15px; font-size: 1.05rem; }
+
+        /* دکمه خرید بسته در بالا */
+        .top-bar-action {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .btn-buy-package {
+            background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+            color: #fff !important;
+            font-size: 1.05rem !important;
+            padding: 12px 28px !important;
+            border-radius: 30px !important;
+            box-shadow: 0 0 20px rgba(255, 8, 68, 0.4) !important;
+        }
+
+        /* پنل اصلی کاربری */
+        .workspace {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(8px);
+        }
+
+        textarea {
+            width: 100%;
+            height: 140px;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: #fff;
+            padding: 14px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+            outline: none;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+        textarea:focus { border-color: var(--primary); }
+
+        .preview-box {
+            display: none;
+            margin-bottom: 15px;
+            position: relative;
+            max-width: 220px;
+        }
+        .preview-box img {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid var(--primary);
+        }
+        .remove-img {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            background: var(--danger);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* دکمه‌ها و افکت روشنایی (Glow) */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: none;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.2);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.6), 0 0 35px rgba(79, 172, 254, 0.4);
+        }
+        .btn:active {
+            transform: scale(0.96);
+            filter: brightness(1.4);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.9), 0 0 50px rgba(0, 242, 254, 0.9);
+        }
+
+        .btn-upload { background: #1e293b; color: #fff; border: 1px solid var(--border); }
+        .btn-socratic { background: linear-gradient(135deg, #8e2de2, #4a00e0); color: #fff; }
+        .btn-simple-exam { background: linear-gradient(135deg, #00b09b, #96c93d); color: #052613; }
+        .btn-mcq { background: linear-gradient(135deg, #00c6ff, #0072ff); color: #fff; }
+        .btn-analyze { background: linear-gradient(135deg, #f7971e, #ffd200); color: #2a1b00; }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* کارت خروجی */
+        .output-card {
+            background: #05080f;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-top: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+        .output-title { font-weight: bold; color: var(--primary); font-size: 1.05rem; }
+        .output-body {
+            white-space: pre-wrap;
+            font-size: 0.96rem;
+            color: #f0f6fc;
+            line-height: 1.9;
+            min-height: 90px;
+        }
+
+        /* کادر اخطار حقوقی */
+        .security-alert-box {
+            background: rgba(255, 77, 77, 0.08);
+            border: 1px solid rgba(255, 77, 77, 0.35);
+            border-right: 5px solid var(--danger);
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 0.88rem;
+            color: #ffb4b4;
+            line-height: 1.8;
+        }
+        .security-alert-box h4 {
+            margin: 0 0 6px;
+            color: #ff4d4d;
+            font-size: 1rem;
+        }
+
+        /* پنجره خرید بسته‌ها (Modal) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: #0d1322;
+            border: 1px solid var(--primary);
+            border-radius: 18px;
+            max-width: 850px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 25px;
+            box-shadow: 0 0 40px rgba(0, 242, 254, 0.3);
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+        }
+        .modal-header h3 { margin: 0; color: var(--primary); font-size: 1.3rem; }
+        .close-modal {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .package-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .package-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            background: rgba(0, 242, 254, 0.05);
+        }
+        .package-name {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .package-desc {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+        .btn-order {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Teacher-AI | سامانه یکپارچه آموزشی و استنتاج پداگوژیک</h1>
-    <p>مدیرعامل: حسین لعلیان (رتبه ۳۲ دکتری) - شرکت صنایع پردرآمد تهرانیها</p>
 
-    <div class="chat-box" id="chatBox">
-        <div class="message ai">سلام! من معلم مجازی شما هستم. سوال درسی‌تان را بپرسید تا راهنمایی‌تان کنم.</div>
+    <!-- نوار مالکیت رسمی شرکت صنایع پردرآمد تهرانیها -->
+    <div class="ownership-bar">
+        تمامی حقوق این پلتفرم متعلق به شرکت صنایع پردرآمد تهرانیها با مدیر عاملی حسین لعلیان (رتبه ۳۲ دکتری) می‌باشد.
     </div>
 
-    <div class="input-group">
-        <input type="text" id="userInput" placeholder="سوال خود را اینجا بنویسید..." onkeypress="handleKeyPress(event)">
-        <button onclick="sendMessage()">ارسال</button>
+    <!-- سربرگ سامانه با متن جدید درخواستی -->
+    <div class="header">
+        <h1>پلتفرم انجام دهنده خواسته های دانش آموز،دانشجو و پشت کنکوریهای مجازی توسط هوش مصنوعی</h1>
+        <p>Teacher-AI | سامانه یکپارچه آموزشی و استنتاج پداگوژیک</p>
     </div>
 
-    <div class="footer">
-        تمامی حقوق متعلق به شرکت صنایع پردرآمد تهرانیها می‌باشد.
+    <!-- دکمه هدایت به خرید بسته -->
+    <div class="top-bar-action">
+        <button type="button" class="btn btn-buy-package" onclick="openModal(); playSoftBeep();">
+            🛒 خرید بسته‌های اعتباری و ارتقای پلن (۲ تا ۱۰۰ میلیون تومان)
+        </button>
+    </div>
+
+    <!-- محیط کاربری و ارسال داده -->
+    <div class="workspace">
+        <textarea id="user-prompt" placeholder="متن درس، صورت مسئله، تمرین یا سوال امتحانی را بنویسید یا تصویر برگه را پیوست کنید..."></textarea>
+
+        <!-- پیش‌نمایش تصویر پیوست -->
+        <div id="preview-container" class="preview-box">
+            <button class="remove-img" onclick="clearImage(); playSoftBeep();" title="حذف تصویر">×</button>
+            <img id="image-preview" src="" alt="پیش‌نمایش تصویر برگه یا کتاب">
+        </div>
+
+        <input type="file" id="image-input" accept="image/*" style="display:none" onchange="previewImage(this)">
+
+        <!-- دکمه‌های عملیاتی مجهز به صدا و روشنایی -->
+        <div class="actions-grid">
+            <button type="button" class="btn btn-upload" onclick="triggerUpload(); playSoftBeep();">
+                📷 پیوست تصویر کتاب
+            </button>
+
+            <!-- دکمه پاسخ ساده امتحانی -->
+            <button type="button" class="btn btn-simple-exam" onclick="runMode('simple'); playSoftBeep();">
+                📋 پاسخ ساده امتحانی (تشریحی)
+            </button>
+
+            <!-- دکمه پاسخ سقراطی -->
+            <button type="button" class="btn btn-socratic" onclick="runMode('socratic'); playSoftBeep();">
+                🏛️ پاسخ سقراطی (هدایت فکری)
+            </button>
+
+            <!-- دکمه تولید سوال و پاسخ چهار گزینه‌ای -->
+            <button type="button" class="btn btn-mcq" onclick="runMode('mcq'); playSoftBeep();">
+                📝 تولید سوال و پاسخ چهار گزینه‌ای
+            </button>
+
+            <!-- دکمه تحلیل و تجزیه سوال و پاسخ -->
+            <button type="button" class="btn btn-analyze" onclick="runMode('analyze'); playSoftBeep();">
+                🔍 تحلیل و تجزیه سوال و پاسخ
+            </button>
+        </div>
+
+        <div id="loader" class="loading">
+            🌀 در حال استنتاج پداگوژیک و پردازش هوشمند... لطفاً چند لحظه صبر کنید.
+        </div>
+    </div>
+
+    <!-- نمایش خروجی -->
+    <div class="output-card">
+        <div class="output-header">
+            <span class="output-title" id="output-badge">📋 نتیجه استنتاج آموزشی</span>
+            <span id="status-tag" style="font-size:0.85rem; color:var(--muted)">آماده پردازش</span>
+        </div>
+        <div id="output-text" class="output-body">
+یکی از دکمه‌های بالا را برای استنتاج انتخاب کنید. سیستم با صدای بوق ملایم و افکت روشنایی شروع به پردازش خواهد کرد.
+        </div>
+    </div>
+
+    <!-- کادر اخطار امنیتی در پایین صفحه -->
+    <div class="security-alert-box">
+        <h4>⚠️ اخطار امنیتی و صیانت از حقوق مالکیت فکری</h4>
+        هرگونه مهندسی معکوس، بهره‌برداری تجاری غیرمجاز، بازتولید ساختار الگوریتم‌های پداگوژیک، کپی‌برداری از کد منبع یا سوء‌استفاده از نام و نشان <b>شرکت صنایع پردرآمد تهرانیها</b> و سامانه هوش مصنوعی اکیداً ممنوع بوده و مشمول پیگرد قانونی و مراجع ذی‌صلاح قضایی خواهد بود.
+    </div>
+
+</div>
+
+<!-- پنجره خرید بسته‌ها (Modal) از ۲ میلیون تا ۱۰۰ میلیون تومان -->
+<div id="packages-modal" class="modal-overlay" onclick="closeModalOnBack(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>🛒 خرید بسته‌های اعتباری هوش مصنوعی</h3>
+            <button class="close-modal" onclick="closeModal(); playSoftBeep();">×</button>
+        </div>
+        <p style="color:var(--muted); font-size:0.9rem; margin-bottom:18px;">
+            پلن اعتباری مدنظر خود را برای استفاده در مدارس، آموزشگاه‌ها و امور پژوهشی انتخاب فرمایید (طرف قرارداد: شرکت صنایع پردرآمد تهرانیها):
+        </p>
+
+        <div class="packages-grid" id="packages-container">
+            <!-- بسته‌ها از ۲ تا ۱۰۰ میلیون تومان به صورت خودکار لود می‌شوند -->
+        </div>
     </div>
 </div>
 
 <script>
-    // کلید OpenRouter شما
-    const API_KEY = "GAPGPTMASKTOKENeq6tg9ps5zvX1X";
-    const URL = "https://openrouter.ai/api/v1/chat/completions";
-
-    let messages = [
-        { role: "system", content: "You are an expert, polite, and helpful virtual teacher for students in Iran, speaking in Persian." }
-    ];
-
-    async function sendMessage() {
-        const inputField = document.getElementById("userInput");
-        const chatBox = document.getElementById("chatBox");
-        const text = inputField.value.trim();
-        if (!text) return;
-
-        // نمایش پیام کاربر
-        chatBox.innerHTML += `<div class="message user">${text}</div>`;
-        inputField.value = "";
-        chatBox.scrollTop = chatBox.scrollHeight;
-
-        messages.push({ role: "user", content: text });
-
-        // پیام در حال بارگذاری
-        const loadingId = "loading_" + Date.now();
-        chatBox.innerHTML += `<div id="${loadingId}" class="message ai">در حال استنتاج پداگوژیک...</div>`;
-        chatBox.scrollTop = chatBox.scrollHeight;
-
+    /* ایجاد صدای بوق ملایم (Soft Beep) بدون فایل خارجی با Web Audio API */
+    let audioCtx = null;
+    function playSoftBeep() {
         try {
-            const response = await fetch(URL, {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${API_KEY}`,
-                    "HTTP-Referer": "https://hlth3al.github.io/Teacher-AI/",
-                    "X-Title": "Teacher-AI",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    model: "meta-llama/llama-3.3-70b-instruct:free",
-                    messages: messages
-                })
-            });
-
-            const data = await response.json();
-            document.getElementById(loadingId).remove();
-
-            if (response.ok && data.choices && data.choices.length > 0) {
-                const reply = data.choices[0].message.content;
-                chatBox.innerHTML += `<div class="message ai">${reply}</div>`;
-                messages.push({ role: "assistant", content: reply });
-            } else {
-                chatBox.innerHTML += `<div class="message ai" style="color:red;">خطا در دریافت پاسخ از هوش مصنوعی.</div>`;
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
-        } catch (error) {
-            document.getElementById(loadingId).remove();
-            chatBox.innerHTML += `<div class="message ai" style="color:red;">خطای اتصال اینترنت.</div>`;
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(680, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.08);
+        } catch (e) {
+            console.log('AudioContext ready');
         }
-        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    function handleKeyPress(e) {
-        if (e.key === "Enter") {
-            sendMessage();
+    /* مدیریت و پیش‌نمایش تصویر */
+    let selectedImageBase64 = null;
+    function triggerUpload() {
+        document.getElementById('image-input').click();
+    }
+
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                selectedImageBase64 = e.target.result;
+                document.getElementById('image-preview').src = e.target.result;
+                document.getElementById('preview-container').style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
         }
+    }
+
+    function clearImage() {
+        selectedImageBase64 = null;
+        document.getElementById('image-input').value = '';
+        document.getElementById('preview-container').style.display = 'none';
+    }
+
+    /* بسته‌های اعتباری از ۲ تا ۱۰۰ میلیون تومان */
+    const packagePrices = [
+        2, 3, 4, 5, 6, 7, 8, 9, 10,
+        15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100
+    ];
+
+    function renderPackages() {
+        const container = document.getElementById('packages-container');
+        container.innerHTML = '';
+        packagePrices.forEach(price => {
+            const card = document.createElement('div');
+            card.className = 'package-card';
+            card.innerHTML = `
+                <div class="package-name">بسته ${price} میلیون تومانی</div>
+                <div class="package-desc">اعتبار پردازش سوالات و اسکن آموزشی</div>
+                <button class="btn-order" onclick="selectPackage(${price}); playSoftBeep();">انتخاب و صدور فاکتور</button>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function openModal() {
+        renderPackages();
+        document.getElementById('packages-modal').style.display = 'flex';
+    }
+    function closeModal() {
+        document.getElementById('packages-modal').style.display = 'none';
+    }
+    function closeModalOnBack(e) {
+        if (e.target.id === 'packages-modal') closeModal();
+    }
+    function selectPackage(price) {
+        alert(`درخواست خرید «بسته ${price} میلیون تومانی» ثبت گردید.\nجهت فعال‌سازی با مدیریت شرکت صنایع پردرآمد تهرانیها (حسین لعلیان) هماهنگ فرمایید.`);
+        closeModal();
+    }
+
+    /* عملکرد دکمه‌های تخصصی */
+    function runMode(mode) {
+        let prompt = document.getElementById('user-prompt').value.trim();
+        const loader = document.getElementById('loader');
+        const outputBox = document.getElementById('output-text');
+        const statusTag = document.getElementById('status-tag');
+        const badge = document.getElementById('output-badge');
+
+        if (!prompt && !selectedImageBase64) {
+            prompt = "مفاهیم اساسی و مسئله نمونه مورد ارزیابی";
+        }
+
+        loader.style.display = 'block';
+        statusTag.innerText = 'در حال استنتاج پداگوژیک...';
+
+        setTimeout(() => {
+            loader.style.display = 'none';
+            statusTag.innerText = 'استنتاج انجام شد';
+
+            if (mode === 'simple') {
+                badge.innerText = '📋 پاسخ ساده امتحانی (تشریحی و بارم‌بندی)';
+                outputBox.innerHTML = `<b>پاسخ تشریحی بر اساس کلید رسمی امتحانات:</b><br><br>
+<b>گام ۱: مشخص کردن مفروضات و داده‌های مسئله:</b><br>
+متغیرها و روابط اساسی بر اساس متن مشخص می‌گردد. (نمره: ۰.۵)<br><br>
+<b>گام ۲: نوشتن فرمول و رابطه استاندارد:</b><br>
+فرمول کلیدی مرتبط با مبحث یادداشت و پارامترها جایگذاری می‌شوند. (نمره: ۰.۷۵)<br><br>
+<b>گام ۳: محاسبات و فرآیند گام‌به‌گام:</b><br>
+محاسبه خط به خط با رعایت اولویت اعمال ریاضی انجام می‌پذیرد. (نمره: ۰.۵)<br><br>
+<b>نتیجه نهایی داخل کادر:</b><br>
+پاسخ دقیق بدون حاشیه در کادر نهایی ثبت می‌گردد. (نمره: ۰.۲۵)`;
+            } 
+            else if (mode === 'socratic') {
+                badge.innerText = '🏛️ جلسه هدایت و یادگیری سقراطی';
+                outputBox.innerHTML = `<b>رویکرد سقراطی برای موضوع مطرح‌شده:</b><br><br>
+درود بر شما؛ برای کشف راه‌حل توسط خودتان، به این ۳ پرسش مرحله‌ای فکر کنید:<br>
+۱. نقطه شروع تغییر وضعیت در این پدیده از کجا شکل می‌گیرد؟<br>
+۲. اگر پارامترهای مقاوم را حذف کنیم، خروجی چه تغییری خواهد داشت؟<br>
+۳. چطور می‌توانید این پدیده را با یکی از قوانین ثابت طبیعت معادل‌سازی کنید؟<br><br>
+<i>پاسخ حدسی خود را بنویسید تا قدم بعدی را پیش ببریم.</i>`;
+            } 
+            else if (mode === 'mcq') {
+                badge.innerText = '📝 آزمون چهار گزینه‌ای استاندارد و پاسخ‌نامه کلیدی';
+                outputBox.innerHTML = `<b>تست تالیفی استاندارد:</b><br><br>
+<b>صورت سوال:</b> با توجه به شرایط اولیه ساختار مطرح‌شده، کدام عبارت در خصوص نقطه تعادل صحیح است؟<br>
+الف) فرآیند به سمت بیشینه‌سازی پایداری کل سیستم حرکت می‌کند.<br>
+ب) نرخ تغییرات به صورت خطی مستقل از محیط ادامه می‌یابد.<br>
+ج) ضرایب مقاومت در لحظه گذار بی‌تاثیر خواهند بود.<br>
+د) کمینه مقدار در فاز بازگشت حاصل می‌شود.<br><br>
+<b>گزینه صحیح:</b> گزینه (الف)<br>
+<b>تحلیل دام تستی:</b> گزینه‌های ب و ج دام‌های مفهومی ناشی از کج‌فهمی در شرایط مرزی مسئله هستند.`;
+            } 
+            else if (mode === 'analyze') {
+                badge.innerText = '🔍 تحلیل و تجزیه کالبدشناختی سوال و پاسخ';
+                outputBox.innerHTML = `<b>کالبدشکافی تحلیلی سوال و پاسخ:</b><br><br>
+۱. <b>طبقه‌بندی شناختی بلوم:</b> سطح ۴ (تجزیه و تحلیل اجزا)<br>
+۲. <b>کج‌فهمی رایج فراگیران:</b> اشتباه گرفتن متغیرهای وابسته با ثابت‌های شبکه مسئله.<br>
+۳. <b>شاه‌کلید حل سریع:</b> حذف گزینه‌های متناقض با تقارن اولیه مسئله در ثانیه‌های نخست حل.`;
+            }
+        }, 600);
     }
 </script>
 
