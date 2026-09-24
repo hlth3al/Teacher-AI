@@ -214,22 +214,25 @@
         <div style="margin-top:14px; font-weight:900; font-size:15px;">دو روش خرید بسته‌ها:</div>
 
         <div class="method-box">
-          <div class="method-title">۱. آفلاین (واریز کارت به کارت و ارسال رسید)</div>
-          مبلغ بسته مورد نظر را به شماره کارت رسمی شرکت واریز کرده و سپس تصویر رسید یا فیش پرداختی را به ایمیل شرکت ارسال فرمایید:
+          <div class="method-title">۱. آفلاین (واریز به حساب شرکت و ارسال رسید)</div>
+          مبلغ بسته مورد نظر را به شماره حساب رسمی شرکت واریز کرده و سپس تصویر رسید یا فیش پرداختی را به ایمیل شرکت ارسال فرمایید!
           <div style="text-align:center; margin-top:10px;">
             <button class="btn" style="background:#ff9ff3; margin:0 auto; padding:10px 18px; font-size:13px;" onclick="copyEmail()">
               📋 کپی آدرس ایمیل شرکت جهت درج در گیرنده
             </button>
-            <div style="margin-top:6px; font-size:12px;">ایمیل رسمی شرکت:<br><code>AI.Algorithms.Ballistics@gmail.com</code></div>
+            <div style="margin-top:8px; font-size:13px; font-weight:900;">
+              ایمیل رسمی شرکت:<br>
+              <code>AI.Algorithms.Ballistics@gmail.com</code>
+            </div>
           </div>
         </div>
 
         <div class="method-box">
           <div class="method-title">۲. آنلاین (درگاه پرداخت الکترونیک آنی)</div>
-          جهت فعال‌سازی و شارژ آنی و خودکار، می‌توانید از درگاه اینترنتی شاپرک استفاده نمایید:
+          جهت فعال‌سازی و شارژ آنی و خودکار، می‌توانید از درگاه اینترنتی شاپرک استفاده نمایید!
           <div style="text-align:center; margin-top:10px;">
-            <button class="btn" style="background:#1dd1a1; margin:0 auto; padding:10px 20px; font-size:14px;" onclick="alert('درگاه پرداخت آنلاین شتابی به زودی متصل خواهد شد.')">
-              💳 اتصال به درگاه پرداخت آنلاین شاپرک
+            <button class="btn" style="background:#1dd1a1; margin:0 auto; padding:10px 20px; font-size:14px;" onclick="alert('اتصال به درگاه اینترنتی شاپرک نیازمند لینک درگاه فعال است.')">
+              💳 ورود به درگاه اینترنتی شاپرک
             </button>
           </div>
         </div>
@@ -295,7 +298,6 @@
       el.textContent = m;
     }
 
-    // عملکرد کپی ایمیل و نمایش متن دقیق خواسته شده در کادر بالا
     function copyEmail(){
       playBeep();
       const emailAddr = "AI.Algorithms.Ballistics@gmail.com";
@@ -353,7 +355,6 @@
       setMsg("فایل ضمیمه حذف گردید.");
     }
 
-    // ارسال پرسش و دریافت پاسخ تشریحی و کامل
     async function executeQuery(userText, prefixInstruction = ""){
       const key = AI_API_KEY.trim();
       if(!key){
