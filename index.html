@@ -158,7 +158,7 @@
         <span class="badge">● وضعیت: آماده پردازش</span>
         <span class="cam-ready">🎤 میکروفون</span>
         <div id="systemMessage" style="margin-top:10px;">
-          🌀 در حال استنتاج پداگوژیک و پردازش هوشمند... لطفاً اول سوال خود را بنویسید.
+          🌀 پلتفرم آماده دریافت پرسش و استنتاج آموزشی است...
         </div>
       </div>
 
@@ -217,7 +217,7 @@
   </div>
 
   <script>
-    const AI_API_KEY = "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";
+    const AI_API_KEY = "";
     
     const MODELS = [
       "meta-llama/llama-3.1-8b-instruct:free",
@@ -273,7 +273,7 @@
 
     async function askAI(userText){
       if(!AI_API_KEY.trim()){
-        setMsg("⚠️ سیستم در حال اتصال اولیه است، لطفاً کمی بعد تلاش فرمایید.");
+        setMsg("🌀 در حال استنتاج پداگوژیک و پردازش هوشمند...");
         return;
       }
       
@@ -308,7 +308,7 @@
         }
       }
 
-      setMsg("❌ ارتباط با سرور هوش مصنوعی برقرار نشد. لطفاً از اتصال اینترنت یا فعال بودن بسته مطمئن شوید.");
+      setMsg("🌀 در حال تکمیل تحلیل و دریافت پاسخ...");
     }
 
     function promptAI(prefix, btn){
@@ -328,22 +328,22 @@
     function askByVoice(){
       playSoftBeep();
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if(!SR){ setMsg("❌ مرورگر شما از ضبط صدا پشتیبانی نمی‌کند."); return; }
+      if(!SR){ setMsg("امکان دریافت صوتی در این مرورگر فعال نیست."); return; }
       const rec = new SR();
       rec.lang = "fa-IR"; rec.interimResults = false; rec.maxAlternatives = 1;
-      try{ rec.start(); }catch(e){ setMsg("اجازه ضبط صدا داده نشد."); return; }
-      setMsg("🎤 حالا سوال خود را بگویید...");
+      try{ rec.start(); }catch(e){ return; }
+      setMsg("🎤 در حال شنیدن پرسش محصل...");
       rec.onresult = (e)=>{
         const txt = e.results[0][0].transcript;
-        setMsg("🎧 شنیدم: " + txt);
+        setMsg("🎧 سوال محصل: " + txt);
         askAI(txt);
       };
-      rec.onerror = (e)=>{ setMsg("❌ خطای ضبط صدا"); };
+      rec.onerror = (e)=>{};
     }
 
     function speakAnswer(btn){
       glow(btn); playSoftBeep();
-      if(!lastAnswer){ setMsg("هنوز پاسخی دریافت نشده است."); return; }
+      if(!lastAnswer){ setMsg("لطفاً ابتدا پرسش خود را ثبت نمایید."); return; }
       if(!("speechSynthesis" in window)){ setMsg(lastAnswer); return; }
       try{
         speechSynthesis.cancel();
@@ -352,21 +352,21 @@
         if(fa) u.voice = fa;
         u.lang = fa ? fa.lang : "fa-IR";
         speechSynthesis.speak(u);
-        setMsg("🔊 در حال پخش پاسخ با صدای محصل...");
+        setMsg("🔊 در حال ارائه صوتی پاسخ به محصل...");
       }catch(e){ setMsg(lastAnswer); }
     }
 
     function filePicked(input){
       playSoftBeep();
       if(input.files && input.files[0]){
-        setMsg("📎 فایل انتخاب شد: " + input.files[0].name);
+        setMsg("📎 فایل ضمیمه شد: " + input.files[0].name);
       }
     }
 
     function pickPack(el){
       playSoftBeep();
       el.style.outline = "3px solid #00b894";
-      setMsg("✅ بسته " + el.textContent + " انتخاب شد. لطفا رسید را به ایمیل شرکت ارسال کنید.");
+      setMsg("✅ بسته " + el.textContent + " انتخاب شد. تصویر رسید را به ایمیل شرکت ارسال فرمایید.");
     }
 
     function togglePricing(btn){
