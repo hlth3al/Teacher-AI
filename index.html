@@ -76,7 +76,7 @@
   }
 
   .status{ margin-top:14px; background:#f1f2f6; border:3px solid #2f3542;
-    border-radius:18px; padding:14px; line-height:1.9; font-weight:700; }
+    border-radius:18px; padding:14px; line-height:1.9; font-weight:700; white-space:pre-wrap; }
   .badge{ display:inline-block; background:#2ed573; color:#000 !important;
     padding:3px 12px; border:1px solid var(--stroke); border-radius:999px;
     font-weight:900; font-size:13px; animation:pulse 1.5s infinite; }
@@ -109,14 +109,9 @@
   .text-input{ width:100%; padding:12px 14px; border:3px solid var(--stroke);
     border-radius:16px; font-size:15px; font-weight:800; background:#fff; margin-top:12px; }
 
-  /* بخش پنهان و نهفته بسته‌ها */
   #pricingSection{
-    display:none;
-    background:#ffffff;
-    border:3px dashed #ff6b81;
-    border-radius:18px;
-    padding:16px;
-    margin-top:14px;
+    display:none; background:#ffffff; border:3px dashed #ff6b81;
+    border-radius:18px; padding:16px; margin-top:14px;
   }
 
   .packs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
@@ -178,16 +173,12 @@
         <button class="btn c8" onclick="speakAnswer(this)">🔊 پاسخ با صدای محصل</button>
 
         <button class="btn c11" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button>
-        <input type="file" id="filePick" accept="image/*,application/pdf" style="display:none"
-               onchange="filePicked(this)" />
+        <input type="file" id="filePick" accept="image/*,application/pdf" style="display:none" onchange="filePicked(this)" />
 
         <button class="btn c9" onclick="sendTextAnswer(this)">📝 ارسال پرسش متنی</button>
-
-        <!-- دکمه اتصال که بسته‌ها را باز و بسته می‌کند -->
         <button class="btn c6" onclick="togglePricing(this)">⚡ وصل شدن + انتخاب بسته</button>
       </div>
 
-      <!-- بخش نهفته بسته‌ها -->
       <div id="pricingSection">
         <div style="font-weight:900; font-size:16px; margin-bottom:10px; text-align:center;">
           📦 لیست بسته‌های آموزشی و اعتباری Teacher-AI
@@ -215,8 +206,7 @@
         </div>
       </div>
 
-      <input class="text-input" id="textQ" type="text"
-             placeholder="سوال یا خواسته خود را اینجا بنویسید..." />
+      <input class="text-input" id="textQ" type="text" placeholder="سوال یا خواسته خود را اینجا بنویسید..." />
     </div>
 
     <div class="card warn">
@@ -227,8 +217,16 @@
   </div>
 
   <script>
-    const AI_API_KEY = "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";
-    const AI_MODEL   = "google/gemma-2-9b-it:free";
+    // کلید اپن‌روتور خود را دقیقاً داخل گیومه زیر بگذارید:
+    const AI_API_KEY = "";
+    
+    // لیست مدل‌های پشتیبان (اگر اولی پاسخ نداد، خودکار دومین مدل تست می‌شود)
+    const MODELS = [
+      "meta-llama/llama-3.1-8b-instruct:free",
+      "google/gemma-2-9b-it:free",
+      "qwen/qwen-2.5-7b-instruct:free"
+    ];
+
     let lastAnswer = "";
 
     (function(){
@@ -276,29 +274,50 @@
     }
 
     async function askAI(userText){
-      setMsg("🌀 وصل به هوش مصنوعی...");
-      playSoftBeep();
-      try{
-        const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-          method:"POST",
-          headers:{
-            "Authorization":"Bearer "+AI_API_KEY,
-            "Content-Type":"application/json",
-            "HTTP-Referer":"https://github.com/hlth3al/Teacher-AI",
-            "X-Title":"Teacher-AI"
-          },
-          body: JSON.stringify({ model: AI_MODEL, messages:[{role:"user", content:userText}] })
-        });
-        const data = await res.json();
-        if(data && data.choices && data.choices[0]){
-          lastAnswer = data.choices[0].message.content;
-          setMsg("✅ پاسخ دریافت شد:\n" + lastAnswer);
-        } else {
-          setMsg("❌ خطا در پاسخ‌دهی هوش مصنوعی");
-        }
-      }catch(e){
-        setMsg("❌ خطای ارتباط با اینترنت.");
+      if(!AI_API_KEY.trim()){
+        setMsg("❌ کلید AI_API_KEY تنظیم نشده است. لطفاً کلید OpenRouter خود را در ابتدای اسکریپت جای‌گذاری کنید.");
+        return;
       }
+      
+      setMsg("🌀 در حال اتصال و استنتاج هوش مصنوعی...");
+      playSoftBeep();
+
+      for(let model of MODELS){
+        try{
+          const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method:"POST",
+            headers:{
+              "Authorization":"Bearer " + AI_API_KEY.trim(),
+              "Content-Type":"application/json",
+              "HTTP-Referer":"https://teacher-ai.local",
+              "X-Title":"Teacher-AI"
+            },
+            body: JSON.stringify({
+              model: model,
+              messages:[{role:"user", content:userText}]
+            })
+          });
+
+          const data = await res.json();
+
+          if(res.ok && data && data.choices && data.choices[0]){
+            lastAnswer = data.choices[0].message.content;
+            setMsg("✅ پاسخ دریافت شد:\n\n" + lastAnswer);
+            return; // پاسخ موفقیت‌آمیز دریافت شد، خروج از حلقه
+          } else if(data && data.error){
+            console.warn("Model error ("+model+"): ", data.error);
+            // اگر خطای عدم اعتبار کلید یا شارژ باشد، نمایش فوری
+            if(data.error.code === 401 || data.error.message?.includes("User key")){
+              setMsg("❌ کلید OpenRouter نامعتبر است یا شارژ ندارد.\nپیام خطا: " + data.error.message);
+              return;
+            }
+          }
+        }catch(e){
+          console.error("Fetch error for model "+model, e);
+        }
+      }
+
+      setMsg("❌ تمامی مدل‌های سرور در حال حاضر پاسخگو نیستند یا اتصال اینترنت/VPN شما قطع است.");
     }
 
     function promptAI(prefix, btn){
