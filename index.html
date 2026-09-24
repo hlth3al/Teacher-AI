@@ -133,10 +133,10 @@
 
   .method-box{
     background:#f1f2f6; border:2px solid var(--stroke); border-radius:16px;
-    padding:14px; margin-top:12px; line-height:1.8;
+    padding:16px; margin-top:14px; line-height:1.9;
   }
   .method-title{
-    font-weight:900; font-size:15px; margin-bottom:6px; color:#2f3542 !important;
+    font-weight:900; font-size:15px; margin-bottom:8px; color:#2f3542 !important;
   }
 
   .warn{ background:#ff7675; border:2px solid #d63031; border-radius:18px;
@@ -203,7 +203,7 @@
         </div>
         
         <div class="packs">
-          <div class="pack" onclick="pickPack(this)">۲,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack" onclick="pickPack(this)">۳,۰۰۰,۰۰۰ تومان</div>
           <div class="pack" onclick="pickPack(this)">۵,۰۰۰,۰۰۰ تومان</div>
           <div class="pack" onclick="pickPack(this)">۱۰,۰۰۰,۰۰۰ تومان</div>
           <div class="pack" onclick="pickPack(this)">۲۰,۰۰۰,۰۰۰ تومان</div>
@@ -211,29 +211,30 @@
           <div class="pack" onclick="pickPack(this)">۱۰۰,۰۰۰,۰۰۰ تومان</div>
         </div>
 
-        <div style="margin-top:14px; font-weight:900; font-size:15px;">دو روش خرید بسته‌ها:</div>
-
         <div class="method-box">
-          <div class="method-title">۱. آفلاین (واریز به حساب شرکت و ارسال رسید)</div>
-          مبلغ بسته مورد نظر را به شماره حساب رسمی شرکت واریز کرده و سپس تصویر رسید یا فیش پرداختی را به ایمیل شرکت ارسال فرمایید!
-          <div style="text-align:center; margin-top:10px;">
+          <div style="font-size:14px; font-weight:800; color:#d63031 !important; margin-bottom:8px;">
+            از پرداخت الکترونیکی معذوریم؛ چراکه امروزه در پرداخت‌های الکترونیکی سوءاستفاده و تقلب صورت می‌گیرد. از این‌رو، این شرکت شما خریداران محترم را به روش پرداخت امن زیر هدایت می‌نماید:
+          </div>
+
+          <div class="method-title" style="margin-top:12px;">
+            تنها روش خرید بسته‌ها:
+          </div>
+          <div style="font-weight:900; font-size:14px; margin-bottom:6px;">
+            ۱. آفلاین (واریز به حساب شرکت از طریق باجه‌های خودپرداز (ATM) (عابر بانک) و باجه‌های بانکی و ارسال رسید)
+          </div>
+          
+          <div>
+            مبلغ بسته مورد نظر را به شماره حساب رسمی شرکت واریز کرده و سپس تصویر رسید یا فیش پرداختی را به ایمیل شرکت ارسال فرمایید!
+          </div>
+
+          <div style="text-align:center; margin-top:14px;">
             <button class="btn" style="background:#ff9ff3; margin:0 auto; padding:10px 18px; font-size:13px;" onclick="copyEmail()">
               📋 کپی آدرس ایمیل شرکت جهت درج در گیرنده
             </button>
-            <div style="margin-top:8px; font-size:13px; font-weight:900;">
+            <div style="margin-top:10px; font-size:13px; font-weight:900;">
               ایمیل رسمی شرکت:<br>
               <code>AI.Algorithms.Ballistics@gmail.com</code>
             </div>
-          </div>
-        </div>
-
-        <div class="method-box">
-          <div class="method-title">۲. آنلاین (درگاه پرداخت الکترونیک آنی)</div>
-          جهت فعال‌سازی و شارژ آنی و خودکار، می‌توانید از درگاه اینترنتی شاپرک استفاده نمایید!
-          <div style="text-align:center; margin-top:10px;">
-            <button class="btn" style="background:#1dd1a1; margin:0 auto; padding:10px 20px; font-size:14px;" onclick="alert('اتصال به درگاه اینترنتی شاپرک نیازمند لینک درگاه فعال است.')">
-              💳 ورود به درگاه اینترنتی شاپرک
-            </button>
           </div>
         </div>
 
@@ -249,7 +250,6 @@
   </div>
 
   <script>
-    // کلید API شما اینجا قرار می‌گیرد
     const AI_API_KEY = "";
 
     const MODELS = [
@@ -482,7 +482,7 @@
 
     function pickPack(el){
       playBeep();
-      setMsg("✅ بسته " + el.textContent + " انتخاب شد. لطفاً روش پرداخت را در بخش زیر تعیین فرمایید.");
+      setMsg("✅ بسته " + el.textContent + " انتخاب شد. لطفاً مبلغ را واریز و رسید آن را به ایمیل شرکت ارسال فرمایید.");
     }
 
     function togglePricing(btn){
