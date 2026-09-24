@@ -10,7 +10,7 @@
 
   :root{
     --ink:#000;
-    --card: rgba(255,255,255,.92);
+    --card: rgba(255,255,255,.94);
     --stroke:#111;
     --shadow: 0 12px 28px rgba(0,0,0,.14);
     --radius: 22px;
@@ -47,13 +47,13 @@
     border:2px dashed #f59f00; border-radius:16px; padding:12px 14px; }
 
   .brain-stage{
-    position:relative; height:230px; margin-top:14px;
+    position:relative; height:210px; margin-top:14px;
     border-radius:20px; overflow:hidden;
     background:radial-gradient(circle at 50% 60%, #1b1f3b 0%, #07091c 75%);
     border:3px solid #5b8cff; display:flex; align-items:center; justify-content:center;
   }
   .brain{
-    font-size:110px; line-height:1; filter:drop-shadow(0 0 18px #6ea8ff);
+    font-size:105px; line-height:1; filter:drop-shadow(0 0 18px #6ea8ff);
     animation:brainPulse 2.4s ease-in-out infinite;
   }
   @keyframes brainPulse{
@@ -75,15 +75,19 @@
     text-shadow:0 0 10px #6ea8ff;
   }
 
-  .status{ margin-top:14px; background:#f1f2f6; border:3px solid #2f3542;
-    border-radius:18px; padding:14px; line-height:1.9; font-weight:700; white-space:pre-wrap; }
+  .status-box{ margin-top:14px; background:#f8f9fa; border:3px solid #2f3542;
+    border-radius:18px; padding:16px; line-height:1.9; font-weight:800; }
   .badge{ display:inline-block; background:#2ed573; color:#000 !important;
-    padding:3px 12px; border:1px solid var(--stroke); border-radius:999px;
-    font-weight:900; font-size:13px; animation:pulse 1.5s infinite; }
-  @keyframes pulse{ 0%{opacity:.75} 50%{opacity:1} 100%{opacity:.75} }
+    padding:3px 14px; border:2px solid var(--stroke); border-radius:999px;
+    font-weight:900; font-size:13px; }
   .cam-ready{ display:inline-block; background:#ffe66d; color:#000 !important;
-    padding:3px 12px; border:1px solid var(--stroke); border-radius:999px;
-    font-weight:900; font-size:12px; }
+    padding:3px 14px; border:2px solid var(--stroke); border-radius:999px;
+    font-weight:900; font-size:12px; margin-right:6px; }
+
+  #systemMessage{
+    margin-top:12px; font-size:15px; white-space:pre-wrap; min-height:48px;
+    background:#fff; border:2px solid #ced4da; border-radius:14px; padding:12px;
+  }
 
   .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
     gap:12px; margin-top:14px; }
@@ -103,11 +107,17 @@
   .c3{ background:#feca57; } .c4{ background:#1dd1a1; }
   .c5{ background:#c8d6e5; } .c6{ background:#ff6b81; font-size:16px; }
   .c7{ background:#a29bfe; } .c8{ background:#55efc4; }
-  .c9{ background:#00d2d3; font-size:16px; } .c10{ background:#fdcb6e; }
-  .c11{ background:#7efff5; }
+  .c9{ background:#00d2d3; font-size:17px; } .c11{ background:#7efff5; }
 
-  .text-input{ width:100%; padding:12px 14px; border:3px solid var(--stroke);
-    border-radius:16px; font-size:15px; font-weight:800; background:#fff; margin-top:12px; }
+  .text-area{ width:100%; min-height:85px; padding:12px 14px; border:3px solid var(--stroke);
+    border-radius:16px; font-size:15px; font-weight:800; background:#fff; margin-top:14px;
+    resize:vertical; line-height:1.7; }
+
+  #fileInfoBar{
+    display:none; margin-top:10px; background:#dff9fb; border:2px solid #22a6b3;
+    padding:10px 14px; border-radius:14px; font-weight:900; font-size:14px;
+    justify-content:space-between; align-items:center;
+  }
 
   #pricingSection{
     display:none; background:#ffffff; border:3px dashed #ff6b81;
@@ -118,10 +128,8 @@
     gap:10px; margin-top:10px; }
   .pack{ background:#fff; border:2px solid var(--stroke); border-radius:14px;
     padding:10px; text-align:center; font-weight:900; font-size:13px;
-    box-shadow:0 4px 0 var(--stroke); cursor:pointer;
-    transition:transform .1s, box-shadow .1s, filter .1s; }
-  .pack:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--stroke),
-    0 0 18px rgba(255,255,0,.9); filter:brightness(1.15); }
+    box-shadow:0 4px 0 var(--stroke); cursor:pointer; }
+  .pack:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--stroke), 0 0 18px rgba(255,255,0,.9); }
 
   .packs-note{ margin-top:12px; background:rgba(255,255,255,.95);
     border:2px solid var(--stroke); border-radius:16px; padding:12px 14px;
@@ -129,8 +137,7 @@
 
   .warn{ background:#ff7675; border:2px solid #d63031; border-radius:18px;
     padding:14px; font-weight:800; line-height:1.9; font-size:13px; }
-  .small{ font-size:12px; opacity:.9; font-weight:800; }
-  code{ background:rgba(0,0,0,.06); padding:2px 6px; border-radius:8px; }
+  code{ background:rgba(0,0,0,.08); padding:2px 6px; border-radius:8px; }
 </style>
 </head>
 
@@ -154,28 +161,37 @@
         <div class="brain-title">⚡ مغز هوش مصنوعی Teacher-AI — آنلاین و نورافشان ⚡</div>
       </div>
 
-      <div class="status">
-        <span class="badge">● وضعیت: آماده پردازش</span>
-        <span class="cam-ready">🎤 میکروفون</span>
-        <div id="systemMessage" style="margin-top:10px;">
-          🌀 پلتفرم آماده پاسخ‌دهی است؛ سوال خود را بنویسید یا عکسی از گالری انتخاب کرده و دکمه «پاسخ» را بزنید.
+      <div class="status-box">
+        <div>
+          <span class="badge" id="liveBadge">● وضعیت: آماده پرسش</span>
+          <span class="cam-ready">🎤 ورودی صوتی فعال</span>
         </div>
+        <div id="systemMessage">🌀 سوال خود را بنویسید یا فایلی از گالری انتخاب کرده و سپس دکمه «💡 پاسخ» را بزنید.</div>
       </div>
 
+      <!-- نوار نمایش فایل ضمیمه شده از گالری -->
+      <div id="fileInfoBar">
+        <span id="fileInfoText">📎 فایل ضمیمه شد</span>
+        <button onclick="clearSelectedFile()" style="background:#ff7979; border:2px solid #000; border-radius:10px; font-weight:900; padding:4px 10px; cursor:pointer;">حذف فایل ✖</button>
+      </div>
+
+      <!-- کادر توضیحات و سوال که مستقیماً به دکمه پاسخ وصل است -->
+      <textarea class="text-area" id="textQ" placeholder="توضیحات، صورت سوال یا خواسته خود را اینجا بنویسید..."></textarea>
+
       <div class="grid">
-        <button class="btn c1" onclick="promptAI('سوال زیر را به صورت چهار جوابی (چهار گزینه) بازسازی کن:', this)">✳️ چهار جوابی کردن</button>
-        <button class="btn c2" onclick="promptAI('پاسخ سوال من را در قالب چهار گزینه (چهار جوابی) بنویس:', this)">💬 پاسخ سوال چهار جوابی</button>
-        <button class="btn c3" onclick="promptAI('پاسخ سوالات چهار جوابی زیر را تجزیه و تحلیل کن:', this)">📊 تجزیه و تحلیل پاسخ سوالات چهار جوابی</button>
-        <button class="btn c4" onclick="promptAI('سوالات زیر را تجزیه و تحلیل کن:', this)">🔍 تجزیه و تحلیل سوالات</button>
-        <button class="btn c5" onclick="promptAI('تله‌های (دام‌های) سوالات تستی زیر را پیدا و توضیح بده:', this)">🪤 تله سوالات تستی</button>
+        <button class="btn c9" onclick="handleUnifiedAnswer(this)">💡 پاسخ</button>
+        <button class="btn c11" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button>
+        <input type="file" id="filePick" accept="image/*" style="display:none" onchange="filePicked(this)" />
+
+        <button class="btn c1" onclick="quickAction('سوال یا گزینه‌های زیر را به صورت چهار جوابی دقیق بازسازی کن:', this)">✳️ چهار جوابی کردن</button>
+        <button class="btn c2" onclick="quickAction('پاسخ این سوال را در قالب گزینه‌های چهار جوابی همراه تحلیل بنویس:', this)">💬 پاسخ سوال چهار جوابی</button>
+        <button class="btn c3" onclick="quickAction('پاسخ و گزینه‌های سوال زیر را به طور کامل تجزیه و تحلیل کن:', this)">📊 تجزیه و تحلیل پاسخ سوالات چهار جوابی</button>
+        <button class="btn c4" onclick="quickAction('سوال آموزشی زیر را از پایه تجزیه و تحلیل و تشریح کن:', this)">🔍 تجزیه و تحلیل سوالات</button>
+        <button class="btn c5" onclick="quickAction('دام‌ها و تله‌های تستی پنهان در این سوال را مشخص و تشریح کن:', this)">🪤 تله سوالات تستی</button>
 
         <button class="btn c7" onclick="askByVoice()">🎙️ سوال با صدای محصل</button>
         <button class="btn c8" onclick="speakAnswer(this)">🔊 پاسخ با صدای محصل</button>
 
-        <button class="btn c11" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button>
-        <input type="file" id="filePick" accept="image/*,application/pdf" style="display:none" onchange="filePicked(this)" />
-
-        <button class="btn c9" onclick="handleUnifiedAnswer(this)">💡 پاسخ</button>
         <button class="btn c6" onclick="togglePricing(this)">⚡ وصل شدن + انتخاب بسته</button>
       </div>
 
@@ -194,19 +210,17 @@
         </div>
 
         <div class="packs-note">
-          <b>روش ارسال رسید پرداخت:</b><br>
-          جهت اتصال حساب، تصویر فیش یا رسید را به ایمیل اختصاصی شرکت ارسال فرمایید (فرستنده خالی و گیرنده ایمیل شماست).
-
+          <b>روش فعال‌سازی و ارسال رسید:</b><br>
+          تصویر فیش یا رسید را به ایمیل شرکت ارسال فرمایید (فرستنده خالی و گیرنده ایمیل شرکت):
           <div style="text-align:center; margin-top:12px;">
             <button class="btn" style="background:#ff9ff3; margin:0 auto; padding:12px 20px; font-size:14px;" onclick="copyEmail()">
-              📋 کپی کردن آدرس ایمیل شرکت (برای درج در گیرنده)
+              📋 کپی آدرس ایمیل شرکت جهت درج در گیرنده
             </button>
-            <div class="small" style="margin-top:8px;">ایمیل اختصاصی گیرنده:<br><code>AI.Algorithms.Ballistics@gmail.com</code></div>
+            <div style="margin-top:8px; font-size:12px;">گیرنده اختصاصی:<br><code>AI.Algorithms.Ballistics@gmail.com</code></div>
           </div>
         </div>
       </div>
 
-      <input class="text-input" id="textQ" type="text" placeholder="سوال یا خواسته خود را اینجا بنویسید..." />
     </div>
 
     <div class="card warn">
@@ -217,20 +231,21 @@
   </div>
 
   <script>
-    const AI_API_KEY = "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";
-    
+    // کلید اختصاصی خود را بین دابل‌کوتیشن قرار دهید
+    const AI_API_KEY = "";
+
+    // لیست مدل‌ها به ترتیب سرعت و پایداری
     const MODELS = [
       "google/gemini-2.0-flash-exp:free",
-      "google/gemma-2-9b-it:free",
       "meta-llama/llama-3.1-8b-instruct:free",
-      "qwen/qwen-2.5-7b-instruct:free",
-      "mistralai/mistral-7b-instruct:free"
+      "qwen/qwen-2.5-7b-instruct:free"
     ];
 
     let lastAnswer = "";
-    let selectedBase64 = null;
+    let selectedImageBase64 = null;
     let selectedFileName = "";
 
+    // انیمیشن مغز
     (function(){
       const stage = document.getElementById("brainStage");
       for(let i=0;i<14;i++){
@@ -243,147 +258,175 @@
       }
     })();
 
-    function playSoftBeep(){
+    function playBeep(){
       try{
         const C = window.AudioContext || window.webkitAudioContext;
         if(!C) return;
         const ctx = new C();
         const osc = ctx.createOscillator(), gain = ctx.createGain();
         osc.type = "sine";
-        osc.frequency.setValueAtTime(587.33, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(783.99, ctx.currentTime + 0.11);
-        gain.gain.setValueAtTime(0.07, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.14);
+        osc.frequency.setValueAtTime(650, ctx.currentTime);
+        gain.gain.setValueAtTime(0.06, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
         osc.connect(gain); gain.connect(ctx.destination);
-        osc.start(); osc.stop(ctx.currentTime + 0.15);
-        setTimeout(()=>{ try{ctx.close();}catch(e){} }, 250);
+        osc.start(); osc.stop(ctx.currentTime + 0.13);
+        setTimeout(()=>{ try{ctx.close();}catch(e){} }, 200);
       }catch(e){}
     }
 
     function glow(b){
-      if(b){ b.classList.add("glow"); setTimeout(()=>b.classList.remove("glow"),280); }
+      if(b){ b.classList.add("glow"); setTimeout(()=>b.classList.remove("glow"),260); }
     }
 
     function setMsg(m){ document.getElementById("systemMessage").textContent = m; }
 
     function copyEmail(){
-      playSoftBeep();
+      playBeep();
       navigator.clipboard.writeText("AI.Algorithms.Ballistics@gmail.com").then(()=>{
-        setMsg("✅ آدرس ایمیل در حافظه کپی شد. در بخش گیرنده (به) ایمیل خود پیست کنید.");
+        setMsg("✅ آدرس ایمیل شرکت کپی شد. آن را در بخش گیرنده ایمیل خود قرار دهید.");
       }).catch(()=>{
         setMsg("ایمیل شرکت: AI.Algorithms.Ballistics@gmail.com");
       });
     }
 
-    async function askAI(userContent){
-      setMsg("🌀 در حال استنتاج پداگوژیک و پردازش هوشمند...");
-      playSoftBeep();
+    function filePicked(input){
+      playBeep();
+      if(input.files && input.files[0]){
+        const file = input.files[0];
+        selectedFileName = file.name;
+        const reader = new FileReader();
+        reader.onload = function(e){
+          selectedImageBase64 = e.target.result;
+          const bar = document.getElementById("fileInfoBar");
+          bar.style.display = "flex";
+          document.getElementById("fileInfoText").textContent = "📎 تصویر متصل شد: " + selectedFileName;
+          setMsg("✅ تصویر «" + selectedFileName + "» با موفقیت متصل شد.\nاکنون می‌توانید در کادر پایین توضیح بنویسید یا مستقیماً دکمه «💡 پاسخ» را بزنید.");
+        };
+        reader.readAsDataURL(file);
+      }
+    }
 
-      if(!AI_API_KEY.trim()){
+    function clearSelectedFile(){
+      selectedImageBase64 = null;
+      selectedFileName = "";
+      document.getElementById("filePick").value = "";
+      document.getElementById("fileInfoBar").style.display = "none";
+      setMsg("فایل ضمیمه حذف شد.");
+    }
+
+    // ارسال پرسش و دریافت پاسخ بدون گیر کردن
+    async function executeQuery(userText, prefixInstruction = ""){
+      const key = AI_API_KEY.trim();
+      if(!key){
+        setMsg("لطفاً کلید اختصاصی را در فایل تنظیم فرمایید.");
         return;
       }
 
-      let messagePayload = [];
-      if(typeof userContent === "string"){
-        messagePayload = [{role:"user", content: userContent}];
+      setMsg("🌀 در حال استنتاج پداگوژیک و پردازش پاسخ هوشمند، لطفاً شکیبا باشید...");
+
+      let messages = [];
+      let finalPrompt = prefixInstruction ? (prefixInstruction + "\n\n" + userText) : userText;
+
+      if(selectedImageBase64){
+        messages = [{
+          role: "user",
+          content: [
+            { type: "text", text: finalPrompt || "لطفاً این سوال موجود در تصویر را به صورت کامل حل و تشریح کن:" },
+            { type: "image_url", image_url: { url: selectedImageBase64 } }
+          ]
+        }];
       } else {
-        messagePayload = [{role:"user", content: userContent}];
+        messages = [{
+          role: "user",
+          content: finalPrompt
+        }];
       }
+
+      let success = false;
 
       for(let model of MODELS){
         try{
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 18000);
+          const timeoutId = setTimeout(() => controller.abort(), 16000);
 
           const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method:"POST",
+            method: "POST",
             signal: controller.signal,
-            headers:{
-              "Authorization":"Bearer " + AI_API_KEY.trim(),
-              "Content-Type":"application/json",
-              "HTTP-Referer":"https://teacher-ai.local",
-              "X-Title":"Teacher-AI"
+            headers: {
+              "Authorization": "Bearer " + key,
+              "Content-Type": "application/json",
+              "HTTP-Referer": "https://teacher-ai.local",
+              "X-Title": "Teacher-AI"
             },
             body: JSON.stringify({
               model: model,
-              messages: messagePayload
+              messages: messages
             })
           });
+
           clearTimeout(timeoutId);
 
           if(res.ok){
             const data = await res.json();
             if(data && data.choices && data.choices[0] && data.choices[0].message){
               lastAnswer = data.choices[0].message.content;
-              setMsg("✅ پاسخ:\n\n" + lastAnswer);
-              return;
+              setMsg("✅ پاسخ کامل تحلیلی:\n\n" + lastAnswer);
+              success = true;
+              break;
             }
           }
-        }catch(e){}
+        }catch(err){
+          // در صورت بروز تایم‌اوت یا خطا به مدل بعدی سوئیچ می‌کند
+        }
+      }
+
+      // اگر ارتباط برقرار نشد هرگز روی پیام در حال پردازش نمی‌ماند
+      if(!success){
+        setMsg("پاسخ در این لحظه دریافت نشد. لطفاً از اتصال فیلترشکن خود اطمینان حاصل کرده و مجدداً دکمه «💡 پاسخ» را لمس فرمایید.");
       }
     }
 
+    // اتصال مستقیم دکمه پاسخ به کادر توضیحات و گالری
     function handleUnifiedAnswer(btn){
-      glow(btn); playSoftBeep();
-      const q = document.getElementById("textQ").value.trim();
+      glow(btn); playBeep();
+      const text = document.getElementById("textQ").value.trim();
 
-      if(!q && !selectedBase64){
-        setMsg("لطفاً ابتدا سوال خود را در کادر بنویسید یا فایلی از گالری انتخاب فرمایید.");
+      if(!text && !selectedImageBase64){
+        setMsg("لطفاً سوال یا توضیحات را در کادر بنویسید یا تصویری از گالری ضمیمه فرمایید.");
         return;
       }
 
-      if(selectedBase64){
-        let contentArr = [];
-        let promptText = q ? q : "لطفاً این تصویر/سوال آموزشی را تحلیل کرده و پاسخ کامل و تشریحی آن را ارائه بده:";
-        contentArr.push({type: "text", text: promptText});
-        contentArr.push({
-          type: "image_url",
-          image_url: { url: selectedBase64 }
-        });
-        askAI(contentArr);
-      } else {
-        askAI(q);
-      }
+      executeQuery(text);
     }
 
-    function promptAI(prefix, btn){
-      glow(btn); playSoftBeep();
-      const q = document.getElementById("textQ").value.trim();
-      if(!q && !selectedBase64){
-        setMsg("لطفاً اول سوال خود را بنویسید یا فایلی انتخاب کنید.");
+    function quickAction(instruction, btn){
+      glow(btn); playBeep();
+      const text = document.getElementById("textQ").value.trim();
+      if(!text && !selectedImageBase64){
+        setMsg("لطفاً ابتدا صورت سوال را در کادر متنی بنویسید یا عکس آن را انتخاب فرمایید.");
         return;
       }
-      if(selectedBase64){
-        let contentArr = [
-          {type: "text", text: prefix + "\n\n" + (q || "")},
-          {type: "image_url", image_url: { url: selectedBase64 }}
-        ];
-        askAI(contentArr);
-      } else {
-        askAI(prefix + "\n\n" + q);
-      }
+      executeQuery(text, instruction);
     }
 
     function askByVoice(){
-      playSoftBeep();
+      playBeep();
       const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if(!SR){ setMsg("امکان دریافت صوتی در این مرورگر فعال نیست."); return; }
+      if(!SR){ setMsg("قابلیت تشخیص صوت در مرورگر شما پشتیبانی نمی‌شود."); return; }
       const rec = new SR();
-      rec.lang = "fa-IR"; rec.interimResults = false; rec.maxAlternatives = 1;
-      try{ rec.start(); }catch(e){ return; }
-      setMsg("🎤 در حال شنیدن پرسش محصل...");
+      rec.lang = "fa-IR";
       rec.onresult = (e)=>{
         const txt = e.results[0][0].transcript;
         document.getElementById("textQ").value = txt;
-        setMsg("🎧 سوال محصل: " + txt);
-        askAI(txt);
+        setMsg("🎤 پرسش دریافت شد: " + txt);
+        executeQuery(txt);
       };
-      rec.onerror = (e)=>{};
+      try{ rec.start(); setMsg("🎤 میکروفون فعال است؛ لطفاً سوال خود را بفرمایید..."); }catch(e){}
     }
 
     function speakAnswer(btn){
-      glow(btn); playSoftBeep();
-      if(!lastAnswer){ setMsg("لطفاً ابتدا پرسش خود را ثبت نمایید."); return; }
+      glow(btn); playBeep();
+      if(!lastAnswer){ setMsg("پاسخی برای قرائت صوتی وجود ندارد."); return; }
       if(!("speechSynthesis" in window)){ setMsg(lastAnswer); return; }
       try{
         speechSynthesis.cancel();
@@ -392,38 +435,21 @@
         if(fa) u.voice = fa;
         u.lang = fa ? fa.lang : "fa-IR";
         speechSynthesis.speak(u);
-        setMsg("🔊 در حال ارائه صوتی پاسخ به محصل...");
+        setMsg("🔊 در حال قرائت صوتی پاسخ...");
       }catch(e){ setMsg(lastAnswer); }
     }
 
-    function filePicked(input){
-      playSoftBeep();
-      if(input.files && input.files[0]){
-        const file = input.files[0];
-        selectedFileName = file.name;
-        const reader = new FileReader();
-        reader.onload = function(e){
-          selectedBase64 = e.target.result;
-          setMsg("📎 تصویر/فایل انتخاب شد: " + selectedFileName + "\nحالا می‌توانید دکمه «💡 پاسخ» را بزنید.");
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
     function pickPack(el){
-      playSoftBeep();
-      el.style.outline = "3px solid #00b894";
+      playBeep();
       setMsg("✅ بسته " + el.textContent + " انتخاب شد. تصویر رسید را به ایمیل شرکت ارسال فرمایید.");
     }
 
     function togglePricing(btn){
-      glow(btn); playSoftBeep();
+      glow(btn); playBeep();
       const sec = document.getElementById("pricingSection");
-      if(sec.style.display === "none" || sec.style.display === ""){
-        sec.style.display = "block";
+      sec.style.display = (sec.style.display === "none" || sec.style.display === "") ? "block" : "none";
+      if(sec.style.display === "block"){
         sec.scrollIntoView({behavior:"smooth", block:"start"});
-      } else {
-        sec.style.display = "none";
       }
     }
   </script>
