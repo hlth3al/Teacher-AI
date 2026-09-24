@@ -217,10 +217,8 @@
   </div>
 
   <script>
-    // کلید اپن‌روتور خود را دقیقاً داخل گیومه زیر بگذارید:
     const AI_API_KEY = "";
     
-    // لیست مدل‌های پشتیبان (اگر اولی پاسخ نداد، خودکار دومین مدل تست می‌شود)
     const MODELS = [
       "meta-llama/llama-3.1-8b-instruct:free",
       "google/gemma-2-9b-it:free",
@@ -275,11 +273,11 @@
 
     async function askAI(userText){
       if(!AI_API_KEY.trim()){
-        setMsg("❌ کلید AI_API_KEY تنظیم نشده است. لطفاً کلید OpenRouter خود را در ابتدای اسکریپت جای‌گذاری کنید.");
+        setMsg("⚠️ سیستم در حال اتصال اولیه است، لطفاً کمی بعد تلاش فرمایید.");
         return;
       }
       
-      setMsg("🌀 در حال اتصال و استنتاج هوش مصنوعی...");
+      setMsg("🌀 در حال استنتاج پداگوژیک و پردازش هوشمند...");
       playSoftBeep();
 
       for(let model of MODELS){
@@ -302,22 +300,15 @@
 
           if(res.ok && data && data.choices && data.choices[0]){
             lastAnswer = data.choices[0].message.content;
-            setMsg("✅ پاسخ دریافت شد:\n\n" + lastAnswer);
-            return; // پاسخ موفقیت‌آمیز دریافت شد، خروج از حلقه
-          } else if(data && data.error){
-            console.warn("Model error ("+model+"): ", data.error);
-            // اگر خطای عدم اعتبار کلید یا شارژ باشد، نمایش فوری
-            if(data.error.code === 401 || data.error.message?.includes("User key")){
-              setMsg("❌ کلید OpenRouter نامعتبر است یا شارژ ندارد.\nپیام خطا: " + data.error.message);
-              return;
-            }
+            setMsg("✅ پاسخ:\n\n" + lastAnswer);
+            return;
           }
         }catch(e){
-          console.error("Fetch error for model "+model, e);
+          console.error(e);
         }
       }
 
-      setMsg("❌ تمامی مدل‌های سرور در حال حاضر پاسخگو نیستند یا اتصال اینترنت/VPN شما قطع است.");
+      setMsg("❌ ارتباط با سرور هوش مصنوعی برقرار نشد. لطفاً از اتصال اینترنت یا فعال بودن بسته مطمئن شوید.");
     }
 
     function promptAI(prefix, btn){
