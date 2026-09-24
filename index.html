@@ -103,7 +103,7 @@
   .c3{ background:#feca57; } .c4{ background:#1dd1a1; }
   .c5{ background:#c8d6e5; } .c6{ background:#ff6b81; font-size:16px; }
   .c7{ background:#a29bfe; } .c8{ background:#55efc4; }
-  .c9{ background:#fab1a0; } .c10{ background:#fdcb6e; }
+  .c9{ background:#00d2d3; font-size:16px; } .c10{ background:#fdcb6e; }
   .c11{ background:#7efff5; }
 
   .text-input{ width:100%; padding:12px 14px; border:3px solid var(--stroke);
@@ -158,7 +158,7 @@
         <span class="badge">● وضعیت: آماده پردازش</span>
         <span class="cam-ready">🎤 میکروفون</span>
         <div id="systemMessage" style="margin-top:10px;">
-          🌀 پلتفرم آماده دریافت پرسش و استنتاج آموزشی است...
+          🌀 پلتفرم آماده پاسخ‌دهی است؛ سوال خود را بنویسید یا عکسی از گالری انتخاب کرده و دکمه «پاسخ» را بزنید.
         </div>
       </div>
 
@@ -175,7 +175,7 @@
         <button class="btn c11" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button>
         <input type="file" id="filePick" accept="image/*,application/pdf" style="display:none" onchange="filePicked(this)" />
 
-        <button class="btn c9" onclick="sendTextAnswer(this)">📝 ارسال پرسش متنی</button>
+        <button class="btn c9" onclick="handleUnifiedAnswer(this)">💡 پاسخ</button>
         <button class="btn c6" onclick="togglePricing(this)">⚡ وصل شدن + انتخاب بسته</button>
       </div>
 
@@ -217,15 +217,19 @@
   </div>
 
   <script>
-    const AI_API_KEY = "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";
+    const AI_API_KEY = "";
     
     const MODELS = [
-      "meta-llama/llama-3.1-8b-instruct:free",
+      "google/gemini-2.0-flash-exp:free",
       "google/gemma-2-9b-it:free",
-      "qwen/qwen-2.5-7b-instruct:free"
+      "meta-llama/llama-3.1-8b-instruct:free",
+      "qwen/qwen-2.5-7b-instruct:free",
+      "mistralai/mistral-7b-instruct:free"
     ];
 
     let lastAnswer = "";
+    let selectedBase64 = null;
+    let selectedFileName = "";
 
     (function(){
       const stage = document.getElementById("brainStage");
@@ -271,19 +275,29 @@
       });
     }
 
-    async function askAI(userText){
-      if(!AI_API_KEY.trim()){
-        setMsg("🌀 در حال استنتاج پداگوژیک و پردازش هوشمند...");
-        return;
-      }
-      
+    async function askAI(userContent){
       setMsg("🌀 در حال استنتاج پداگوژیک و پردازش هوشمند...");
       playSoftBeep();
 
+      if(!AI_API_KEY.trim()){
+        return;
+      }
+
+      let messagePayload = [];
+      if(typeof userContent === "string"){
+        messagePayload = [{role:"user", content: userContent}];
+      } else {
+        messagePayload = [{role:"user", content: userContent}];
+      }
+
       for(let model of MODELS){
         try{
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 18000);
+
           const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method:"POST",
+            signal: controller.signal,
             headers:{
               "Authorization":"Bearer " + AI_API_KEY.trim(),
               "Content-Type":"application/json",
@@ -292,37 +306,62 @@
             },
             body: JSON.stringify({
               model: model,
-              messages:[{role:"user", content:userText}]
+              messages: messagePayload
             })
           });
+          clearTimeout(timeoutId);
 
-          const data = await res.json();
-
-          if(res.ok && data && data.choices && data.choices[0]){
-            lastAnswer = data.choices[0].message.content;
-            setMsg("✅ پاسخ:\n\n" + lastAnswer);
-            return;
+          if(res.ok){
+            const data = await res.json();
+            if(data && data.choices && data.choices[0] && data.choices[0].message){
+              lastAnswer = data.choices[0].message.content;
+              setMsg("✅ پاسخ:\n\n" + lastAnswer);
+              return;
+            }
           }
-        }catch(e){
-          console.error(e);
-        }
+        }catch(e){}
+      }
+    }
+
+    function handleUnifiedAnswer(btn){
+      glow(btn); playSoftBeep();
+      const q = document.getElementById("textQ").value.trim();
+
+      if(!q && !selectedBase64){
+        setMsg("لطفاً ابتدا سوال خود را در کادر بنویسید یا فایلی از گالری انتخاب فرمایید.");
+        return;
       }
 
-      setMsg("🌀 در حال تکمیل تحلیل و دریافت پاسخ...");
+      if(selectedBase64){
+        let contentArr = [];
+        let promptText = q ? q : "لطفاً این تصویر/سوال آموزشی را تحلیل کرده و پاسخ کامل و تشریحی آن را ارائه بده:";
+        contentArr.push({type: "text", text: promptText});
+        contentArr.push({
+          type: "image_url",
+          image_url: { url: selectedBase64 }
+        });
+        askAI(contentArr);
+      } else {
+        askAI(q);
+      }
     }
 
     function promptAI(prefix, btn){
       glow(btn); playSoftBeep();
       const q = document.getElementById("textQ").value.trim();
-      if(!q){ setMsg("لطفاً اول سوال خود را بنویسید."); return; }
-      askAI(prefix + "\n\n" + q);
-    }
-
-    function sendTextAnswer(btn){
-      glow(btn); playSoftBeep();
-      const q = document.getElementById("textQ").value.trim();
-      if(!q){ setMsg("لطفاً اول سوال خود را بنویسید."); return; }
-      askAI(q);
+      if(!q && !selectedBase64){
+        setMsg("لطفاً اول سوال خود را بنویسید یا فایلی انتخاب کنید.");
+        return;
+      }
+      if(selectedBase64){
+        let contentArr = [
+          {type: "text", text: prefix + "\n\n" + (q || "")},
+          {type: "image_url", image_url: { url: selectedBase64 }}
+        ];
+        askAI(contentArr);
+      } else {
+        askAI(prefix + "\n\n" + q);
+      }
     }
 
     function askByVoice(){
@@ -335,6 +374,7 @@
       setMsg("🎤 در حال شنیدن پرسش محصل...");
       rec.onresult = (e)=>{
         const txt = e.results[0][0].transcript;
+        document.getElementById("textQ").value = txt;
         setMsg("🎧 سوال محصل: " + txt);
         askAI(txt);
       };
@@ -359,7 +399,14 @@
     function filePicked(input){
       playSoftBeep();
       if(input.files && input.files[0]){
-        setMsg("📎 فایل ضمیمه شد: " + input.files[0].name);
+        const file = input.files[0];
+        selectedFileName = file.name;
+        const reader = new FileReader();
+        reader.onload = function(e){
+          selectedBase64 = e.target.result;
+          setMsg("📎 تصویر/فایل انتخاب شد: " + selectedFileName + "\nحالا می‌توانید دکمه «💡 پاسخ» را بزنید.");
+        };
+        reader.readAsDataURL(file);
       }
     }
 
