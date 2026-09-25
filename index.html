@@ -25,6 +25,8 @@
       radial-gradient(circle at 30% 90%, rgba(255,255,255,.35) 0 220px, transparent 221px),
       linear-gradient(135deg,#a8edea 0%,#fed6e3 45%,#d4fc79 100%);
     position:relative;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   .bubble{ position:fixed; border-radius:50%; background:rgba(255,255,255,.45);
@@ -111,7 +113,7 @@
 
   .text-area{ width:100%; min-height:85px; padding:12px 14px; border:3px solid var(--stroke);
     border-radius:16px; font-size:15px; font-weight:800; background:#fff; margin-top:14px;
-    resize:vertical; line-height:1.7; }
+    resize:vertical; line-height:1.7; user-select:text; -webkit-user-select:text; }
 
   #fileInfoBar{
     display:none; margin-top:10px; background:#dff9fb; border:2px solid #22a6b3;
@@ -145,7 +147,7 @@
 </style>
 </head>
 
-<body>
+<body oncontextmenu="return false;">
   <div class="bubble b1"></div><div class="bubble b2"></div>
   <div class="bubble b3"></div><div class="bubble b4"></div>
 
@@ -250,6 +252,73 @@
   </div>
 
   <script>
+    // --- سیستم صوتی پویا (Hover Beep & Interaction) ---
+    let sharedAudioCtx = null;
+    function getAudioCtx(){
+      if(!sharedAudioCtx){
+        const C = window.AudioContext || window.webkitAudioContext;
+        if(C) sharedAudioCtx = new C();
+      }
+      if(sharedAudioCtx && sharedAudioCtx.state === 'suspended'){
+        sharedAudioCtx.resume();
+      }
+      return sharedAudioCtx;
+    }
+
+    let lastMoveSoundTime = 0;
+    function playSoftBeep(freq = 520, vol = 0.02, dur = 0.06){
+      try{
+        const ctx = getAudioCtx();
+        if(!ctx) return;
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(vol, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + dur + 0.01);
+      }catch(e){}
+    }
+
+    function playBeep(){
+      playSoftBeep(680, 0.05, 0.12);
+    }
+
+    // پخش صدای نرم و یواش با حرکت روی صفحه
+    document.addEventListener("mousemove", (e) => {
+      const now = Date.now();
+      if(now - lastMoveSoundTime > 90){
+        lastMoveSoundTime = now;
+        playSoftBeep(480 + (Math.sin(now / 500) * 120), 0.015, 0.05);
+      }
+    });
+
+    document.addEventListener("touchmove", () => {
+      const now = Date.now();
+      if(now - lastMoveSoundTime > 120){
+        lastMoveSoundTime = now;
+        playSoftBeep(520, 0.02, 0.05);
+      }
+    }, {passive: true});
+
+    // --- سیستم ضد سرقت و ضد مشاهده سورس (Anti-Inspect) ---
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
+        (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's'))
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // --- بقیه منطق و مغز Teacher-AI ---
     const AI_API_KEY = "";
 
     const MODELS = [
@@ -273,22 +342,6 @@
         stage.appendChild(r);
       }
     })();
-
-    function playBeep(){
-      try{
-        const C = window.AudioContext || window.webkitAudioContext;
-        if(!C) return;
-        const ctx = new C();
-        const osc = ctx.createOscillator(), gain = ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(650, ctx.currentTime);
-        gain.gain.setValueAtTime(0.06, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.start(); osc.stop(ctx.currentTime + 0.13);
-        setTimeout(()=>{ try{ctx.close();}catch(e){} }, 200);
-      }catch(e){}
-    }
 
     function glow(b){
       if(b){ b.classList.add("glow"); setTimeout(()=>b.classList.remove("glow"),260); }
