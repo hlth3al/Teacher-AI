@@ -1,341 +1,150 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teacher-AI | هوش مصنوعی معلم</title>
-  <style>
-    :root {
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --primary: #38bdf8;
-      --primary-hover: #0284c7;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #334155;
-      --accent: #10b981;
-      --danger: #ef4444;
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teacher-AI | پلتفرم آموزشی</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');:root{--ink:#000;--card:rgba(255,255,255,.96)}*{box-sizing:border-box;font-family:Vazirmatn,sans-serif;color:var(--ink)!important}body{margin:0;padding:18px 10px 40px;min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 10% 10%,#ffffff8c 0 120px,transparent 121px),radial-gradient(circle at 90% 20%,#ffffff73 0 170px,transparent 171px),linear-gradient(135deg,#a8edea,#fed6e3 45%,#d4fc79);user-select:none}.wrap{max-width:920px;margin:auto;position:relative;z-index:1}.card{background:var(--card);border:3px solid #fc0;border-radius:22px;padding:18px;margin:14px 0;box-shadow:0 12px 28px #0002;backdrop-filter:blur(8px)}.title{text-align:center;font-weight:900;font-size:22px;padding:14px;border-radius:18px;border:2px solid #111;box-shadow:0 6px #111;background:linear-gradient(45deg,#ff6b6b,#4ecdc4,#ffe66d);margin-top:12px}.sub,.status-box,.method-box{margin-top:14px;padding:14px;border-radius:16px;background:#fff3bf;border:2px dashed #f59f00;font-weight:800;line-height:1.9}.brain-stage{height:210px;margin-top:14px;border-radius:20px;background:radial-gradient(circle,#1b1f3b,#07091c);border:3px solid #5b8cff;display:flex;align-items:center;justify-content:center;position:relative}.brain{font-size:105px;animation:pulse 2.4s infinite}.brain-title{position:absolute;bottom:8px;text-align:center;color:#dbe9ff!important;font-weight:900}@keyframes pulse{50%{transform:scale(1.08);filter:drop-shadow(0 0 25px #b06eff)}}.badge,.cam-ready{display:inline-block;padding:3px 14px;border:2px solid;border-radius:999px;font-weight:900;background:#2ed573}.cam-ready{background:#ffe66d;margin-right:6px}#systemMessage{margin-top:12px;background:white;border:2px solid #ced4da;border-radius:14px;padding:12px;min-height:48px;white-space:pre-wrap;line-height:1.8}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}.btn,.pack{border:3px solid #111;border-radius:18px;padding:14px;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 6px #111;background:white}.btn{display:flex;align-items:center;justify-content:center;gap:10px}.c1{background:#ff9ff3}.c2{background:#54a0ff}.c3{background:#feca57}.c4{background:#1dd1a1}.c5{background:#c8d6e5}.c6{background:#ff6b81}.c7{background:#a29bfe}.c8{background:#55efc4}.c9{background:#00d2d3}.c10{background:#ffeaa7}.c11{background:#ffa801}.warn{background:#fff3bf;border:2px solid #e03131}.text-area{width:100%;min-height:120px;border-radius:18px;border:3px solid #111;padding:14px;font-size:15px;font-weight:700;margin-top:14px;resize:vertical;box-shadow:0 6px #111}.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}#pricingSection{display:block;margin-top:14px}#fileInfoBar{display:none;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding:8px 12px;background:#e7f5ff;border:2px solid #339af0;border-radius:12px;font-size:13px;font-weight:700}#fileInfoBar button{background:#ff6b6b;color:#fff!important;border:none;border-radius:8px;padding:4px 10px;cursor:pointer;font-weight:900}.interactive-row{transition:box-shadow .18s ease,border-color .18s ease,filter .18s ease,transform .18s ease;position:relative}.interactive-row.active-row,.interactive-row:hover{border-color:#ff0055!important;box-shadow:0 0 0 3px #ff0055,0 0 26px #ff0055,0 0 46px #ff77a9,0 8px 18px #0004!important;filter:drop-shadow(0 0 10px #ffd700cc);animation:jiggle .42s ease-in-out infinite alternate;z-index:5;position:relative}@keyframes jiggle{0%{transform:scale(1.015) rotate(0)}25%{transform:scale(1.015) rotate(-1deg) translateY(-2px)}50%{transform:scale(1.015) rotate(1deg) translateY(2px)}75%{transform:scale(1.015) rotate(-.7deg)}100%{transform:scale(1.015)}}@media(prefers-reduced-motion:reduce){.interactive-row.active-row,.interactive-row:hover{animation:none}}
+
+@keyframes bannerGlow{0%,100%{box-shadow:0 6px 22px #d9042955,0 0 0 3px #ffb3c1 inset}50%{box-shadow:0 8px 30px #d9042988,0 0 0 3px #ffdde2 inset}}
+.benefit-banner{margin-top:14px;padding:16px 18px;border-radius:18px;border:3px solid #d90429;background:linear-gradient(135deg,#ff4d4d,#d90429 60%,#a4031f);text-align:center;font-weight:900;font-size:15px;line-height:2;animation:bannerGlow 2.6s ease-in-out infinite}
+.benefit-banner .bb-title{display:inline-block;padding:4px 18px;margin-bottom:8px;border-radius:999px;background:#ffffff;color:#d90429!important;font-size:15px;letter-spacing:.3px}
+.benefit-banner .bb-text{color:#ffffff!important;text-shadow:0 1px 2px #7a0212}
+</style></head><body><div class="wrap"><section class="card"><div class="sub interactive-row">پلتفرم انجام‌دهنده خواسته‌های دانش‌آموز، دانشجو و پشت‌کنکوری‌های مجازی توسط هوش مصنوعی<br><br>تمامی حقوق این پلتفرم متعلق به شرکت صنایع پردرآمد تهرانیها با مدیرعاملی حسین لعلیان (رتبه ۳۲ کنکور دکتری) می‌باشد.</div><div class="title interactive-row">Teacher-AI | پلتفرم یکپارچه آموزشی و استنتاج</div><div class="brain-stage interactive-row"><div class="brain">🧠</div><div class="brain-title">⚡ مغز هوش مصنوعی Teacher-AI — آنلاین و نورافشان ⚡</div></div><div class="status-box interactive-row"><span class="badge">● وضعیت: آماده پرسش</span> <span class="cam-ready">🎤 ورودی صوتی فعال</span><div id="systemMessage" class="interactive-row">🌀 سوال خود را بنویسید یا تصویری از گالری انتخاب کنید و سپس «💡 پاسخ» را بزنید.</div></div><div id="fileInfoBar" class="interactive-row"><span id="fileInfoText"></span><button onclick="clearSelectedFile()">حذف فایل ✖</button></div><textarea class="text-area interactive-row" id="textQ" placeholder="توضیحات، صورت سوال یا خواسته خود را اینجا بنویسید..."></textarea><div class="grid"><button class="btn c9 interactive-row" onclick="handleUnifiedAnswer()">💡 پاسخ</button><button class="btn c10 interactive-row" onclick="pasteFromClipboard()">📋 الصاق از کلیپ‌بورد / وب</button><button class="btn c11 interactive-row" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button><input type="file" id="filePick" accept="image/*" hidden onchange="filePicked(this)"><button class="btn c1 interactive-row" onclick="quickAction('سوال یا گزینه‌های زیر را به صورت چهار جوابی دقیق بازسازی کن:')">✳️ چهار جوابی کردن</button><button class="btn c2 interactive-row" onclick="quickAction('پاسخ این سوال را در قالب گزینه‌های چهار جوابی همراه تحلیل بنویس:')">💬 پاسخ سوال چهار جوابی</button><button class="btn c3 interactive-row" onclick="quickAction('پاسخ و گزینه‌های سوال زیر را به طور کامل تجزیه و تحلیل کن:')">📊 تجزیه و تحلیل پاسخ سوالات چهار جوابی</button><button class="btn c4 interactive-row" onclick="quickAction('سوال آموزشی زیر را از پایه تجزیه و تحلیل و تشریح کن:')">🔍 تجزیه و تحلیل سوالات</button><button class="btn c5 interactive-row" onclick="quickAction('دام‌ها و تله‌های تستی پنهان در این سوال را مشخص و تشریح کن:')">🪤 تله سوالات تستی</button><button class="btn c7 interactive-row" onclick="askByVoice()">🎙️ سوال با صدای محصل</button><button class="btn c8 interactive-row" onclick="speakAnswer()">🔊 پاسخ با صدای محصل</button></div><div id="pricingSection" class="interactive-row"><div id="benefitBanner" class="benefit-banner interactive-row"><span class="bb-title">✨ مزیت خرید بسته‌های شرکت ما ✨</span><div class="bb-text">اگر مدتی از بستهٔ خود استفاده نکنید، <b>اعتبارتان نزد ما محفوظ می‌ماند و هرگز منقضی نمی‌شود!</b></div></div><div class="interactive-row" style="font-weight:900;text-align:center;margin-top:14px">📦 لیست بسته‌های آموزشی و اعتباری Teacher-AI</div><div class="packs"><div class="pack interactive-row" onclick="pickPack(this)">۳,۰۰۰,۰۰۰ تومان</div><div class="pack interactive-row" onclick="pickPack(this)">۵,۰۰۰,۰۰۰ تومان</div><div class="pack interactive-row" onclick="pickPack(this)">۱۰,۰۰۰,۰۰۰ تومان</div><div class="pack interactive-row" onclick="pickPack(this)">۲۰,۰۰۰,۰۰۰ تومان</div><div class="pack interactive-row" onclick="pickPack(this)">۵۰,۰۰۰,۰۰۰ تومان</div><div class="pack interactive-row" onclick="pickPack(this)">۱۰۰,۰۰۰,۰۰۰ تومان</div></div><div class="method-box interactive-row"><div>از پرداخت الکترونیکی معذوریم؛ روش خرید آفلاین و ارسال رسید است.</div><div class="interactive-row" style="font-weight:900;margin-top:12px">تنها روش خرید بسته‌ها: واریز به حساب شرکت از طریق ATM یا باجه بانکی و ارسال رسید.</div><div class="interactive-row">مبلغ بسته مورد نظر را واریز کرده و تصویر رسید را به ایمیل شرکت ارسال فرمایید.</div><button class="btn interactive-row" style="margin:14px auto" onclick="copyEmail()">📋 کپی آدرس ایمیل شرکت</button><div class="interactive-row" style="text-align:center">ایمیل رسمی شرکت:<br><code>AI.Algorithms.Ballistics@gmail.com</code></div></div></div></section><section class="card warn interactive-row"><b>⚠️ اخطار امنیتی و صیانت از حقوق مالکیت فکری</b><br>تمامی حقوق متعلق به شرکت صنایع پردرآمد تهرانیها و مدیرعامل حسین لعلیان می‌باشد؛ هرگونه کپی‌برداری پیگرد قانونی دارد.</section></div><script>
+const AVALAI_API_KEY  = "GAPGPTMASKTOKENqj8wcb4hr2X1X";
+const AVALAI_ENDPOINT = "https://api.avalai.ir/v1/chat/completions";
+const AVALAI_MODEL    = "gpt-4o-mini";
+const TEACHER_SYSTEM_PROMPT = ["تو «معلم‌یار هوشمند Teacher-AI» هستی؛ یک معلم مجازی با تجربه برای دانش‌آموزان مقاطع ایران.", "قواعد پاسخ‌گویی: زبان فارسی روان، پاسخ گام‌به‌گام و دقیق، ذکر نکات تستی و آموزشی."].join("\n");
+let lastAnswerText = "";
+let selectedImageBase64 = null;
+
+(()=>{let last=0,ctx=null;function beep(){let now=Date.now();if(now-last<150)return;last=now;try{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();let o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=880;g.gain.setValueAtTime(.0001,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.045,ctx.currentTime+.008);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.075);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.08)}catch(e){}}function activate(el){if(!el||!el.classList||!el.classList.contains('interactive-row'))return;el.classList.add('active-row');beep()}function deactivate(el){el?.classList?.remove('active-row')}document.addEventListener('pointerover',e=>{let x=e.target.closest('.interactive-row');if(x&&x!==e.relatedTarget?.closest?.('.interactive-row'))activate(x)});document.addEventListener('pointerout',e=>{let x=e.target.closest('.interactive-row');if(x&&x!==e.relatedTarget?.closest?.('.interactive-row'))deactivate(x)});document.addEventListener('pointerdown',e=>activate(e.target.closest('.interactive-row')));document.addEventListener('pointerup',e=>deactivate(e.target.closest('.interactive-row')));document.addEventListener('contextmenu',e=>e.preventDefault());})();
+
+function msg(t){document.getElementById('systemMessage').textContent=t}
+function setMsgHtml(t){document.getElementById('systemMessage').innerHTML=t}
+function quickAction(p){let ta=document.getElementById('textQ');ta.value=p+'\n\n'+ta.value;ta.focus()}
+
+function renderMarkdown(md){
+  let t = md.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  t = t.replace(/
+```([\s\S]*?)
+```/g, (m, c) => '<pre style="background:#f1f3f5;border-radius:12px;padding:10px;overflow-x:auto"><code>' + c + '</code></pre>');
+  t = t.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  return t.replace(/\n/g, '<br>');
+}
+
+async function pasteFromClipboard(){
+  try{
+    let text = await navigator.clipboard.readText();
+    if(text){
+      let ta = document.getElementById('textQ');
+      ta.value = ta.value ? ta.value + '\n' + text : text;
+      ta.focus();
+      msg('✅ محتوای وب/کلیپ‌بورد الصاق شد.');
+    }
+  }catch(e){
+    msg('⚠️ برای الصاق، دسترسی کلیپ‌بورد را تأیید کنید یا دستی پیست نمایید.');
+  }
+}
+
+function filePicked(i){
+  if(i.files && i.files[0]){
+    let f = i.files[0];
+    let r = new FileReader();
+    r.onload = e => {
+      selectedImageBase64 = e.target.result;
+      document.getElementById('fileInfoText').textContent = '🖼 ' + f.name;
+      document.getElementById('fileInfoBar').style.display = 'flex';
+      msg('✅ تصویر انتخاب شد. اکنون سوال را بنویسید یا دکمه «💡 پاسخ» را بزنید.');
+    };
+    r.readAsDataURL(f);
+  }
+}
+
+function clearSelectedFile(){
+  selectedImageBase64 = null;
+  document.getElementById('filePick').value = '';
+  document.getElementById('fileInfoBar').style.display = 'none';
+  msg('تصویر حذف شد.');
+}
+
+async function handleUnifiedAnswer(){
+  let q = document.getElementById('textQ').value.trim();
+  if(!q && !selectedImageBase64){
+    msg('✍️ لطفاً ابتدا سوال را بنویسید یا یک تصویر انتخاب کنید.');
+    return;
+  }
+  msg('⏳ در حال ارسال به هوش مصنوعی و دریافت تحلیل آموزشی...');
+
+  let content;
+  if(selectedImageBase64){
+    content = [];
+    if(q) content.push({type: 'text', text: q});
+    content.push({type: 'image_url', image_url: {url: selectedImageBase64}});
+  } else {
+    content = q;
+  }
+
+  try{
+    let res = await fetch(AVALAI_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + AVALAI_API_KEY
+      },
+      body: JSON.stringify({
+        model: AVALAI_MODEL,
+        messages: [
+          {role: 'system', content: TEACHER_SYSTEM_PROMPT},
+          {role: 'user', content: content}
+        ]
+      })
+    });
+
+    let data = await res.json();
+    if(!res.ok){
+      throw new Error(data.error?.message || ('خطای سرور: ' + res.status));
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    }
+    lastAnswerText = data.choices?.[0]?.message?.content || 'پاسخی دریافت نشد.';
+    setMsgHtml(renderMarkdown(lastAnswerText));
+  }catch(e){
+    msg('⚠️ خطا در دریافت پاسخ:\n' + e.message);
+  }
+}
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 1rem;
-    }
+function askByVoice(){
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRecognition){
+    msg('⚠️ مرورگر شما از ضبط مستقیم صدا پشتیبانی نمی‌کند. لطفاً از کیبورد صوتی استفاده فرمایید.');
+    return;
+  }
+  let recog = new SpeechRecognition();
+  recog.lang = 'fa-IR';
+  recog.onstart = () => msg('🎙️ در حال شنیدن صدای شما... صحبت کنید.');
+  recog.onresult = (ev) => {
+    let transcript = ev.results[0][0].transcript;
+    let ta = document.getElementById('textQ');
+    ta.value = ta.value ? ta.value + ' ' + transcript : transcript;
+    msg('✅ صدا دریافت شد.');
+  };
+  recog.onerror = (e) => msg('⚠️ خطای صوتی: ' + e.error);
+  recog.start();
+}
 
-    .container {
-      width: 100%;
-      max-width: 800px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
+function speakAnswer(){
+  if(!window.speechSynthesis){
+    msg('⚠️ قابلیت خواندن صوتی در این مرورگر فعال نیست.');
+    return;
+  }
+  let cleanText = lastAnswerText ? lastAnswerText.replace(/[*#`_]/g, '') : document.getElementById('systemMessage').textContent;
+  if(!cleanText || cleanText.includes('سوال خود را بنویسید')){
+    msg('⚠️ متنی برای خواندن موجود نیست.');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  let utter = new SpeechSynthesisUtterance(cleanText);
+  utter.lang = 'fa-IR';
+  utter.rate = 0.95;
+  window.speechSynthesis.speak(utter);
+}
 
-    header {
-      text-align: center;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    header h1 {
-      font-size: 1.8rem;
-      color: var(--primary);
-      margin-bottom: 0.25rem;
-    }
-
-    header p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 110px;
-      background-color: #0f172a;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      padding: 0.85rem;
-      font-size: 1rem;
-      resize: vertical;
-      outline: none;
-    }
-
-    textarea:focus {
-      border-color: var(--primary);
-    }
-
-    .tools-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      align-items: center;
-    }
-
-    .btn {
-      background-color: var(--card-bg);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 0.55rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: all 0.2s;
-    }
-
-    .btn:hover {
-      background-color: var(--border);
-    }
-
-    .btn-primary {
-      background-color: var(--primary);
-      color: #0f172a;
-      border: none;
-      font-weight: bold;
-      margin-right: auto;
-    }
-
-    .btn-primary:hover {
-      background-color: var(--primary-hover);
-      color: #fff;
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    #imagePreviewContainer {
-      display: none;
-      position: relative;
-      margin-top: 0.5rem;
-      width: fit-content;
-    }
-
-    #imagePreview {
-      max-width: 140px;
-      max-height: 140px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      object-fit: cover;
-    }
-
-    .remove-img-btn {
-      position: absolute;
-      top: -6px;
-      left: -6px;
-      background: var(--danger);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
-      cursor: pointer;
-      font-size: 12px;
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .response-area {
-      min-height: 160px;
-      white-space: pre-wrap;
-      line-height: 1.8;
-      font-size: 1.05rem;
-    }
-
-    .status-text {
-      color: var(--primary);
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-      display: none;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="container">
-    <header>
-      <h1>Teacher-AI دستیار هوشمند آموزشی</h1>
-      <p>طرح سؤال متنی، بارگذاری تصویر و دریافت بی‌درنگ پاسخ</p>
-    </header>
-
-    <div class="card">
-      <div class="input-group">
-        <textarea id="questionInput" placeholder="پرسش یا مبحث درسی خود را اینجا بنویسید..."></textarea>
-
-        <div id="imagePreviewContainer">
-          <img id="imagePreview" src="" alt="پیش‌نمایش تصویر">
-          <button type="button" class="remove-img-btn" onclick="clearSelectedImage()">×</button>
-        </div>
-
-        <div class="tools-bar">
-          <!-- دکمه الصاق از وب / کلیپ‌بورد -->
-          <button type="button" class="btn" onclick="pasteFromClipboard()">
-            📋 الصاق از کلیپ‌بورد / وب
-          </button>
-
-          <!-- دکمه انتخاب تصویر از گالری -->
-          <label class="btn" style="cursor: pointer;">
-            🖼️ انتخاب تصویر از گالری
-            <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="handleImageSelection(event)">
-          </label>
-
-          <!-- دکمه ارسال سؤال -->
-          <button type="button" class="btn btn-primary" id="submitBtn" onclick="askTeacherAI()">
-            ارسال و دریافت پاسخ 🚀
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div id="statusIndicator" class="status-text">در حال ارتباط با سرور هوش مصنوعی...</div>
-      <div id="responseArea" class="response-area">پاسخ هوش مصنوعی در این قسمت نمایش داده خواهد شد.</div>
-    </div>
-  </div>
-
-  <script>
-    const AVALAI_API_KEY = "GAPGPTMASKTOKEN1tz853ii9bwX1X";
-    let selectedImageBase64 = null;
-
-    // تابع الصاق مستقیم متن از کلیپ‌بورد
-    async function pasteFromClipboard() {
-      try {
-        const text = await navigator.clipboard.readText();
-        const textarea = document.getElementById("questionInput");
-        if (text) {
-          textarea.value = textarea.value ? textarea.value + "\n" + text : text;
-          textarea.focus();
-        }
-      } catch (err) {
-        alert("لطفاً دسترسی به کلیپ‌بورد را تأیید کنید یا متن را دستی در کادر Paste نمایید.");
-      }
-    }
-
-    // انتخاب تصویر و تبدیل به Base64
-    function handleImageSelection(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        selectedImageBase64 = e.target.result;
-        document.getElementById("imagePreview").src = selectedImageBase64;
-        document.getElementById("imagePreviewContainer").style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // حذف تصویر انتخاب شده
-    function clearSelectedImage() {
-      selectedImageBase64 = null;
-      document.getElementById("imageInput").value = "";
-      document.getElementById("imagePreview").src = "";
-      document.getElementById("imagePreviewContainer").style.display = "none";
-    }
-
-    // ارسال درخواست به هوش مصنوعی AvalAI
-    async function askTeacherAI() {
-      const question = document.getElementById("questionInput").value.trim();
-      const responseArea = document.getElementById("responseArea");
-      const statusIndicator = document.getElementById("statusIndicator");
-      const submitBtn = document.getElementById("submitBtn");
-
-      if (!question && !selectedImageBase64) {
-        alert("لطفاً متنی بنویسید یا تصویری انتخاب کنید.");
-        return;
-      }
-
-      // آماده‌سازی حالت لودینگ
-      submitBtn.disabled = true;
-      statusIndicator.style.display = "block";
-      statusIndicator.textContent = "در حال پردازش و پاسخگویی توسط AvalAI...";
-      responseArea.textContent = "";
-
-      // ساخت محتوای پیام (پشتیبانی همزمان از متن و تصویر)
-      let messageContent = [];
-      if (question) {
-        messageContent.push({ type: "text", text: question });
-      }
-      if (selectedImageBase64) {
-        messageContent.push({
-          type: "image_url",
-          image_url: { url: selectedImageBase64 }
-        });
-      }
-
-      // تعیین مدل مناسب (در صورت وجود تصویر مدل با قابلیت vision)
-      const modelName = "gpt-4o-mini";
-
-      try {
-        const response = await fetch("https://api.avalai.ir/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + AVALAI_API_KEY
-          },
-          body: JSON.stringify({
-            model: modelName,
-            messages: [
-              {
-                role: "system",
-                content: "شما یک استاد و معلم هوشمند آموزشی هستید. پاسخ‌های دقیق، علمی، ساختاریافته و به زبان فارسی ارائه دهید."
-              },
-              {
-                role: "user",
-                content: messageContent
-              }
-            ]
-          })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.error?.message || "خطا در دریافت پاسخ از سرور");
-        }
-
-        const answer = data.choices?.[0]?.message?.content || "پاسخی دریافت نشد.";
-        responseArea.textContent = answer;
-        statusIndicator.style.display = "none";
-
-      } catch (err) {
-        responseArea.textContent = "⚠️ خطایی رخ داد:\n" + err.message;
-        statusIndicator.style.display = "none";
-      } finally {
-        submitBtn.disabled = false;
-      }
-    }
-  </script>
-</body>
-</html>
+function copyEmail(){navigator.clipboard.writeText('AI.Algorithms.Ballistics@gmail.com');msg('ایمیل کپی شد.')}
+function pickPack(e){msg('بسته انتخابی: '+e.textContent)}
+</script></body></html>
