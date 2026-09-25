@@ -29,7 +29,6 @@
     -webkit-user-select: none;
   }
 
-  /* انیمیشن تکان خوردن ظریف سطرها */
   @keyframes lineJiggle {
     0% { transform: scale(1.018) rotate(0deg); }
     25% { transform: scale(1.018) rotate(-1.2deg) translateY(-2px); }
@@ -38,7 +37,6 @@
     100% { transform: scale(1.018) rotate(0deg); }
   }
 
-  /* ویژگی نورافشانی و لرزش برای سطرها هنگام حرکت ماوس یا لمس دست */
   .interactive-row {
     transition: box-shadow 0.2s ease, filter 0.2s ease, transform 0.15s ease;
     will-change: transform, box-shadow;
@@ -115,6 +113,30 @@
     background:#fff; border:2px solid #ced4da; border-radius:14px; padding:12px;
   }
 
+  /* استایل اختصاصی و فوق‌العاده شکیل برای جمله قرمز مزیت */
+  .red-benefit-banner {
+    background: #fff0f0;
+    border: 3px solid #ff3838;
+    border-radius: 18px;
+    padding: 14px 16px;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(255, 56, 56, 0.25);
+  }
+  .red-benefit-title {
+    color: #c0392b !important;
+    font-size: 16px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+  .red-benefit-text {
+    color: #d63031 !important;
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1.85;
+  }
+
   .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
     gap:12px; margin-top:14px; }
 
@@ -148,29 +170,6 @@
   #pricingSection{
     display:none; background:#ffffff; border:3px dashed #ff6b81;
     border-radius:18px; padding:16px; margin-top:14px;
-  }
-
-  /* استایل اختصاصی بنر قرمز رنگ مزیت خرید بسته */
-  .advantage-banner {
-    background: #fff0f0;
-    border: 3px solid #ee5253;
-    border-radius: 16px;
-    padding: 14px 16px;
-    margin-bottom: 16px;
-    text-align: center;
-    box-shadow: 0 4px 14px rgba(238, 82, 83, 0.25);
-  }
-  .advantage-title {
-    color: #d63031 !important;
-    font-size: 16px;
-    font-weight: 900;
-    margin-bottom: 6px;
-  }
-  .advantage-text {
-    color: #c0392b !important;
-    font-size: 15px;
-    font-weight: 900;
-    line-height: 1.8;
   }
 
   .packs{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
@@ -229,6 +228,15 @@
 
       <textarea class="text-area interactive-row" id="textQ" placeholder="توضیحات، صورت سوال یا خواسته خود را اینجا بنویسید..."></textarea>
 
+      <!-- جمله قرمز شکیل درخواستی پیش از معرفی کلیدها و بسته‌ها -->
+      <div class="red-benefit-banner interactive-row">
+        <div class="red-benefit-title">💎 مزیت خرید بسته‌های شرکت ما:</div>
+        <div class="red-benefit-text">
+          «اگر بسته‌ای از پلتفرم را برای مدتی استفاده نکنید، اعتبار شما باقی می‌ماند و منقضی نمی‌شود!»
+        </div>
+      </div>
+
+      <!-- معرفی کلیدها و ابزارهای پلتفرم -->
       <div class="grid">
         <button class="btn c9 interactive-row" onclick="handleUnifiedAnswer(this)">💡 پاسخ</button>
         <button class="btn c11 interactive-row" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button>
@@ -247,15 +255,6 @@
       </div>
 
       <div id="pricingSection" class="interactive-row">
-
-        <!-- سطر شکیل و قرمز رنگ مزیت خرید بسته‌ها قبل از لیست قیمت‌ها -->
-        <div class="advantage-banner interactive-row">
-          <div class="advantage-title">💎 مزیت انحصاری و تضمینی خرید بسته‌های شرکت ما:</div>
-          <div class="advantage-text">
-            «اگر بسته‌ای از پلتفرم را برای مدتی استفاده نکنید، اعتبار شما باقی می‌ماند و منقضی نمی‌شود!»
-          </div>
-        </div>
-
         <div class="interactive-row" style="font-weight:900; font-size:16px; margin-bottom:10px; text-align:center;">
           📦 لیست بسته‌های آموزشی و اعتباری Teacher-AI
         </div>
@@ -322,7 +321,7 @@
   /* سیستم صوتی متعادل (بوق متوازن روی سطرها) */
   let audioCtx = null;
   let lastBeepTime = 0;
-  const BEEP_INTERVAL = 150; // فاصله زمانی حساب‌شده
+  const BEEP_INTERVAL = 150;
 
   function playSoftBeep() {
     const now = Date.now();
@@ -355,16 +354,13 @@
     } catch(err) {}
   }
 
-  // اختصاص خودکار تعامل لمسی، نورافشانی، لرزش و بوق به همه سطرها
   function bindInteractiveRows() {
     const rows = document.querySelectorAll('.interactive-row');
     rows.forEach(row => {
-      // برای ماوس
       row.addEventListener('mouseenter', () => {
         playSoftBeep();
       });
 
-      // برای لمس روی موبایل
       row.addEventListener('touchstart', () => {
         playSoftBeep();
         row.classList.add('active-row');
@@ -375,7 +371,6 @@
       });
     });
 
-    // حرکت دست روی سطرها در گوشی
     document.addEventListener('touchmove', (e) => {
       const touch = e.touches[0];
       const target = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -395,7 +390,6 @@
     initRays();
   });
 
-  /* اشعه‌های نورافشان مغز */
   function initRays() {
     const stage = document.getElementById('brainStage');
     if (!stage) return;
@@ -410,7 +404,6 @@
     }
   }
 
-  /* متغیرها و توابع رابط کاربری */
   let selectedFileBase64 = null;
   let selectedFileMime = "";
 
@@ -518,3 +511,4 @@
 </script>
 </body>
 </html>
+خ۹
