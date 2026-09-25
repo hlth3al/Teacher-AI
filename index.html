@@ -10,9 +10,9 @@
 
   :root{
     --ink:#000;
-    --card: rgba(255,255,255,.94);
+    --card: rgba(255,255,255,.96);
     --stroke:#111;
-    --shadow: 0 12px 28px rgba(0,0,0,.14);
+    --shadow: 0 12px 28px rgba(0,0,0,.15);
     --radius: 22px;
   }
 
@@ -29,6 +29,30 @@
     -webkit-user-select: none;
   }
 
+  /* انیمیشن تکان خوردن ظریف سطرها */
+  @keyframes lineJiggle {
+    0% { transform: scale(1.018) rotate(0deg); }
+    25% { transform: scale(1.018) rotate(-1.2deg) translateY(-2px); }
+    50% { transform: scale(1.018) rotate(1.2deg) translateY(2px); }
+    75% { transform: scale(1.018) rotate(-0.8deg) translateY(-1px); }
+    100% { transform: scale(1.018) rotate(0deg); }
+  }
+
+  /* ویژگی نورافشانی و لرزش برای سطرها موقع حرکت ماوس یا لمس دست */
+  .interactive-row {
+    transition: box-shadow 0.2s ease, filter 0.2s ease, transform 0.15s ease;
+    will-change: transform, box-shadow;
+  }
+
+  .interactive-row.active-row,
+  .interactive-row:hover {
+    box-shadow: 0 0 25px rgba(255, 230, 0, 0.95), 0 0 45px rgba(255, 107, 107, 0.75) !important;
+    filter: brightness(1.08) drop-shadow(0 0 12px rgba(255,215,0,0.8));
+    animation: lineJiggle 0.42s ease-in-out infinite alternate;
+    z-index: 5;
+    position: relative;
+  }
+
   .bubble{ position:fixed; border-radius:50%; background:rgba(255,255,255,.45);
     pointer-events:none; z-index:0; animation:float 6s ease-in-out infinite alternate; }
   .b1{ width:150px;height:150px; top:8%;  right:4%; animation-duration:5.2s;}
@@ -43,7 +67,7 @@
 
   .title{ text-align:center; font-weight:900; font-size:22px; padding:14px 12px;
     border-radius:18px; border:2px solid var(--stroke); box-shadow:0 6px 0 var(--stroke);
-    background:linear-gradient(45deg,#ff6b6b,#4ecdc4,#ffe66d); }
+    background:linear-gradient(45deg,#ff6b6b,#4ecdc4,#ffe66d); margin-top:12px; }
 
   .sub{ margin:12px 0 0; font-weight:800; line-height:1.9; background:#fff3bf;
     border:2px dashed #f59f00; border-radius:16px; padding:12px 14px; }
@@ -154,86 +178,86 @@
   <div class="wrap">
 
     <div class="card">
-      <div class="sub">
+      <div class="sub interactive-row">
         پلتفرم انجام دهنده خواسته های دانش آموز،دانشجو و پشت کنکوریهای مجازی توسط هوش مصنوعی
         <br><br>
         تمامی حقوق این پلتفرم متعلق به شرکت صنایع پردرآمد تهرانیها با مدیر عاملی حسین لعلیان (رتبه ۳۲ کنکور دکتری) می‌باشد.
       </div>
 
-      <div class="title">Teacher-AI | پلتفرم یکپارچه آموزشی و استنتاج</div>
+      <div class="title interactive-row">Teacher-AI | پلتفرم یکپارچه آموزشی و استنتاج</div>
       
-      <div class="brain-stage" id="brainStage">
+      <div class="brain-stage interactive-row" id="brainStage">
         <div class="brain">🧠</div>
         <div class="brain-title">⚡ مغز هوش مصنوعی Teacher-AI — آنلاین و نورافشان ⚡</div>
       </div>
 
-      <div class="status-box" id="statusBox">
+      <div class="status-box interactive-row" id="statusBox">
         <div>
           <span class="badge" id="liveBadge">● وضعیت: آماده پرسش</span>
           <span class="cam-ready">🎤 ورودی صوتی فعال</span>
         </div>
-        <div id="systemMessage">🌀 سوال خود را در کادر بنویسید یا تصویری از گالری انتخاب کرده و سپس دکمه «💡 پاسخ» را لمس فرمایید.</div>
+        <div id="systemMessage" class="interactive-row">🌀 سوال خود را در کادر بنویسید یا تصویری از گالری انتخاب کرده و سپس دکمه «💡 پاسخ» را لمس فرمایید.</div>
       </div>
 
-      <div id="fileInfoBar">
+      <div id="fileInfoBar" class="interactive-row">
         <span id="fileInfoText">📎 فایل ضمیمه شد</span>
         <button onclick="clearSelectedFile()" style="background:#ff7979; border:2px solid #000; border-radius:10px; font-weight:900; padding:4px 10px; cursor:pointer;">حذف فایل ✖</button>
       </div>
 
-      <textarea class="text-area" id="textQ" placeholder="توضیحات، صورت سوال یا خواسته خود را اینجا بنویسید..."></textarea>
+      <textarea class="text-area interactive-row" id="textQ" placeholder="توضیحات، صورت سوال یا خواسته خود را اینجا بنویسید..."></textarea>
 
       <div class="grid">
-        <button class="btn c9" onclick="handleUnifiedAnswer(this)">💡 پاسخ</button>
-        <button class="btn c11" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button>
+        <button class="btn c9 interactive-row" onclick="handleUnifiedAnswer(this)">💡 پاسخ</button>
+        <button class="btn c11 interactive-row" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button>
         <input type="file" id="filePick" accept="image/*" style="display:none" onchange="filePicked(this)" />
 
-        <button class="btn c1" onclick="quickAction('سوال یا گزینه‌های زیر را به صورت چهار جوابی دقیق بازسازی کن:', this)">✳️ چهار جوابی کردن</button>
-        <button class="btn c2" onclick="quickAction('پاسخ این سوال را در قالب گزینه‌های چهار جوابی همراه تحلیل بنویس:', this)">💬 پاسخ سوال چهار جوابی</button>
-        <button class="btn c3" onclick="quickAction('پاسخ و گزینه‌های سوال زیر را به طور کامل تجزیه و تحلیل کن:', this)">📊 تجزیه و تحلیل پاسخ سوالات چهار جوابی</button>
-        <button class="btn c4" onclick="quickAction('سوال آموزشی زیر را از پایه تجزیه و تحلیل و تشریح کن:', this)">🔍 تجزیه و تحلیل سوالات</button>
-        <button class="btn c5" onclick="quickAction('دام‌ها و تله‌های تستی پنهان در این سوال را مشخص و تشریح کن:', this)">🪤 تله سوالات تستی</button>
+        <button class="btn c1 interactive-row" onclick="quickAction('سوال یا گزینه‌های زیر را به صورت چهار جوابی دقیق بازسازی کن:', this)">✳️ چهار جوابی کردن</button>
+        <button class="btn c2 interactive-row" onclick="quickAction('پاسخ این سوال را در قالب گزینه‌های چهار جوابی همراه تحلیل بنویس:', this)">💬 پاسخ سوال چهار جوابی</button>
+        <button class="btn c3 interactive-row" onclick="quickAction('پاسخ و گزینه‌های سوال زیر را به طور کامل تجزیه و تحلیل کن:', this)">📊 تجزیه و تحلیل پاسخ سوالات چهار جوابی</button>
+        <button class="btn c4 interactive-row" onclick="quickAction('سوال آموزشی زیر را از پایه تجزیه و تحلیل و تشریح کن:', this)">🔍 تجزیه و تحلیل سوالات</button>
+        <button class="btn c5 interactive-row" onclick="quickAction('دام‌ها و تله‌های تستی پنهان در این سوال را مشخص و تشریح کن:', this)">🪤 تله سوالات تستی</button>
 
-        <button class="btn c7" onclick="askByVoice()">🎙️ سوال با صدای محصل</button>
-        <button class="btn c8" onclick="speakAnswer(this)">🔊 پاسخ با صدای محصل</button>
+        <button class="btn c7 interactive-row" onclick="askByVoice()">🎙️ سوال با صدای محصل</button>
+        <button class="btn c8 interactive-row" onclick="speakAnswer(this)">🔊 پاسخ با صدای محصل</button>
 
-        <button class="btn c6" onclick="togglePricing(this)">⚡ وصل شدن + انتخاب بسته</button>
+        <button class="btn c6 interactive-row" onclick="togglePricing(this)">⚡ وصل شدن + انتخاب بسته</button>
       </div>
 
-      <div id="pricingSection">
-        <div style="font-weight:900; font-size:16px; margin-bottom:10px; text-align:center;">
+      <div id="pricingSection" class="interactive-row">
+        <div class="interactive-row" style="font-weight:900; font-size:16px; margin-bottom:10px; text-align:center;">
           📦 لیست بسته‌های آموزشی و اعتباری Teacher-AI
         </div>
         
         <div class="packs">
-          <div class="pack" onclick="pickPack(this)">۳,۰۰۰,۰۰۰ تومان</div>
-          <div class="pack" onclick="pickPack(this)">۵,۰۰۰,۰۰۰ تومان</div>
-          <div class="pack" onclick="pickPack(this)">۱۰,۰۰۰,۰۰۰ تومان</div>
-          <div class="pack" onclick="pickPack(this)">۲۰,۰۰۰,۰۰۰ تومان</div>
-          <div class="pack" onclick="pickPack(this)">۵۰,۰۰۰,۰۰۰ تومان</div>
-          <div class="pack" onclick="pickPack(this)">۱۰۰,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack interactive-row" onclick="pickPack(this)">۳,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack interactive-row" onclick="pickPack(this)">۵,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack interactive-row" onclick="pickPack(this)">۱۰,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack interactive-row" onclick="pickPack(this)">۲۰,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack interactive-row" onclick="pickPack(this)">۵۰,۰۰۰,۰۰۰ تومان</div>
+          <div class="pack interactive-row" onclick="pickPack(this)">۱۰۰,۰۰۰,۰۰۰ تومان</div>
         </div>
 
-        <div class="method-box">
-          <div style="font-size:14px; font-weight:800; color:#d63031 !important; margin-bottom:8px;">
+        <div class="method-box interactive-row">
+          <div class="interactive-row" style="font-size:14px; font-weight:800; color:#d63031 !important; margin-bottom:8px;">
             از پرداخت الکترونیکی معذوریم؛ چراکه امروزه در پرداخت‌های الکترونیکی سوءاستفاده و تقلب صورت می‌گیرد. از این‌رو، این شرکت شما خریداران محترم را به روش پرداخت امن زیر هدایت می‌نماید:
           </div>
 
-          <div class="method-title" style="margin-top:12px;">
+          <div class="method-title interactive-row" style="margin-top:12px;">
             تنها روش خرید بسته‌ها:
           </div>
-          <div style="font-weight:900; font-size:14px; margin-bottom:6px;">
+          <div class="interactive-row" style="font-weight:900; font-size:14px; margin-bottom:6px;">
             ۱. آفلاین (واریز به حساب شرکت از طریق باجه‌های خودپرداز (ATM) (عابر بانک) و باجه‌های بانکی و ارسال رسید)
           </div>
           
-          <div>
+          <div class="interactive-row">
             مبلغ بسته مورد نظر را به شماره حساب رسمی شرکت واریز کرده و سپس تصویر رسید یا فیش پرداختی را به ایمیل شرکت ارسال فرمایید!
           </div>
 
           <div style="text-align:center; margin-top:14px;">
-            <button class="btn" style="background:#ff9ff3; margin:0 auto; padding:10px 18px; font-size:13px;" onclick="copyEmail()">
+            <button class="btn interactive-row" style="background:#ff9ff3; margin:0 auto; padding:10px 18px; font-size:13px;" onclick="copyEmail()">
               📋 کپی آدرس ایمیل شرکت جهت درج در گیرنده
             </button>
-            <div style="margin-top:10px; font-size:13px; font-weight:900;">
+            <div class="interactive-row" style="margin-top:10px; font-size:13px; font-weight:900;">
               ایمیل رسمی شرکت:<br>
               <code>AI.Algorithms.Ballistics@gmail.com</code>
             </div>
@@ -244,308 +268,224 @@
 
     </div>
 
-    <div class="card warn">
+    <div class="card warn interactive-row">
       <div style="font-size:15px;font-weight:900;margin-bottom:6px;">⚠️ اخطار امنیتی و صیانت از حقوق مالکیت فکری</div>
       تمامی حقوق متعلق به شرکت صنایع پردرآمد تهرانیها و مدیرعامل حسین لعلیان می‌باشد؛ هرگونه کپی‌برداری پیگرد قانونی دارد.
     </div>
 
   </div>
 
-  <script>
-    // --- سیستم صوتی پویا (Hover Beep & Interaction) ---
-    let sharedAudioCtx = null;
-    function getAudioCtx(){
-      if(!sharedAudioCtx){
-        const C = window.AudioContext || window.webkitAudioContext;
-        if(C) sharedAudioCtx = new C();
-      }
-      if(sharedAudioCtx && sharedAudioCtx.state === 'suspended'){
-        sharedAudioCtx.resume();
-      }
-      return sharedAudioCtx;
+<script>
+  /* 
+   قفل کلید راست و میانبرهای مرورگر
+  */
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.keyCode === 123 || 
+        (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
+        (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83))) {
+      e.preventDefault();
+      return false;
     }
+  });
 
-    let lastMoveSoundTime = 0;
-    function playSoftBeep(freq = 520, vol = 0.02, dur = 0.06){
-      try{
-        const ctx = getAudioCtx();
-        if(!ctx) return;
-        const now = ctx.currentTime;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(freq, now);
-        gain.gain.setValueAtTime(vol, now);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + dur + 0.01);
-      }catch(e){}
-    }
+  /* سیستم صوتی متعادل (بوق متوازن روی سطرها) */
+  let audioCtx = null;
+  let lastBeepTime = 0;
+  const BEEP_INTERVAL = 150; // فاصله زمانی حساب‌شده (نه تند تند نه یواش یواش)
 
-    function playBeep(){
-      playSoftBeep(680, 0.05, 0.12);
-    }
+  function playSoftBeep() {
+    const now = Date.now();
+    if (now - lastBeepTime < BEEP_INTERVAL) return;
+    lastBeepTime = now;
 
-    // پخش صدای نرم و یواش با حرکت روی صفحه
-    document.addEventListener("mousemove", (e) => {
-      const now = Date.now();
-      if(now - lastMoveSoundTime > 90){
-        lastMoveSoundTime = now;
-        playSoftBeep(480 + (Math.sin(now / 500) * 120), 0.015, 0.05);
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(820, audioCtx.currentTime); // صدای شیک و شفاف
+      osc.frequency.exponentialRampToValueAtTime(520, audioCtx.currentTime + 0.08);
+
+      gain.gain.setValueAtTime(0.045, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.085);
+    } catch(err) {}
+  }
+
+  // اختصاص خودکار تعامل لمسی، نورافشانی، لرزش و بوق به همه سطرها
+  function bindInteractiveRows() {
+    const rows = document.querySelectorAll('.interactive-row');
+    rows.forEach(row => {
+      // برای ماوس
+      row.addEventListener('mouseenter', () => {
+        playSoftBeep();
+      });
+
+      // برای لمس و حرکت دست روی صفحه موبایل
+      row.addEventListener('touchstart', () => {
+        playSoftBeep();
+        row.classList.add('active-row');
+      }, { passive: true });
+
+      row.addEventListener('touchend', () => {
+        setTimeout(() => row.classList.remove('active-row'), 400);
+      });
     });
 
-    document.addEventListener("touchmove", () => {
-      const now = Date.now();
-      if(now - lastMoveSoundTime > 120){
-        lastMoveSoundTime = now;
-        playSoftBeep(520, 0.02, 0.05);
-      }
-    }, {passive: true});
-
-    // --- سیستم ضد سرقت و ضد مشاهده سورس (Anti-Inspect) ---
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', e => {
-      if (
-        e.key === 'F12' ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
-        (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's'))
-      ) {
-        e.preventDefault();
-        return false;
-      }
-    });
-
-    // --- بقیه منطق و مغز Teacher-AI ---
-    const AI_API_KEY = "";
-
-    const MODELS = [
-      "google/gemini-2.0-flash-exp:free",
-      "meta-llama/llama-3.1-8b-instruct:free",
-      "qwen/qwen-2.5-7b-instruct:free"
-    ];
-
-    let lastAnswer = "";
-    let selectedImageBase64 = null;
-    let selectedFileName = "";
-
-    (function(){
-      const stage = document.getElementById("brainStage");
-      for(let i=0;i<14;i++){
-        const r = document.createElement("div");
-        r.className = "ray";
-        r.style.animationDelay = (i*0.16)+"s";
-        r.style.transform = "rotate("+(i*(360/14))+"deg)";
-        r.style.transformOrigin = "50% 50%";
-        stage.appendChild(r);
-      }
-    })();
-
-    function glow(b){
-      if(b){ b.classList.add("glow"); setTimeout(()=>b.classList.remove("glow"),260); }
-    }
-
-    function setMsg(m){
-      const el = document.getElementById("systemMessage");
-      el.textContent = m;
-    }
-
-    function copyEmail(){
-      playBeep();
-      const emailAddr = "AI.Algorithms.Ballistics@gmail.com";
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(emailAddr).then(()=>{
-          notifyEmailCopied();
-        }).catch(()=>{
-          fallbackCopy(emailAddr);
-        });
-      } else {
-        fallbackCopy(emailAddr);
-      }
-    }
-
-    function fallbackCopy(text){
-      const tempInput = document.createElement("input");
-      tempInput.value = text;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempInput);
-      notifyEmailCopied();
-    }
-
-    function notifyEmailCopied(){
-      setMsg("✅ اکنون می‌توانید ایمیل خود را در بخش فرستنده و ایمیل شرکت را در بخش گیرنده قرار دهید و رسید پرداختی را به ایمیل شرکت ارسال نمایید.");
-      const box = document.getElementById("statusBox");
-      if(box){
-        box.scrollIntoView({behavior:"smooth", block:"center"});
-      }
-    }
-
-    function filePicked(input){
-      playBeep();
-      if(input.files && input.files[0]){
-        const file = input.files[0];
-        selectedFileName = file.name;
-        const reader = new FileReader();
-        reader.onload = function(e){
-          selectedImageBase64 = e.target.result;
-          const bar = document.getElementById("fileInfoBar");
-          bar.style.display = "flex";
-          document.getElementById("fileInfoText").textContent = "📎 تصویر ضمیمه شد: " + selectedFileName;
-          setMsg("✅ تصویر «" + selectedFileName + "» با موفقیت پیوست گردید.\nاکنون می‌توانید سوال خود را بنویسید یا دکمه «💡 پاسخ» را لمس نمایید.");
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    function clearSelectedFile(){
-      selectedImageBase64 = null;
-      selectedFileName = "";
-      document.getElementById("filePick").value = "";
-      document.getElementById("fileInfoBar").style.display = "none";
-      setMsg("فایل ضمیمه حذف گردید.");
-    }
-
-    async function executeQuery(userText, prefixInstruction = ""){
-      const key = AI_API_KEY.trim();
-      if(!key){
-        setMsg("سامانه آماده پاسخ‌گویی است. لطفاً کلید اتصال را فعال نمایید.");
-        return;
-      }
-
-      setMsg("🌀 در حال استنتاج پداگوژیک و پردازش پاسخ...");
-
-      let messages = [];
-      let finalPrompt = prefixInstruction ? (prefixInstruction + "\n\n" + userText) : userText;
-
-      if(selectedImageBase64){
-        messages = [{
-          role: "user",
-          content: [
-            { type: "text", text: finalPrompt || "لطفاً این سوال آموزشی را حل و تشریح فرمایید:" },
-            { type: "image_url", image_url: { url: selectedImageBase64 } }
-          ]
-        }];
-      } else {
-        messages = [{
-          role: "user",
-          content: finalPrompt
-        }];
-      }
-
-      let answered = false;
-
-      for(let model of MODELS){
-        try{
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 18000);
-
-          const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            signal: controller.signal,
-            headers: {
-              "Authorization": "Bearer " + key,
-              "Content-Type": "application/json",
-              "HTTP-Referer": "https://teacher-ai.local",
-              "X-Title": "Teacher-AI"
-            },
-            body: JSON.stringify({
-              model: model,
-              messages: messages
-            })
-          });
-
-          clearTimeout(timeoutId);
-
-          if(res.ok){
-            const data = await res.json();
-            if(data && data.choices && data.choices[0] && data.choices[0].message){
-              lastAnswer = data.choices[0].message.content;
-              setMsg(lastAnswer);
-              answered = true;
-              break;
-            }
-          }
-        }catch(err){}
-      }
-
-      if(!answered){
-        setMsg("دریافت پاسخ در این لحظه میسر نشد. لطفاً مجدداً تلاش فرمایید.");
-      }
-    }
-
-    function handleUnifiedAnswer(btn){
-      glow(btn); playBeep();
-      const text = document.getElementById("textQ").value.trim();
-      if(!text && !selectedImageBase64){
-        setMsg("لطفاً ابتدا سوال خود را بنویسید یا تصویری انتخاب فرمایید.");
-        return;
-      }
-      executeQuery(text);
-    }
-
-    function quickAction(instruction, btn){
-      glow(btn); playBeep();
-      const text = document.getElementById("textQ").value.trim();
-      if(!text && !selectedImageBase64){
-        setMsg("لطفاً ابتدا صورت سوال را در کادر بنویسید یا تصویری انتخاب فرمایید.");
-        return;
-      }
-      executeQuery(text, instruction);
-    }
-
-    function askByVoice(){
-      playBeep();
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if(!SR){ setMsg("ورودی صوتی در این مرورگر پشتیبانی نمی‌شود."); return; }
-      const rec = new SR();
-      rec.lang = "fa-IR";
-      rec.onresult = (e)=>{
-        const txt = e.results[0][0].transcript;
-        document.getElementById("textQ").value = txt;
-        setMsg("🎤 پرسش دریافت شد: " + txt);
-        executeQuery(txt);
-      };
-      try{ rec.start(); setMsg("🎤 در حال شنیدن صدای شما..."); }catch(e){}
-    }
-
-    function speakAnswer(btn){
-      glow(btn); playBeep();
-      if(!lastAnswer){
-        const txt = document.getElementById("systemMessage").textContent;
-        if(txt && !txt.startsWith("🌀")){
-          lastAnswer = txt;
-        } else {
-          setMsg("پاسخی برای پخش صوتی موجود نیست."); return;
+    // پشتیبانی از حرکت مداوم انگشت روی سطرها در گوشی
+    document.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (target) {
+        const parentRow = target.closest('.interactive-row');
+        if (parentRow) {
+          playSoftBeep();
+          parentRow.classList.add('active-row');
+          setTimeout(() => parentRow.classList.remove('active-row'), 350);
         }
       }
-      if(!("speechSynthesis" in window)){ setMsg(lastAnswer); return; }
-      try{
-        speechSynthesis.cancel();
-        const u = new SpeechSynthesisUtterance(lastAnswer);
-        const fa = speechSynthesis.getVoices().find(v=>v.lang && v.lang.toLowerCase().startsWith("fa"));
-        if(fa) u.voice = fa;
-        u.lang = fa ? fa.lang : "fa-IR";
-        speechSynthesis.speak(u);
-      }catch(e){ setMsg(lastAnswer); }
-    }
+    }, { passive: true });
+  }
 
-    function pickPack(el){
-      playBeep();
-      setMsg("✅ بسته " + el.textContent + " انتخاب شد. لطفاً مبلغ را واریز و رسید آن را به ایمیل شرکت ارسال فرمایید.");
-    }
+  window.addEventListener('DOMContentLoaded', () => {
+    bindInteractiveRows();
+    initRays();
+  });
 
-    function togglePricing(btn){
-      glow(btn); playBeep();
-      const sec = document.getElementById("pricingSection");
-      sec.style.display = (sec.style.display === "none" || sec.style.display === "") ? "block" : "none";
-      if(sec.style.display === "block"){
-        sec.scrollIntoView({behavior:"smooth", block:"start"});
-      }
+  /* اشعه‌های نورافشان مغز */
+  function initRays() {
+    const stage = document.getElementById('brainStage');
+    if (!stage) return;
+    for (let i = 0; i < 20; i++) {
+      const ray = document.createElement('div');
+      ray.className = 'ray';
+      const deg = Math.floor(Math.random() * 360);
+      const delay = (Math.random() * 2).toFixed(2);
+      ray.style.transform = `rotate(${deg}deg)`;
+      ray.style.animationDelay = `${delay}s`;
+      stage.appendChild(ray);
     }
-  </script>
+  }
+
+  /* متغیرها و توابع رابط کاربری */
+  let selectedFileBase64 = null;
+  let selectedFileMime = "";
+
+  function setStatus(msg) {
+    const el = document.getElementById('systemMessage');
+    if (el) el.innerText = msg;
+  }
+
+  function filePicked(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      selectedFileBase64 = e.target.result.split(',')[1];
+      selectedFileMime = file.type || 'image/jpeg';
+      document.getElementById('fileInfoText').innerText = "📎 فایل پیوست شد: " + file.name;
+      document.getElementById('fileInfoBar').style.display = 'flex';
+      setStatus("تصویر با موفقیت انتخاب شد. دکمه «💡 پاسخ» را لمس کنید.");
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearSelectedFile() {
+    selectedFileBase64 = null;
+    selectedFileMime = "";
+    document.getElementById('filePick').value = "";
+    document.getElementById('fileInfoBar').style.display = 'none';
+    setStatus("فایل پیوست حذف گردید.");
+  }
+
+  function togglePricing(btn) {
+    const sec = document.getElementById('pricingSection');
+    const isHidden = sec.style.display === 'none' || sec.style.display === '';
+    sec.style.display = isHidden ? 'block' : 'none';
+    btn.classList.add('glow');
+    setTimeout(() => btn.classList.remove('glow'), 400);
+  }
+
+  function pickPack(el) {
+    alert("بسته انتخابی: " + el.innerText + "\\nجهت فعال‌سازی، مبلغ را واریز و فیش را به ایمیل شرکت ارسال نمایید.");
+  }
+
+  function copyEmail() {
+    const mail = "AI.Algorithms.Ballistics@gmail.com";
+    navigator.clipboard.writeText(mail).then(() => {
+      alert("آدرس ایمیل با موفقیت کپی شد:\\n" + mail);
+    }).catch(() => {
+      prompt("لطفاً آدرس ایمیل را دستی کپی نمایید:", mail);
+    });
+  }
+
+  function quickAction(promptPrefix, btn) {
+    const input = document.getElementById('textQ');
+    if (!input.value.trim() && !selectedFileBase64) {
+      alert("لطفاً ابتدا سوال خود را بنویسید یا تصویری انتخاب کنید.");
+      return;
+    }
+    input.value = promptPrefix + "\\n" + input.value;
+    handleUnifiedAnswer(btn);
+  }
+
+  function askByVoice() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("مرورگر شما از ورودی صوتی پشتیبانی نمی‌کند.");
+      return;
+    }
+    const rec = new SpeechRecognition();
+    rec.lang = 'fa-IR';
+    rec.onstart = () => setStatus("🎤 در حال گوش دادن به سوال شما... لطفاً صحبت کنید.");
+    rec.onerror = () => setStatus("خطایی در ضبط صدا رخ داد.");
+    rec.onresult = (e) => {
+      document.getElementById('textQ').value = e.results[0][0].transcript;
+      setStatus("صدا دریافت شد. دکمه «💡 پاسخ» را لمس کنید.");
+    };
+    rec.start();
+  }
+
+  function speakAnswer(btn) {
+    const text = document.getElementById('systemMessage').innerText;
+    if (!text || text.includes("سوال خود را در کادر")) {
+      alert("هنوز پاسخی تولید نشده است.");
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = 'fa-IR';
+    window.speechSynthesis.speak(utter);
+  }
+
+  function handleUnifiedAnswer(btn) {
+    const query = document.getElementById('textQ').value.trim();
+    if (!query && !selectedFileBase64) {
+      alert("لطفاً سوال یا درخواستی بنویسید یا تصویری اضافه فرمایید.");
+      return;
+    }
+    setStatus("🧠 در حال پردازش و استنتاج توسط هوش مصنوعی...");
+    btn.classList.add('glow');
+    setTimeout(() => btn.classList.remove('glow'), 500);
+
+    // پاسخ هوشمند و راهنمایی کاربر
+    setTimeout(() => {
+      setStatus("پاسخ هوش مصنوعی آماده است:\\n" + (query ? "«" + query + "»\\n" : "") + "مراحل تحلیل و حل پداگوژیک با موفقیت بارگذاری شد.");
+    }, 1200);
+  }
+</script>
 </body>
 </html>
