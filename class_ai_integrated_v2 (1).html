@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="fa"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="#10142b" name="theme-color"/><title>Class-AI | پلتفرم آموزشی هوشمند</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap');
+:root{color-scheme:dark;--fg:#f2f6ff;--line:rgba(159,190,255,.3)}*{box-sizing:border-box;font-family:Vazirmatn,Tahoma,sans-serif}
+body{margin:0;min-height:100vh;padding:20px 12px 45px;color:var(--fg);background:radial-gradient(ellipse at 15% 8%,#293f71 0,transparent 36%),radial-gradient(ellipse at 88% 30%,#392458 0,transparent 34%),linear-gradient(140deg,#090d1d,#141b35 52%,#080b19);overflow-x:hidden}.wrap{max-width:1020px;margin:auto}
+.card{position:relative;margin:15px 0;padding:20px;border:2px solid var(--line);border-radius:24px;background:linear-gradient(135deg,rgba(27,38,72,.94),rgba(19,23,47,.91));box-shadow:0 15px 42px #0005,inset 0 1px #ffffff12;backdrop-filter:blur(10px);color:var(--fg);line-height:1.95;font-weight:800;transition:border-color .18s,box-shadow .18s,filter .18s,transform .18s}.card h2{font-size:1.18rem;margin:0 0 9px;color:#ffe7a2;font-weight:900}.card p{font-weight:800}
+.title-card{text-align:center;background:linear-gradient(135deg,#24235b,#133a55 65%,#331b55);border-color:#7f8cff;animation:pulse-card 3.2s ease-in-out infinite}.title-card h1{margin:0;color:#fff;font-size:clamp(2.2rem,7vw,4rem);font-weight:900;letter-spacing:1px;text-shadow:0 0 26px #75d}.lines p{margin:2px 0;font-weight:850}.manager{text-align:center}.manager strong{color:#ffdf87}
+.fx{transition:border-color .18s,box-shadow .18s,filter .18s,transform .18s;will-change:transform}.card.fx:hover,.card.fx.fx-active{border-color:#ff344f!important;box-shadow:0 0 0 2px #ff344f55,0 0 28px #ff344f88,0 14px 36px #0007!important;filter:brightness(1.12);animation:shake .48s linear infinite!important}.title-card.fx:hover,.title-card.fx-active,.brain-card.fx:hover,.brain-card.fx-active{animation:pulse-shake 1.1s ease-in-out infinite!important}
+.brain-card{padding:13px;animation:pulse-card 3s ease-in-out infinite}.brain-stage{height:240px;border-radius:18px;background:radial-gradient(circle,#132958,#070b1e 70%);display:flex;align-items:center;justify-content:center;overflow:hidden}.brain-svg{width:min(85%,350px);height:220px;animation:brain-glow 3s ease-in-out infinite alternate}.brain-svg .stroke{fill:none;stroke:#62e9ff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.brain-svg .inner{fill:none;stroke:#a180ff;stroke-width:1.6;stroke-linecap:round;opacity:.95}.brain-svg .node{fill:#e6fdff;filter:drop-shadow(0 0 6px #55e9ff)}
+.status-box{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:11px;text-align:center;color:#efffff;font-weight:900}.mic-icon{width:43px;height:43px;filter:drop-shadow(0 0 12px #4df1cd);color:#6dffe0;flex:0 0 auto}.status-chip{padding:6px 14px;border:1px solid #6de4d4;border-radius:99px;background:#113c3c;color:#d7fff5;font-weight:900}.instruction{text-align:center;color:#fff;font-size:1.06rem;font-weight:900}.section-label{margin:0 0 10px;color:#ffe7a2;font-size:1.12rem;font-weight:900}
+.text-area{width:100%;min-height:148px;resize:vertical;border:2px solid #8494bd;border-radius:16px;padding:14px;background:#f8fbff;color:#17213a;font-size:1rem;line-height:1.8;user-select:text;outline:none}.text-area:focus{border-color:#66d9ff;box-shadow:0 0 0 3px #66d9ff33}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:11px}.btn{min-height:54px;width:100%;padding:11px 14px;border:2px solid #9cb4e5;border-radius:15px;background:linear-gradient(145deg,#24365f,#172542);color:#f5f8ff;font-size:.94rem;font-weight:900;line-height:1.55;cursor:pointer;box-shadow:0 6px 0 #080d1c;touch-action:manipulation;transition:border-color .18s,box-shadow .18s,filter .18s,transform .18s}.btn:hover,.btn:focus-visible,.btn.fx-active{border-color:#ff344f;background:linear-gradient(145deg,#5c263e,#342039);box-shadow:0 0 0 2px #ff344f55,0 0 22px #ff344f77;animation:shake .48s linear infinite;outline:none}.btn:active{transform:translateY(3px)}
+.answer-box{min-height:150px;max-height:650px;overflow:auto;padding:17px;border:2px solid #55c9e8;border-radius:16px;background:#f7faff;color:#15213b;line-height:1.9;user-select:text}.answer-box *{color:inherit}.system-message{margin-top:10px;padding:12px;border:1px solid #8293b8;border-radius:13px;background:#101a32;color:#fff;white-space:pre-wrap;min-height:48px;line-height:1.8}.filebar{display:none;align-items:center;justify-content:space-between;gap:8px;margin:10px 0;padding:10px;border:1px solid #64d7cb;border-radius:12px;background:#153b42;color:#fff}.filebar span{overflow-wrap:anywhere}.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:10px}.pack{padding:11px;border:1px solid #ffe19b;border-radius:14px;background:#332b35;color:#fff;text-align:center;font-weight:900}.warn{border:2px solid #ff737d;background:linear-gradient(135deg,#592535,#312039);color:#fff;text-align:center;font-weight:900}.email{text-align:center;font-size:1.15rem;font-weight:900;color:#91e9ff;direction:ltr;unicode-bidi:embed}.security{border-color:#ff5267;background:linear-gradient(135deg,#3c1b2b,#23172c)}.security h2{color:#ff9daa}.tiny{font-size:.88rem;color:#bfcce7}
+@keyframes shake{0%,100%{transform:translate(0,0) rotate(0)}20%{transform:translate(-2px,1px) rotate(-.5deg)}40%{transform:translate(2px,-1px) rotate(.5deg)}60%{transform:translate(-2px,-1px) rotate(-.5deg)}80%{transform:translate(2px,1px) rotate(.5deg)}}@keyframes pulse-card{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}@keyframes pulse-shake{0%,100%{transform:scale(1)}25%{transform:scale(1.018) translate(-1px,1px)}50%{transform:scale(1.025) translate(1px,-1px)}75%{transform:scale(1.018) translate(-1px,-1px)}}@keyframes brain-glow{from{transform:scale(.96);filter:drop-shadow(0 0 8px #62e9ff)}to{transform:scale(1.04);filter:drop-shadow(0 0 22px #a180ff)}}@media(max-width:560px){body{padding:12px 9px 32px}.card{padding:16px;border-radius:19px}.brain-stage{height:200px}.btn{font-size:.9rem}}
+</style></head><body><main class="wrap">
+<section aria-label="کادر اول عنوان" class="card title-card fx" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><h1>Class-AI</h1><p>پلتفرم انجام دهنده تکلیف و امتحان توی خونه مجازی توسط هوش مصنوعی</p><p>پلتفرم کلاس درس مدرسه و دانشگاه و موسسه کنکوری مجازی توی خونه توسط هوش مصنوعی</p><p>پلتفرم موسسه کنکور مجازی توسط هوش مصنوعی</p><p>پلتفرم دانشگاه مجازی توسط هوش مصنوعی</p></section>
+<section aria-label="کادر دوم پلتفرم های تکلیف و امتحان" class="card fx lines" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><p>پلتفرم تکلیف کتبی مجازی توسط هوش مصنوعی</p><p>پلتفرم تکلیف شفاهی مجازی توسط هوش مصنوعی</p><p>پلتفرم امتحان کتبی مجازی توسط هوش مصنوعی</p><p>پلتفرم امتحان شفاهی مجازی توسط هوش مصنوعی</p></section>
+<section class="card fx manager" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><h2>مدیریت:</h2><p><strong>حسین لعلیان (رتبه ۳۲ کنکور دکتری)</strong></p><p>و همچنین مفتخر بتحصیل در 6 دانشکده:شیلات،شیمی،زبان،مدیریت،مهندسی آی تی و مهندسی صنایع</p><p>صحت موضوع را از وزارت علوم جویا شوید!</p></section>
+<section aria-label="تصویر مغز هوش مصنوعی" class="card brain-card fx" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><div class="brain-stage"><svg aria-label="مغز عصبی هوش مصنوعی و مدارهای نورانی" class="brain-svg" role="img" viewbox="0 0 360 230"><defs><radialgradient id="brainFill"><stop stop-color="#584ca5" stop-opacity=".55"></stop><stop offset="1" stop-color="#09213c" stop-opacity=".9"></stop></radialgradient></defs><path class="stroke" d="M177 31c-18-17-48-11-53 10-20-7-41 7-39 29-23 6-29 34-13 49-16 18-8 43 11 50-5 22 13 39 34 35 9 18 33 20 47 7 6-8 10-18 10-29V43c0-5 1-9 3-12zm6 0c18-17 48-11 53 10 20-7 41 7 39 29 23 6 29 34 13 49 16 18 8 43-11 50 5 22-13 39-34 35-9 18-33 20-47 7-6-8-10-18-10-29V43c0-5-1-9-3-12z" fill="url(#brainFill)"></path><path class="inner" d="M170 52c-18-7-32 5-30 20-21-1-27 18-16 31-16 11-10 31 6 35-9 14 1 28 17 26m-2-85c-2 13 5 21 17 23m-25 32c-2 13 5 21 17 23m-25 32c7 32 5 30 20 21-1 27 18 16 31 16 11 10 31-6 35 9 14-1 28-17 26m2-85c2 13-5 21-17 23m25 32c-12-4-21 1-24 12M180 40v133"></path><path class="stroke" d="M97 76 57 55 33 67m46 56-44 7-17-18m83 67-40 27-25-5m237-125 40-21 24 12m-46 56 44 7 17-18m-83 67 40 27 25-5M180 39V15m-29 34-20-28m-43 76-31-7m237 0 31-7m-87-59 20-28m-19 151 25 24m-84-17v34"></path><g><circle class="node" cx="33" cy="67" r="4"></circle><circle class="node" cx="18" cy="100" r="4"></circle><circle class="node" cx="40" cy="218" r="4"></circle><circle class="node" cx="327" cy="67" r="4"></circle><circle class="node" cx="342" cy="100" r="4"></circle><circle class="node" cx="320" cy="218" r="4"></circle><circle class="node" cx="180" cy="15" r="4"></circle></g></svg></div></section>
+<section class="card fx status-box" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><span class="status-chip">وضعیت آماده پرسش!</span><span class="status-chip">وضعیت آماده پاسخ!</span><span class="status-chip">ورودی و خروجی صوتی فعال!</span><svg aria-label="میکروفن" class="mic-icon" role="img" viewbox="0 0 48 48"><rect fill="none" height="25" rx="7" stroke="currentColor" stroke-width="3.5" width="14" x="17" y="5"></rect><path d="M10 22a14 14 0 0 0 28 0M24 36v7m-9 0h18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3.5"></path></svg></section>
+<section class="card fx instruction" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">سوال خود را بنویسید یا با هوش مصنوعی صحبت کنید و یا از گالری انتخاب کنید و سپس دکمه پاسخ را بزنید!</section>
+<section class="card fx" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><h2 class="section-label">مکان :</h2><label for="textQ">نوشتن سوال امتحانی،تکلیف کلاسی و کپی پیست مطلب امتحانی،تکلیف کلاسی</label><textarea autocomplete="off" class="text-area" id="textQ" placeholder="سوال را اینجا بنویسید یا الصاق کنید..."></textarea><input accept="image/*" hidden="" id="filePick" onchange="filePicked(this)" type="file"/><div class="filebar" id="fileInfoBar"><span id="fileInfoText"></span><button class="btn fx" onclick="clearSelectedFile()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)" type="button">حذف عکس ✖</button></div></section>
+<section class="card fx" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><h2>ابزارها و دکمه‌ها</h2><div class="grid">
+<button class="btn fx" onclick="runAnalysis('سوال زیر را از نظر مفهوم، داده‌ها و روش حل تجزیه و تحلیل کن:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تجزیه و تحلیل کردن سوال</button>
+<button class="btn fx" onclick="quickAction('تله‌ها و دام‌های پنهان در سوال زیر را مشخص و توضیح بده:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">مشخص کردن تله درون سوال</button>
+<button class="btn fx" onclick="handleUnifiedAnswer()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">پاسخ</button>
+<button class="btn fx" onclick="runAnalysis('پاسخ زیر را کامل بررسی و تجزیه و تحلیل کن؛ خطاها و نکات را بگو:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تجزیه و تحلیل کردن پاسخ</button>
+<button class="btn fx" onclick="copyAnswer()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">کپی کردن پاسخ</button>
+<button class="btn fx" onclick="document.getElementById('filePick').click()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">انتخاب عکس از گالری</button>
+<button class="btn fx" onclick="runAnalysis('سوال داخل تصویر پیوست‌شده را دقیق بخوان، بازنویسی و تحلیل کن:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تجزیه و تحلیل کردن سوال درون عکس</button>
+<button class="btn fx" onclick="runAnalysis('پاسخ سوالات موجود در عکس پیوست‌شده را با جزئیات تحلیل کن:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تجزیه و تحلیل کردن پاسخ سوالات عکس</button>
+<button class="btn fx" onclick="clearAll()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">سطل اشغال(پاک کردن سوال/پاسخ قبلی)</button>
+<button class="btn fx" onclick="quickAction('سوال یا گزینه‌های زیر را به صورت چهار جوابی دقیق بازسازی کن:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">چهار جوابی کردن</button>
+<button class="btn fx" onclick="runAnalysis('سوال چهار جوابی زیر را تحلیل کن و ساختار گزینه‌ها را توضیح بده:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تجزیه و تحلیل کردن  سوال چهار جوابی</button>
+<button class="btn fx" onclick="quickAction('پاسخ این سوال را در قالب گزینه‌های چهار جوابی همراه تحلیل بنویس:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">پاسخ به سوال چهار جوابی</button>
+<button class="btn fx" onclick="runAnalysis('پاسخ و گزینه‌های سوال چهار جوابی زیر را به طور کامل تجزیه و تحلیل کن:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تجزیه و تحلیل کردن پاسخ سوال چهار جوابی</button>
+<button class="btn fx" onclick="quickAction('دام‌ها و تله‌های پنهان در این سوال چهارگزینه‌ای را مشخص و تشریح کن:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">مشخص کردن تله درون سوال چهارجوابی</button>
+<button class="btn fx" onclick="askByVoice()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">پرسیدن سوال امتحانی، کنکوری،تکلیف کلاسی</button>
+<button class="btn fx" onclick="runAnalysis('سوال امتحانی، کنکوری یا تکلیف کلاسی زیر را تجزیه و تحلیل کن:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تجزیه و تحلیل کردن سوال امتحانی، کنکوری،تکلیف کلاسی پرسیده شده</button>
+<button class="btn fx" onclick="speakAnswer()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">پاسخ با صدای من</button>
+<button class="btn fx" onclick="analyzeMyVoice()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تجزیه و تحلیل پاسخ با صدای من</button>
+<button class="btn fx" onclick="downloadSpeechAudio()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">ذخیره پاسخ صوتی</button>
+<button class="btn fx" onclick="askStructured()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">سوالات دارای جدول-فرمول-نمودار</button>
+<button class="btn fx" onclick="runAnalysis('سوال زیر را با جدول، نمودار و فرمول‌های لازم به‌صورت ساختاریافته تجزیه و تحلیل کن:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تجزیه و تحلیل سوالات دارای جدول-فرمول-نمودار</button>
+<button class="btn fx" onclick="quickAction('تله سوالات دارای جدول، فرمول یا نمودار را مشخص و توضیح بده:')" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تله سوالات دارای جدول-فرمول-نمودار</button>
+<button class="btn fx" onclick="answerStructured()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)">تجزیه و تحلیل پاسخ دارای جدول-فرمول-نمودار</button>
+</div></section>
+<section class="card fx" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><h2>کادر پاسخ هوش مصنوعی</h2><div aria-live="polite" class="answer-box" id="systemMessage"></div><div class="system-message" id="statusMessage">آماده دریافت سوال و پاسخ‌گویی هستم.</div></section>
+<section class="card fx" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><h2>مزیت خرید بسته ها:</h2><div class="lines"><p>اگر مدتی از بسته خود استفاده نکنید،</p><p>اعتبارتان نزد ما محفوظ میماند و هرگز منقضی و باطل نمیشود!</p></div></section>
+<section class="card fx" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><h2>لیست بسته های اعتباری:</h2><div class="packs"><div class="pack">۳ میلیون تومان</div><div class="pack">۵ میلیون تومان</div><div class="pack">۱۰ میلیون تومان</div><div class="pack">۲۰ میلیون تومان</div><div class="pack">۵۰ میلیون تومان</div><div class="pack">۱۰۰ میلیون تومان</div><div class="pack">۱۵۰ میلیون تومان</div><div class="pack">۲۰۰ میلیون تومان</div></div></section>
+<section class="card fx warn" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><p>بدلیل تقلب و سوء استفاده در پرداختهای الکترونیکی ؛از پرداخت الکترونیکی معذوریم!</p><p>از اینرو تنها روش خرید؛</p><p>آفلاین و ارسال رسید به ایمیل است !</p></section>
+<section class="card fx" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><h2>اطلاعات پرداخت آفلاین</h2><p>شماره کارت:</p><div class="email" dir="ltr">6037991555549678</div><button class="btn fx" onclick="copyCardNumber()" type="button">کپی کردن شماره کارت</button></section>
+<section class="card fx" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><div class="email">Ai.Algorithms.Ballistics@gmail.com</div><button class="btn fx" onclick="copyEmail()" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)" style="margin-top:12px">کپی کردن ایمیل</button></section>
+<section class="card fx security" onmouseenter="fxOn(this)" onpointerdown="fxOn(this,event)" ontouchstart="fxOn(this,event)"><h2>اخطار امنیتی و حقوق صیانت از مالکیت فکری!</h2><p>تمامی حقوق این پلتفرم متعلق به حسین لعلیان میباشد؛</p><p>لذا هرگونه کپی برداری پیگرد قانونی دارد!</p></section>
+<p class="tiny" style="text-align:center">Class-AI</p></main>
+<script>
+/* ============================================================
+   CONFIGURATION — GapGPT API
+   کلید API خود را فقط در همین خط عوض کنید 👇
+   ============================================================ */
+const GAPGPT_API_KEY = "PASTE_YOUR_GAPGPT_API_KEY_HERE"; // کلید خود را فقط محلی و در همین متغیر وارد کنید
+const GAPGPT_BASE_URL = "https://api.gapgpt.app/v1";
+const GAPGPT_ENDPOINT = GAPGPT_BASE_URL + "/chat/completions";
+const GAPGPT_MODEL = "gpt-4o-mini";                    // مدل چندوجهی (متن + تصویر)
+const TEACHER_SYSTEM_PROMPT = [
+"تو «معلم‌یار هوشمند Student-AI» هستی؛ یک معلم مجازی با تجربه برای دانش‌آموزان مقاطع ابتدایی، متوسطه اول و دوم (نظام آموزشی ایران / کنکور).",
+"قواعد پاسخ‌گویی:",
+"1) همیشه به زبان فارسی روان و ساده پاسخ بده؛ اصطلاحات تخصصی را در صورت نیاز با توضیح کوتاه بیاور.",
+"2) بر اساس کتب و سرفصل‌های رسمی وزارت آموزش‌وپرورش ایران (ریاضی، فیزیک، شیمی، زیست، ادبیات، عربی، دینی، زبان و ...) توضیح بده.",
+"3) اگر تصویر سوال ارسال شد، اول صورت سوال را دقیق بخوان و بازنویسی کن، بعد گام‌به‌گام حل کن.",
+"4) ساختار پاسخ: ✅ پاسخ نهایی در ابتدا یا انتها، سپس حل گام‌به‌گام، سپس نکته/تله تستی و نکته کنکوری.",
+"5) از Markdown استفاده کن: عنوان با ##، فرمول‌ها و عبارات مهم با **مهم**، لیست با - ، و جدول در صورت نیاز.",
+"6) اگر سوال مبهم یا ناقص بود، فرض منطقی خودت را اعلام کن و ادامه بده؛ سوال بی‌جواب نگذار.",
+"7) پاسخ‌ها باید دقیق، صادقانه و آموزشی باشند؛ اگر جوابی را نمی‌دانی صادقانه بگو و بهترین حدس آموزشی را با ذکر عدم قطعیت ارائه کن."
+].join("\n");
+
+/* ---------------- playBeep : gentle Web Audio beep ---------------- */
+let _beepLast=0,_actx=null;
+function playBeep(){
+  const now=Date.now(); if(now-_beepLast<160)return; _beepLast=now;
+  try{
+    _actx=_actx||new(window.AudioContext||window.webkitAudioContext)();
+    if(_actx.state==='suspended')_actx.resume().catch(()=>{});
+    const t=_actx.currentTime,o1=_actx.createOscillator(),o2=_actx.createOscillator(),g=_actx.createGain();
+    o1.type='sine';o1.frequency.setValueAtTime(660,t);o1.frequency.exponentialRampToValueAtTime(990,t+.09);
+    o2.type='sine';o2.frequency.setValueAtTime(1320,t);o2.frequency.exponentialRampToValueAtTime(1760,t+.09);
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.055,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+.22);
+    o1.connect(g);o2.connect(g);g.connect(_actx.destination);o1.start(t);o2.start(t);o1.stop(t+.24);o2.stop(t+.24);
+  }catch(e){}
+}
+function fxOn(el,ev){if(!el||!el.classList||!el.classList.contains('fx'))return;el.classList.add('fx-active');if(ev&&ev.isTrusted&&(/^(pointerdown|touchstart|click|keydown)$/.test(ev.type)))playBeep()}
+function fxOff(el){if(el&&el.classList)el.classList.remove('fx-active')}
+document.addEventListener('pointerover',e=>{const el=e.target.closest?.('.fx');if(el&&!(e.relatedTarget&&el.contains(e.relatedTarget)))fxOn(el)});
+document.addEventListener('pointerout',e=>{const el=e.target.closest?.('.fx');if(el&&!(e.relatedTarget&&el.contains(e.relatedTarget)))fxOff(el)});
+document.addEventListener('pointerdown',e=>{const el=e.target.closest?.('.fx');if(el)fxOn(el,e)});
+document.addEventListener('focusin',e=>{const el=e.target.closest?.('.fx');if(el)fxOn(el,e)});
+document.addEventListener('focusout',e=>{const el=e.target.closest?.('.fx');if(el)fxOff(el)});
+document.addEventListener('pointerup',e=>{const el=e.target.closest?.('.fx');if(el&&!el.matches(':hover'))fxOff(el)});
+document.addEventListener('touchstart',e=>{const el=e.target.closest?.('.fx');if(el)fxOn(el,e)},{passive:true});
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{if(e.key==='F12'||(e.ctrlKey&&['u','s'].includes(e.key.toLowerCase()))||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(e.key.toLowerCase())))e.preventDefault()});
+
+/* ---------------- UI helpers ---------------- */
+function msg(t){document.getElementById('systemMessage').textContent=t}
+function setMsgHtml(t){document.getElementById('systemMessage').innerHTML=t}
+function quickAction(p){document.getElementById('textQ').value=p+'\n\n'+document.getElementById('textQ').value;document.getElementById('textQ').focus()}
+
+/* ---------------- Markdown (light) renderer ---------------- */
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function _isSimpleFrac(x){return /^[\d.,٫،]+$/.test(String(x).trim())}
+function _mathReadable(s){
+  const reps=r=>r
+    .replace(/\\frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g,function(m,a,b){a=a.trim();b=b.trim();return (_isSimpleFrac(a)&&_isSimpleFrac(b))?(a+'/'+b):('('+a+')/('+b+')')})
+    .replace(/\\(?:times|cdot)/g,'×')
+    .replace(/\\div/g,'÷').replace(/\\pm/g,'±').replace(/\\mp/g,'∓')
+    .replace(/\\leq/g,'≤').replace(/\\geq/g,'≥').replace(/\\neq/g,'≠').replace(/\\approx/g,'≈')
+    .replace(/\\sqrt\s*\{([^{}]*)\}/g,'√($1)')
+    .replace(/\\left\b|\\right\b/g,'')
+    .replace(/\\[,;:!]/g,' ')
+    .replace(/\\[a-zA-Z]+/g,'')
+    .replace(/[ \t]{2,}/g,' ');
+  for(let i=0;i<4;i++)s=reps(s);
+  return s;
+}
+function cleanModelText(md){
+  let t=String(md==null?'':md).replace(/\r\n?/g,'\n');
+  const codes=[];
+  t=t.replace(/```[\s\S]*?```|`[^`\n]+`/g,function(m){codes.push(m);return '\x00C'+(codes.length-1)+'\x00'});
+  // Repair common malformed LaTeX, then turn common fractions/operators into readable text.
+  t=t.replace(/\\\\([()[\]])/g,'\\$1');
+  t=t.replace(/(^|[^\\])frac(?=\s*\{)/g,'$1\\frac');
+  t=_mathReadable(t);
+  t=t.replace(/\\[()[\]]/g,'').replace(/\\\[|\\\]/g,'');
+  // Strip Markdown heading/emphasis debris but keep the actual words and list content.
+  t=t.replace(/^[ \t]*#{1,6}[ \t]*/gm,'');
+  t=t.replace(/[ \t]*#{1,6}[ \t]*$/gm,'');
+  t=t.replace(/^[ \t]*(?:\*{1,}|_{3,}|-{3,}|#{1,6})[ \t]*$/gm,'');
+  t=t.replace(/\*\*([^*\n]+)\*\*/g,'$1').replace(/\*([^*\n]+)\*/g,'$1');
+  t=t.replace(/^[ \t]*[-*][ \t]+/gm,'• ');
+  t=t.replace(/^[ \t]*(?:#{1,6}\s*)?(?:\*{1,}|_{2,})[ \t]*$/gm,'');
+  t=t.replace(/^[ \t]*[.·•]+[ \t]*$/gm,'');
+  t=t.replace(/^[ \t]*#{1,6}[ \t]*\.[ \t]*$/gm,'');
+  t=t.replace(/\n{3,}/g,'\n\n');
+  t=t.replace(/\x00C(\d+)\x00/g,function(m,i){return codes[+i]});
+  return t.trim();
+}
+function renderMarkdown(md){
+  let t=esc(cleanModelText(md));
+  t=t.replace(/```([\s\S]*?)```/g,(m,c)=>'<pre style="background:#f1f3f5;border-radius:12px;padding:10px;overflow-x:auto;white-space:pre-wrap">'+c.trim()+'</pre>');
+  t=t.replace(/`([^`\n]+)`/g,'<code style="background:#f1f3f5;border-radius:6px;padding:1px 6px">$1</code>');
+  t=t.replace(/^#{1,6}\s*(.+)$/gm,'<b style="display:block;margin:8px 0 4px">$1</b>');
+  t=t.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
+  t=t.replace(/\*\*/g,'');
+  t=t.replace(/\*([^*\n]+)\*/g,'<i>$1</i>');
+  t=t.replace(/^\s*[-*]\s+(.+)$/gm,'• $1');
+  t=t.replace(/^\s*\|(.+)\|\s*$/gm,(m,row)=>'<span style="display:block;font-family:monospace;direction:ltr;text-align:left">'+row.trim()+'</span>');
+  return t.replace(/\n/g,'<br>');
+}
+/* ---------------- File / image handling ---------------- */
+let selectedImageBase64=null, selectedImageName='';
+function filePicked(i){
+  if(i.files&&i.files[0]){
+    let f=i.files[0];
+    if(!/^image\//.test(f.type)){msg('⚠️ لطفاً فقط فایل تصویر انتخاب کنید.');i.value='';return}
+    if(f.size>4*1024*1024){msg('⚠️ حجم تصویر بیشتر از ۴ مگابایت است؛ تصویر کوچک‌تری انتخاب کنید.');i.value='';return}
+    let r=new FileReader();
+    r.onload=e=>{
+      selectedImageBase64=e.target.result;      // data:image/...;base64,....
+      selectedImageName=f.name;
+      document.getElementById('fileInfoText').textContent='🖼 '+f.name+' ('+(f.size/1024).toFixed(0)+' KB) — تصویر همراه سوال ارسال می‌شود';
+      document.getElementById('fileInfoBar').style.display='flex';
+      msg('🖼 تصویر انتخاب شد؛ حالا توضیح یا خواسته‌ات را بنویس و «💡 پاسخ» را بزن.');
+    };
+    r.onerror=()=>msg('خطا در خواندن فایل تصویر.');
+    r.readAsDataURL(f);
+  }
+}
+function clearSelectedFile(){
+  selectedImageBase64=null;selectedImageName='';
+  document.getElementById('filePick').value='';
+  document.getElementById('fileInfoBar').style.display='none';
+}
+
+/* ---------------- Unified answer (GapGPT live) ---------------- */
+let busy=false,lastAnswerText="";
+function setLoading(on){
+  busy=on;
+  document.querySelectorAll('.btn').forEach(b=>{b.style.opacity=on?'.55':'1';b.style.pointerEvents=on?'none':'auto'});
+}
+async function handleUnifiedAnswer(){
+  if(busy)return;
+  let q=document.getElementById('textQ').value.trim();
+  if(!q&&!selectedImageBase64){msg('✍️ لطفاً سوال خود را بنویسید یا تصویری از گالری انتخاب کنید.');return}
+  if(!GAPGPT_API_KEY||GAPGPT_API_KEY.trim().length<10){msg('⚠️ کلید API GapGPT تنظیم نشده است. مقدار GAPGPT_API_KEY را در ابتدای اسکریپت وارد کنید.');return}
+  setLoading(true);
+  msg('در حال تحلیل و پاسخ‌گویی... ⏳\n(ممکن است چند ثانیه طول بکشد)');
+  let userContent;
+  if(selectedImageBase64){
+    userContent=[
+      {type:'text',text:q||'سوال موجود در تصویر را حل و گام‌به‌گام توضیح بده.'},
+      {type:'image_url',image_url:{url:selectedImageBase64,detail:'high'}}
+    ];
+  }else{
+    userContent=q;
+  }
+  try{
+    let res=await fetch(GAPGPT_ENDPOINT,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+GAPGPT_API_KEY
+      },
+      body:JSON.stringify({
+        model:GAPGPT_MODEL,
+        messages:[
+          {role:'system',content:TEACHER_SYSTEM_PROMPT},
+          {role:'user',content:userContent}
+        ],
+        temperature:0.4,
+        max_tokens:2500
+      })
+    });
+    if(!res.ok){
+      let errText='';
+      try{let ej=await res.json();errText=(ej.error&&(ej.error.message||ej.error.code))||JSON.stringify(ej)}catch(e){errText=await res.text().catch(()=>'')}
+      if(res.status===401){msg('⛔ خطای احراز هویت (۴۰۱): کلید API نامعتبر یا منقضی شده است. مقدار GAPGPT_API_KEY را بررسی کنید.');}
+      else if(res.status===429){msg('⛔ خطای محدودیت نرخ (۴۲۹): تعداد درخواست‌ها زیاد است یا اعتبار بسته تمام شده؛ چند لحظه بعد دوباره تلاش کنید.');}
+      else if(res.status===402){msg('⛔ خطای اعتبار (۴۰۲): موجودی بسته GapGPT کافی نیست.');}
+      else{msg('⛔ خطای سرور GapGPT (کد '+res.status+').\n'+String(errText).slice(0,300));}
+      setLoading(false);return;
+    }
+    let data=await res.json();
+    let answer=data&&data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content;
+    if(!answer){msg('پاسخی از سرویس دریافت نشد. لطفاً دوباره تلاش کنید.');setLoading(false);return}
+    lastAnswerText=String(answer);
+    let usage=data.usage?(' | توکن‌ها: '+usage_str(data.usage)):'';
+    setMsgHtml('<b style="color:#0b7285">🤖 پاسخ Student-AI:</b><hr style="border:none;border-top:2px dashed #74c0fc;margin:8px 0">'+renderMarkdown(answer)+(usage?'<br><small>📊 '+usage+'</small>':''));
+  }catch(err){
+    if(err&&err.name==='TypeError'){
+      msg('🌐 خطای شبکه: اتصال به سرور GapGPT برقرار نشد.\nاتصال اینترنت یا فیلترشکن/DNS خود را بررسی کنید و دوباره تلاش کنید.');
+    }else{
+      msg('⛔ خطای غیرمنتظره: '+(err&&err.message?err.message:err));
+    }
+  }finally{
+    setLoading(false);
+  }
+}
+function usage_str(u){
+  let p=[];if(u.prompt_tokens!=null)p.push('ورودی '+u.prompt_tokens);if(u.completion_tokens!=null)p.push('خروجی '+u.completion_tokens);if(u.total_tokens!=null)p.push('مجموع '+u.total_tokens);return p.join(' / ')
+}
+
+/* ---------------- Pricing / email / voice (unchanged behavior) ---------------- */
+function togglePricing(){let e=document.getElementById('pricingSection');e.style.display=e.style.display==='block'?'none':'block'}
+function pickPack(e){msg('بسته انتخاب‌شده: '+e.textContent)}
+async function copyText(text,okMessage,failMessage){try{if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(text);msg(okMessage);return}throw new Error('clipboard unavailable')}catch(e){try{const x=document.createElement('textarea');x.value=text;x.style.position='fixed';x.style.opacity='0';document.body.appendChild(x);x.select();const ok=document.execCommand('copy');x.remove();if(ok){msg(okMessage);return}}catch(_){}msg(failMessage)}}
+function copyEmail(){return copyText('Ai.Algorithms.Ballistics@gmail.com','آدرس ایمیل کپی شد.','کپی خودکار ممکن نشد؛ ایمیل را دستی کپی کنید.')}
+function copyCardNumber(){return copyText('6037991555549678','شماره کارت کپی شد.','کپی خودکار ممکن نشد؛ شماره کارت را دستی کپی کنید.')}
+function askByVoice(){
+  let R=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!R){msg('تشخیص گفتار در این مرورگر پشتیبانی نمی‌شود.');return}
+  let r=new R();r.lang='fa-IR';
+  r.onresult=e=>document.getElementById('textQ').value=e.results[0][0].transcript;
+  r.onerror=()=>msg('دسترسی میکروفون یا تشخیص گفتار ممکن نیست.');
+  r.start()
+}
+function answerTextForSpeech(){return cleanModelText(lastAnswerText).trim()}
+function choosePersianVoice(){
+  const vs=speechSynthesis.getVoices()||[];
+  return vs.find(v=>/^fa([-_]|$)/i.test(v.lang))||vs.find(v=>/persian|farsi|فارسی/i.test(v.name+' '+v.lang))||null;
+}
+function waitForVoices(){return new Promise(resolve=>{
+  if(speechSynthesis.getVoices().length){resolve();return}
+  let done=false;const finish=()=>{if(done)return;done=true;resolve()};
+  speechSynthesis.addEventListener('voiceschanged',finish,{once:true});setTimeout(finish,1800);
+})}
+async function speakAnswer(){
+  const text=answerTextForSpeech();
+  if(!text){msg('متنی برای خواندن وجود ندارد؛ ابتدا سوال را ارسال کنید.');return}
+  if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){msg('پخش گفتار در این مرورگر پشتیبانی نمی‌شود.');return}
+  try{
+    speechSynthesis.cancel();await waitForVoices();await new Promise(r=>setTimeout(r,80));speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);u.lang='fa-IR';u.rate=.94;
+    const voice=choosePersianVoice();if(voice)u.voice=voice;
+    u.onerror=e=>msg('خطا در پخش گفتار: '+(e.error||'نامشخص'));speechSynthesis.speak(u);
+  }catch(e){msg('پخش گفتار ناموفق بود؛ صدای فارسی مرورگر را بررسی کنید.')}
+}
+function downloadBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
+async function downloadSpeechAudio(){
+  const text=answerTextForSpeech();if(!text){msg('پاسخی برای ذخیره وجود ندارد.');return}
+  msg('در حال تلاش برای دریافت صدای TTS از GapGPT...');
+  try{
+    const r=await fetch(GAPGPT_BASE_URL+'/audio/speech',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+GAPGPT_API_KEY},body:JSON.stringify({model:'tts-1',voice:'alloy',input:text,response_format:'mp3'})});
+    if(r.ok){const b=await r.blob();if(b.size>0){downloadBlob(b,'student-ai-answer.mp3');msg('فایل صوتی TTS دانلود شد.');return}}
+  }catch(e){}
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){msg('سرویس TTS فایل صوتی نداد و ضبط میکروفون هم پشتیبانی نمی‌شود. مرورگرها ضبط مستقیم صدای سیستم را نمی‌دهند.');return}
+  msg('روش جایگزین: هنگام پخش TTS صدای بلندگو با میکروفون ضبط می‌شود. مجوز میکروفون بدهید و بلندگو را نزدیک میکروفون بگذارید؛ این ضبط مستقیم صدای دیجیتال نیست.');
+  let stream=null,rec=null,chunks=[];
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({audio:true});rec=new MediaRecorder(stream);
+    rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+    const stopped=new Promise(resolve=>{rec.onstop=resolve});rec.start();
+    await waitForVoices();speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);u.lang='fa-IR';u.rate=.94;const v=choosePersianVoice();if(v)u.voice=v;
+    const spoken=new Promise(resolve=>{u.onend=resolve;u.onerror=resolve});speechSynthesis.speak(u);
+    await Promise.race([spoken,new Promise(resolve=>setTimeout(resolve,Math.max(12000,text.length*190)))]);
+    if(rec.state!=='inactive')rec.stop();await stopped;stream.getTracks().forEach(t=>t.stop());
+    const blob=new Blob(chunks,{type:rec.mimeType||'audio/webm'});if(!blob.size)throw new Error('empty');
+    downloadBlob(blob,'student-ai-answer-recording.webm');msg('ضبط میکروفون دانلود شد؛ کیفیت به محیط وابسته است و این صدای ضبط‌شده از بلندگو است.');
+  }catch(e){try{if(stream)stream.getTracks().forEach(t=>t.stop())}catch(_){}msg('ضبط ناموفق بود؛ مجوز میکروفون و HTTPS را بررسی کنید.')}
+}
+function askStructured(){quickAction('سوال زیر را با جدول، نمودار و فرمول‌های لازم به‌صورت ساختاریافته بررسی کن:')}
+function answerStructured(){quickAction('پاسخ سوال زیر را با جدول، نمودار (توصیف متنی) و فرمول‌های خوانا و مرحله‌به‌مرحله ارائه کن:')}
+function clearAll(){
+  if(window.speechSynthesis)speechSynthesis.cancel();lastAnswerText='';
+  document.getElementById('textQ').value='';clearSelectedFile();document.getElementById('filePick').value='';
+  document.getElementById('systemMessage').textContent='🌀 سوال خود را بنویسید یا تصویری از گالری انتخاب کنید و سپس «💡 پاسخ» را بزنید.';
+}
+
+function runAnalysis(prompt){if(busy)return;const tq=document.getElementById('textQ');if(!tq.value.trim()&&!selectedImageBase64){msg('✍️ ابتدا سوال را بنویسید یا تصویر انتخاب کنید.');tq.focus();return}tq.value=prompt+'\n\n'+tq.value;handleUnifiedAnswer()}
+function copyAnswer(){if(!lastAnswerText){msg('هنوز پاسخی برای کپی وجود ندارد.');return}return copyText(lastAnswerText,'✅ پاسخ کپی شد.','کپی خودکار ممکن نشد؛ پاسخ را دستی کپی کنید.')}
+function analyzeMyVoice(){runAnalysis('پاسخ شفاهی زیر را کامل تجزیه و تحلیل و اصلاح کن:')}
+
+</script></body></html>
