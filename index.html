@@ -1,155 +1,459 @@
-<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teacher-AI | پلتفرم آموزشی</title><style>
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap');:root{--ink:#000;--card:rgba(255,255,255,.96)}*{box-sizing:border-box;font-family:Vazirmatn,sans-serif;color:var(--ink)!important}body{margin:0;padding:18px 10px 40px;min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 10% 10%,#ffffff8c 0 120px,transparent 121px),radial-gradient(circle at 90% 20%,#ffffff73 0 170px,transparent 171px),linear-gradient(135deg,#a8edea,#fed6e3 45%,#d4fc79);user-select:none}.wrap{max-width:920px;margin:auto;position:relative;z-index:1}.card{background:var(--card);border:3px solid #fc0;border-radius:22px;padding:18px;margin:14px 0;box-shadow:0 12px 28px #0002;backdrop-filter:blur(8px)}.title{text-align:center;font-weight:900;font-size:22px;padding:16px 14px;border-radius:18px;border:2px solid #111;box-shadow:0 6px #111;background:linear-gradient(45deg,#ff6b6b,#4ecdc4,#ffe66d);margin-bottom:14px;line-height:1.8}.title .t-brand{font-size:26px;display:block}.title .t-sub{font-size:18px;display:block;margin-top:2px}.title .t-desc{font-size:16px;display:block;margin-top:2px}.sub,.status-box,.method-box{margin-top:14px;padding:14px;border-radius:16px;background:#fff3bf;border:2px dashed #f59f00;font-weight:800;line-height:1.9}.brain-stage{height:210px;margin-top:14px;border-radius:20px;background:radial-gradient(circle,#1b1f3b,#07091c);border:3px solid #5b8cff;display:flex;align-items:center;justify-content:center;position:relative}.brain{font-size:105px;animation:pulse 2.4s infinite}.brain-title{position:absolute;bottom:8px;text-align:center;color:#dbe9ff!important;font-weight:900}@keyframes pulse{50%{transform:scale(1.08);filter:drop-shadow(0 0 25px #b06eff)}}.badge,.cam-ready{display:inline-block;padding:3px 14px;border:2px solid;border-radius:999px;font-weight:900;background:#2ed573}.cam-ready{background:#ffe66d;margin-right:6px}#systemMessage{margin-top:12px;background:white;border:2px solid #ced4da;border-radius:14px;padding:12px;min-height:48px;white-space:pre-wrap}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}.btn,.pack{border:3px solid #111;border-radius:18px;padding:14px;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 6px #111;background:white}.btn{display:flex;align-items:center;justify-content:center;gap:10px}.c1{background:#ff9ff3}.c2{background:#54a0ff}.c3{background:#feca57}.c4{background:#1dd1a1}.c5{background:#c8d6e5}.c6{background:#ff6b81}.c7{background:#a29bfe}.c8{background:#55efc4}.c9{background:#00d2d3}.c10{background:#ff7675}.c11{background:#ffa801}.warn{background:#fff3bf;border:2px solid #e03131}.text-area{width:100%;min-height:120px;border-radius:18px;border:3px solid #111;padding:14px;font-size:15px;font-weight:700;margin-top:14px;resize:vertical;box-shadow:0 6px #111}.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}#pricingSection{display:block;margin-top:14px}#fileInfoBar{display:none;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding:8px 12px;background:#e7f5ff;border:2px solid #339af0;border-radius:12px;font-size:13px;font-weight:700}#fileInfoBar button{background:#ff6b6b;color:#fff!important;border:none;border-radius:8px;padding:4px 10px;cursor:pointer;font-weight:900}.interactive-row{transition:box-shadow .18s ease,border-color .18s ease,filter .18s ease,transform .18s ease;position:relative}.interactive-row.active-row,.interactive-row:hover{border-color:#ff0055!important;box-shadow:0 0 0 3px #ff0055,0 0 26px #ff0055,0 0 46px #ff77a9,0 8px 18px #0004!important;filter:drop-shadow(0 0 10px #ffd700cc);animation:jiggle .42s ease-in-out infinite alternate;z-index:5;position:relative}@keyframes jiggle{0%{transform:scale(1.015) rotate(0)}25%{transform:scale(1.015) rotate(-1deg) translateY(-2px)}50%{transform:scale(1.015) rotate(1deg) translateY(2px)}75%{transform:scale(1.015) rotate(-.7deg)}100%{transform:scale(1.015)}}@media(prefers-reduced-motion:reduce){.interactive-row.active-row,.interactive-row:hover{animation:none}}@keyframes bannerGlow{0%,100%{box-shadow:0 6px 22px #d9042955,0 0 0 3px #ffb3c1 inset}50%{box-shadow:0 8px 30px #d9042988,0 0 0 3px #ffdde2 inset}}.benefit-banner{margin-top:14px;padding:16px 18px;border-radius:18px;border:3px solid #d90429;background:linear-gradient(135deg,#ff4d4d,#d90429 60%,#a4031f);text-align:center;font-weight:900;font-size:15px;line-height:2;animation:bannerGlow 2.6s ease-in-out infinite}.benefit-banner .bb-title{display:inline-block;padding:4px 18px;margin-bottom:8px;border-radius:999px;background:#ffffff;color:#d90429!important;font-size:15px;letter-spacing:.3px}.benefit-banner .bb-text{color:#ffffff!important;text-shadow:0 1px 2px #7a0212}
-</style></head><body><div class="wrap"><section class="card"><div class="title interactive-row"><span class="t-brand">Teacher-AI</span><span class="t-sub">پلتفرم</span><span class="t-desc">مدرسه مجازی-کنکور مجازی-دانشگاه مجازی</span></div><div class="sub interactive-row">پلتفرم انجام‌دهنده خواسته‌های دانش‌آموز، دانشجو و پشت‌کنکوری‌های مجازی توسط هوش مصنوعی<br><br>تمامی حقوق این پلتفرم متعلق به شرکت صنایع پردرآمد تهرانیها با مدیرعاملی حسین لعلیان (رتبه ۳۲ کنکور دکتری) می‌باشد.</div><div class="brain-stage interactive-row"><div class="brain">🧠</div><div class="brain-title">⚡ مغز هوش مصنوعی Teacher-AI — آنلاین و نورافشان ⚡</div></div><div class="status-box interactive-row"><span class="badge">● وضعیت: آماده پرسش</span> <span class="cam-ready">🎤 ورودی صوتی فعال</span><div id="systemMessage" class="interactive-row">🌀 سوال خود را بنویسید یا تصویری از گالری انتخاب کنید و سپس «💡 پاسخ» را بزنید.</div></div><div id="fileInfoBar" class="interactive-row"><span id="fileInfoText"></span><button onclick="clearSelectedFile()">حذف فایل ✖</button></div><textarea class="text-area interactive-row" id="textQ" placeholder="توضیحات، صورت سوال یا خواسته خود را اینجا بنویسید..."></textarea><div class="grid"><button class="btn c9 interactive-row" onclick="handleUnifiedAnswer()">💡 پاسخ</button><button class="btn c10 interactive-row" onclick="copyAnswerText()">📋 کپی کردن پاسخ</button><button class="btn c11 interactive-row" onclick="document.getElementById('filePick').click()">📚 انتخاب (گالری)</button><input type="file" id="filePick" accept="image/*" hidden onchange="filePicked(this)"><button class="btn c1 interactive-row" onclick="quickAction('سوال یا گزینه‌های زیر را به صورت چهار جوابی دقیق بازسازی کن:')">✳️ چهار جوابی کردن</button><button class="btn c2 interactive-row" onclick="quickAction('پاسخ این سوال را در قالب گزینه‌های چهار جوابی همراه تحلیل بنویس:')">💬 پاسخ سوال چهار جوابی</button><button class="btn c3 interactive-row" onclick="quickAction('پاسخ و گزینه‌های سوال زیر را به طور کامل تجزیه و تحلیل کن:')">📊 تجزیه و تحلیل پاسخ سوالات چهار جوابی</button><button class="btn c4 interactive-row" onclick="quickAction('سوال آموزشی زیر را از پایه تجزیه و تحلیل و تشریح کن:')">🔍 تجزیه و تحلیل سوالات</button><button class="btn c5 interactive-row" onclick="quickAction('دام‌ها و تله‌های تستی پنهان در این سوال را مشخص و تشریح کن:')">🪤 تله سوالات تستی</button><button class="btn c7 interactive-row" onclick="askByVoice()">🎙️ سوال با صدای محصل</button><button class="btn c8 interactive-row" onclick="speakAnswer()">🔊 پاسخ با صدای محصل</button></div><div id="pricingSection" class="interactive-row"><div id="benefitBanner" class="benefit-banner interactive-row"><span class="bb-title">✨ مزیت خرید بسته‌های شرکت ما ✨</span><div class="bb-text">اگر مدتی از بستهٔ خود استفاده نکنید، <b>اعتبارتان نزد ما محفوظ می‌ماند و هرگز منقضی نمی‌شود!</b></div></div><div class="interactive-row" style="font-weight:900;text-align:center;margin-top:14px">📦 لیست بسته‌های آموزشی و اعتباری Teacher-AI</div><div class="packs"><div class="pack interactive-row" onclick="pickPack(this)">۳,۰۰۰,۰۰۰ تومان</div><div class="pack interactive-row" onclick="pickPack(this)">۵,۰۰۰,۰۰۰ تومان</div><div class="pack interactive-row" onclick="pickPack(this)">۱۰,۰۰۰,۰۰۰ تومان</div><div class="pack interactive-row" onclick="pickPack(this)">۲۰,۰۰۰,۰۰۰ تومان</div><div class="pack interactive-row" onclick="pickPack(this)">۵۰,۰۰۰,۰۰۰ تومان</div><div class="pack interactive-row" onclick="pickPack(this)">۱۰۰,۰۰۰,۰۰۰ تومان</div></div><div class="method-box interactive-row"><div>از پرداخت الکترونیکی معذوریم؛ روش خرید آفلاین و ارسال رسید است.</div><div class="interactive-row" style="font-weight:900;margin-top:12px">تنها روش خرید بسته‌ها: واریز به حساب شرکت از طریق ATM یا باجه بانکی و ارسال رسید.</div><div class="interactive-row">مبلغ بسته مورد نظر را واریز کرده و تصویر رسید را به ایمیل شرکت ارسال فرمایید.</div><button class="btn interactive-row" style="margin:14px auto" onclick="copyEmail()">📋 کپی آدرس ایمیل شرکت</button><div class="interactive-row" style="text-align:center">ایمیل رسمی شرکت:<br><code>AI.Algorithms.Ballistics@gmail.com</code></div></div></div></section><section class="card warn interactive-row"><b>⚠️ اخطار امنیتی و صیانت از حقوق مالکیت فکری</b><br>تمامی حقوق متعلق به شرکت صنایع پردرآمد تهرانیها و مدیرعامل حسین لعلیان می‌باشد؛ هرگونه کپی‌برداری پیگرد قانونی دارد.</section></div><script>
-// --- تنظیمات API برای GapGPT ---
-const GAPGPT_API_KEY  = "sk-oUMPFk8tCvhZTxQrzQ0bABJfgRhGCsn2KOFBQ7pSjZJ6ZUXU"; 
-const GAPGPT_ENDPOINT = "https://api.gapgpt.app/v1/chat/completions";
-const GAPGPT_MODEL    = "gpt-4o";
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student-AI | پلتفرم آموزشی هوشمند حسین لعلیان</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --gold: #d97706;
+      --gold-light: #fef3c7;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+    }
 
-const TEACHER_SYSTEM_PROMPT = ["تو «معلم‌یار هوشمند Teacher-AI» هستی؛ یک معلم مجازی با تجربه برای دانش‌آموزان مقاطع ایران.", "قواعد پاسخ‌گویی: زبان فارسی روان، پاسخ گام‌به‌گام و دقیق، ذکر نکات تستی و آموزشی."].join("\n");
-let rawLastAnswer = "";
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+    body {
+      background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 50%, #faf5ff 100%);
+      color: var(--text-main);
+      padding: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+    .container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    }
+    .header-card {
+      border-top: 5px solid var(--primary);
+      text-align: center;
+      background: linear-gradient(to bottom, #ffffff, #f8fafc);
+    }
+    .header-card h1 { font-size: 1.8rem; font-weight: 900; color: #1e3a8a; margin-bottom: 8px; }
+    .header-card p { color: var(--text-muted); font-size: 0.95rem; }
 
-(()=>{let last=0,ctx=null;function beep(){let now=Date.now();if(now-last<150)return;last=now;try{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();let o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=880;g.gain.setValueAtTime(.0001,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.045,ctx.currentTime+.008);g.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.075);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.08)}catch(e){}}function activate(el){if(!el||!el.classList||!el.classList.contains('interactive-row'))return;el.classList.add('active-row');beep()}function deactivate(el){el?.classList?.remove('active-row')}document.addEventListener('pointerover',e=>{let x=e.target.closest('.interactive-row');if(x&&x!==e.relatedTarget?.closest?.('.interactive-row'))activate(x)});document.addEventListener('pointerout',e=>{let x=e.target.closest('.interactive-row');if(x&&x!==e.relatedTarget?.closest?.('.interactive-row'))deactivate(x)});document.addEventListener('pointerdown',e=>activate(e.target.closest('.interactive-row')));document.addEventListener('pointerup',e=>deactivate(e.target.closest('.interactive-row')));document.addEventListener('contextmenu',e=>e.preventDefault());})();
+    .honors-card {
+      border: 2px solid #f59e0b;
+      background: #fffbeb;
+      border-radius: 16px;
+      padding: 18px 20px;
+      font-size: 0.95rem;
+      color: #92400e;
+    }
+    .honors-card h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
 
-function msg(t){document.getElementById('systemMessage').textContent=t}
-function setMsgHtml(t){document.getElementById('systemMessage').innerHTML=t}
-function quickAction(p){document.getElementById('textQ').value=p+'\n\n'+document.getElementById('textQ').value;document.getElementById('textQ').focus()}
+    .input-group { margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px; }
+    label { font-weight: 700; font-size: 0.95rem; color: #334155; }
+    textarea {
+      width: 100%;
+      height: 140px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
 
-function renderMarkdown(md){
-  let t=md.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  t=t.replace(/\n\n([\s\S]*?)\n\n/g,(m,c)=>'<pre style="background:#f1f3f5;border-radius:12px;padding:10px;overflow-x:auto">'+c+'</pre>');
-  t=t.replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
-  return t.replace(/\n/g,'<br>');
-}
+    .file-dropzone {
+      border: 2px dashed #94a3b8;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      background: #f8fafc;
+      cursor: pointer;
+      position: relative;
+    }
+    .file-dropzone:hover { background: #f1f5f9; border-color: var(--primary); }
+    .file-dropzone input {
+      position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
+    }
 
-function filePicked(i){
-  if(i.files&&i.files[0]){
-    let f=i.files[0];
-    let r=new FileReader();
-    r.onload=e=>{
-      selectedImageBase64=e.target.result;
-      document.getElementById('fileInfoText').textContent='🖼 '+f.name;
-      document.getElementById('fileInfoBar').style.display='flex';
-    };
-    r.readAsDataURL(f);
-  }
-}
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    button.btn-action {
+      background: #f8fafc;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    button.btn-action:hover { background: #e2e8f0; }
+    button.btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border: 1px solid var(--primary);
+    }
+    button.btn-primary:hover { background: var(--primary-hover); }
+    button.btn-warn {
+      background: var(--danger-bg);
+      border-color: #fca5a5;
+      color: var(--danger);
+    }
+    button.btn-warn:hover { background: #fecaca; }
 
-function clearSelectedFile(){
-  selectedImageBase64=null;
-  document.getElementById('filePick').value='';
-  document.getElementById('fileInfoBar').style.display='none';
-}
-
-let selectedImageBase64=null;
-
-async function handleUnifiedAnswer(){
-  let q=document.getElementById('textQ').value.trim();
-  if(!q&&!selectedImageBase64){msg('✍️ سوال را بنویسید یا تصویر انتخاب کنید.');return}
-  msg('⏳ در حال تحلیل و تدریس مسئله...');
-  
-  let content;
-  if(selectedImageBase64){
-    content=[
-      {type:'text',text:q || 'لطفاً این تصویر و سوالات آن را به صورت گام‌به‌گام و تشریحی حل و تحلیل کنید.'},
-      {type:'image_url',image_url:{url:selectedImageBase64}}
-    ];
-  } else {
-    content=q;
-  }
-
-  try{
-    let res=await fetch(GAPGPT_ENDPOINT,{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'Authorization':'Bearer ' + GAPGPT_API_KEY
-      },
-      body:JSON.stringify({
-        model:GAPGPT_MODEL,
-        messages:[
-          {role:'system',content:TEACHER_SYSTEM_PROMPT},
-          {role:'user',content:content}
-        ]
-      })
-    });
+    .response-card {
+      border-left: 5px solid var(--primary);
+      background: #ffffff;
+      min-height: 120px;
+    }
+    .response-content {
+      margin-top: 12px;
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #1e293b;
+      word-wrap: break-word;
+    }
+    .preview-box img { max-width: 140px; border-radius: 8px; margin-top: 10px; border: 1px solid #e2e8f0; }
     
-    let data=await res.json();
-    if(!res.ok){
-      msg('خطا ('+res.status+'):\n'+(data?.error?.message || res.statusText));
-    } else if(data?.choices?.[0]?.message?.content){
-      rawLastAnswer = data.choices[0].message.content;
-      setMsgHtml(renderMarkdown(rawLastAnswer));
-    } else {
-      msg('پاسخ نامعتبر از سرور:\n'+JSON.stringify(data));
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 10px;
+      margin-bottom: 20px;
     }
-  }catch(e){
-    msg('خطا در اتصال: '+e.message);
-  }
-}
+  </style>
+</head>
+<body>
 
-function copyAnswerText(){
-  if(!rawLastAnswer){
-    let currentText = document.getElementById('systemMessage').innerText.trim();
-    if(currentText && !currentText.startsWith('🌀') && !currentText.startsWith('⏳') && !currentText.startsWith('✍️') && !currentText.startsWith('خطا')){
-      rawLastAnswer = currentText;
-    }
-  }
-  if(!rawLastAnswer){
-    alert('هنوز پاسخی برای کپی کردن ثبت نشده است.');
-    return;
-  }
-  navigator.clipboard.writeText(rawLastAnswer).then(()=>{
-    alert('✅ متن کامل پاسخ با موفقیت کپی شد.');
-  }).catch(()=>{
-    navigator.clipboard.writeText(document.getElementById('systemMessage').innerText);
-    alert('✅ متن پاسخ کپی شد.');
-  });
-}
+<div class="container">
+  
+  <!-- سربرگ اصلی پلتفرم -->
+  <header class="card header-card">
+    <h1>⚡ مغز هوش مصنوعی Student-AI — آنلاین و نورافشان ⚡</h1>
+    <p>سامانه آموزشی هوشمند حل مسائل علمی، تحلیلی، فرمولی و تصویری</p>
+  </header>
 
-function askByVoice(){
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SpeechRecognition){
-    alert('مرورگر شما از ورودی صوت پشتیبانی نمی‌کند.');
-    return;
+  <!-- کادر اخطار و افتخارات تحصیلی ۶ دانشکده -->
+  <section class="card honors-card">
+    <h2>⚠️ اخطار امنیتی، مالکیت فکری و سوابق پژوهشی</h2>
+    <p>این سامانه متعلق به حسین لعلیان (رتبه ۳۲ کنکور دکتری) بوده و کلیه حقوق طراحی الگوریتم‌ها و بستر نرم‌افزاری آن محفوظ است.</p>
+    <div style="margin-top: 10px; font-weight: 500; border-top: 1px dashed #d97706; padding-top: 8px;">
+      و همچنین مفتخر بتحصیل در6 دانشکده:شیلات،شیمی،زبان،مدیریت،مهندسی آی تی و مهندسی صنایع صحت موضوع را از وزارت علوم جویا شوید!
+    </div>
+  </section>
+
+  <!-- فرم تعامل کاربر -->
+  <main class="card">
+    <div class="input-group">
+      <label for="textQ">صورت سوال، مسئله ریاضی یا درخواست تحلیلی:</label>
+      <textarea id="textQ" placeholder="سوال خود را بنویسید یا با دکمه‌های زیر قالب‌بندی سریع را اعمال فرمایید..."></textarea>
+    </div>
+
+    <div class="input-group">
+      <label>بارگذاری تصویر مسئله (در صورت وجود):</label>
+      <div class="file-dropzone">
+        <input type="file" id="fileInput" accept="image/*" onchange="handleFileSelect(event)">
+        <span id="filePromptText">📁 انتخاب یا کشیدن عکس مسئله به اینجا</span>
+      </div>
+      <div id="previewArea" class="preview-box"></div>
+    </div>
+
+    <!-- گرید دکمه‌های کنترلی -->
+    <div class="btn-grid">
+      <button class="btn-action btn-primary" onclick="handleUnifiedAnswer()">💡 پاسخ هوشمند</button>
+      <button class="btn-action btn-warn" onclick="resetForNewQuestion()">🗑️ پاکسازی و سوال جدید</button>
+      <button class="btn-action" onclick="insertMathTableQuestionTemplate()">🧮 سوال (جدول/نمودار/فرمول)</button>
+      <button class="btn-action" onclick="answerMathTableMode()">📐 پاسخ (جدول/نمودار/فرمول)</button>
+      <button class="btn-action" onclick="speakAnswer()">🔊 خوانش صوتی</button>
+      <button class="btn-action" onclick="saveSpokenAnswerAudio()">💾 ذخیره صوت پاسخ</button>
+    </div>
+  </main>
+
+  <!-- کادر نمایش پاسخ نهایی -->
+  <section class="card response-card">
+    <label>پاسخ و تحلیل سیستم هوشمند:</label>
+    <div id="systemMessage" class="response-content">
+      🌀 سوال را بنویسید یا تصویر انتخاب کنید و سپس «💡 پاسخ هوشمند» را بزنید.
+    </div>
+  </section>
+
+  <footer>
+    Student-AI &copy; تمامی حقوق مادی و معنوی برای مهندس حسین لعلیان محفوظ است.
+  </footer>
+
+</div>
+
+<script>
+  // متغیرهای وضعیت
+  const AVALAI_API_KEY = "GAPGPTMASKTOKENl859ywd3y4fX1X"; // کلید اختصاصی AvalAI خود را اینجا بگذارید
+  let selectedImageBase64 = null;
+  let rawLastAnswer = "";
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let isRecording = false;
+
+  function msg(str) {
+    document.getElementById('systemMessage').innerText = str;
   }
-  const rec = new SpeechRecognition();
-  rec.lang = 'fa-IR';
-  msg('🎙️ در حال گوش دادن به صدای محصل...');
-  rec.onresult = function(e){
-    const spoken = e.results[0][0].transcript;
+
+  function setMsgHtml(html) {
+    document.getElementById('systemMessage').innerHTML = html;
+  }
+
+  function esc(s) {
+    return (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  // مدیریت بارگذاری و خواندن فایل تصویر
+  function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      selectedImageBase64 = evt.target.result;
+      document.getElementById('previewArea').innerHTML = '<img src="' + selectedImageBase64 + '" alt="پیش‌نمایش">';
+      document.getElementById('filePromptText').innerText = '✅ عکس بارگذاری شد: ' + file.name;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearSelectedFile() {
+    selectedImageBase64 = null;
+    document.getElementById('fileInput').value = "";
+    document.getElementById('previewArea').innerHTML = "";
+    document.getElementById('filePromptText').innerText = "📁 انتخاب یا کشیدن عکس مسئله به اینجا";
+  }
+
+  // پاکسازی و ریست کامل محیط
+  function resetForNewQuestion() {
+    try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch(e){}
+    rawLastAnswer = "";
+    document.getElementById('textQ').value = "";
+    clearSelectedFile();
+    setMsgHtml("🌀 سوال جدید را بنویسید یا تصویر انتخاب کنید و سپس «💡 پاسخ هوشمند» را بزنید.");
+  }
+
+  // اصلاح ریشه‌ای قالب‌بندی متون، خطوط و سمبل‌های ناخواسته LaTeX
+  function renderMarkdown(md) {
+    let s = (md || '').toString();
+
+    // حذف اسلش‌های تکراری و تصحیح محصورکننده‌های ریاضی LaTeX
+    s = s.replace(/\\\\\(/g, '\\(').replace(/\\\\\)/g, '\\)');
+    s = s.replace(/\\\\\[/g, '\\[').replace(/\\\\\]/g, '\\]');
+    s = s.replace(/(^|[^\\])\bfrac\s*\{/g, '$1\\frac{');
+
+    // حذف تیترهای تهی مانند ### . یا خطوط شامل استارک‌های مزاحم
+    s = s.replace(/^\s*#{1,6}\s*(\.|\*\*|\s*)\s*$/gm, '');
+    s = s.replace(/^\s*\*\*\s*$/gm, '');
+    s = s.replace(/\n{3,}/g, '\n\n');
+
+    let t = esc(s);
+
+    // بلوک‌های کد و نقل‌قول‌ها
+    t = t.replace(/
+```([\s\S]*?)
+```/g, (m, c) => '<pre style="background:#f1f5f9;border-radius:10px;padding:12px;overflow-x:auto;direction:ltr;text-align:left;font-family:monospace;font-size:0.9rem;">' + c.trim() + '</pre>');
+    t = t.replace(/`([^`\n]+)`/g, '<code style="background:#f1f5f9;border-radius:6px;padding:2px 6px;direction:ltr;font-family:monospace;">$1</code>');
+    
+    // تبدیل تیترها به بولد شکیل
+    t = t.replace(/^#{1,6}\s*(.+)$/gm, '<b style="display:block;margin:12px 0 6px;color:#1e3a8a;font-size:1.05rem;">$1</b>');
+    t = t.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+    t = t.replace(/\*([^*\n]+)\*/g, '<i>$1</i>');
+    t = t.replace(/^\s*[-*]\s+(.+)$/gm, '• $1');
+    t = t.replace(/^\s*\|(.+)\|\s*$/gm, (m, row) => '<span style="display:block;font-family:monospace;direction:ltr;text-align:left;background:#f8fafc;padding:2px 6px;border-bottom:1px solid #e2e8f0;">' + row.trim() + '</span>');
+    t = t.replace(/\n/g, '<br>');
+
+    return t;
+  }
+
+  // پرامپت آماده برای سوالات نموداری و جدولی
+  function insertMathTableQuestionTemplate() {
     const txt = document.getElementById('textQ');
-    txt.value = txt.value ? txt.value + ' ' + spoken : spoken;
-    msg('صدای شما دریافت شد. دکمه «💡 پاسخ» را بزنید.');
-  };
-  rec.onerror = function(){
-    msg('خطا در دریافت صدا. مجدداً تلاش کنید.');
-  };
-  rec.start();
-}
-
-function speakAnswer(){
-  const text = rawLastAnswer || document.getElementById('systemMessage').innerText;
-  if(!text || text.startsWith('🌀') || text.startsWith('⏳') || text.startsWith('✍️') || text.startsWith('خطا')){
-    alert('هنوز پاسخی جهت خوانش صوتی موجود نیست.');
-    return;
+    const template = [
+      'صورت سوال (جدول/نمودار/فرمول):',
+      '1) در صورت وجود جدول یا مقادیر مشخص، آن‌ها را دقیق تایپ یا تصویر واضح بفرستید.',
+      '2) روابط جبری را خوانا بنویسید (مثال: (x^2 + 4x) / 2 = 10).',
+      '3) خواسته اصلی مسئله را معین کنید.',
+      '',
+      'خواسته:'
+    ].join('\n');
+    txt.value = txt.value ? (txt.value + '\n\n' + template) : template;
+    txt.focus();
+    msg('قالب سوال جدول/نمودار/فرمول اضافه شد. اطلاعات را تکمیل فرموده و «💡 پاسخ هوشمند» را بزنید.');
   }
-  if('speechSynthesis' in window){
+
+  // پاسخگویی متمرکز روی نظم جدول، نمودار و فرمول
+  async function answerMathTableMode() {
+    const txt = document.getElementById('textQ');
+    const q = (txt.value || '').trim();
+    if (!q && !selectedImageBase64) {
+      msg('✍️ ابتدا سوال را بنویسید یا تصویر مربوط به جدول/فرمول را پیوست فرمایید.');
+      return;
+    }
+    const prefix = 'لطفاً به عنوان استاد، مسئله دارای جدول/نمودار/فرمول را به تفکیک مراحل، منظم و گام‌به‌گام تحلیل فرما. از ایجاد تیترهای تکراری مثل ### یا نشانه‌های ناقص پرهیز کن و محاسبات را به زبان ساده و روان بنویس.';
+    txt.value = q ? (prefix + "\n\n" + q) : prefix;
+    await handleUnifiedAnswer();
+  }
+
+  // ارسال اصلی سوال به API
+  async function handleUnifiedAnswer() {
+    const txt = document.getElementById('textQ');
+    const question = (txt.value || '').trim();
+
+    if (!question && !selectedImageBase64) {
+      msg('✍️ لطفاً متنی تایپ کنید یا عکسی از سوال بارگذاری فرمایید.');
+      return;
+    }
+
+    msg('⏳ در حال برقراری اتصال با مغز هوش مصنوعی Student-AI و تحلیل مسئله...');
+
+    try {
+      const messages = [
+        {
+          role: "system",
+          content: "شما هوش مصنوعی آموزشی Student-AI هستید. وظیفه شما حل دقیق مسائل، توضیح گام‌به‌گام، خروجی مرتب و بدون علائم زاید مارک‌داون یا اسلش‌های اضافی لاتک است."
+        }
+      ];
+
+      if (selectedImageBase64) {
+        messages.push({
+          role: "user",
+          content: [
+            { type: "text", text: question || "لطفاً این تصویر و مسائل داخل آن را به طور کامل تحلیل و حل فرمایید." },
+            { type: "image_url", image_url: { url: selectedImageBase64 } }
+          ]
+        });
+      } else {
+        messages.push({
+          role: "user",
+          content: question
+        });
+      }
+
+      const response = await fetch("https://api.avalai.ir/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + AVALAI_API_KEY
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: messages,
+          temperature: 0.3
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('خطا در دریافت پاسخ: کد وضعیت ' + response.status);
+      }
+
+      const data = await response.json();
+      const reply = data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : "پاسخی از مدل دریافت نشد.";
+      rawLastAnswer = reply;
+      setMsgHtml(renderMarkdown(reply));
+
+    } catch (err) {
+      setMsgHtml('<span style="color:var(--danger)">⚠️ خطا در برقراری ارتباط: ' + esc(err.message) + '</span>');
+    }
+  }
+
+  // خوانش پاسخ با TTS
+  function speakAnswer() {
+    const text = rawLastAnswer || document.getElementById('systemMessage').innerText;
+    if (!text || text.startsWith('🌀') || text.startsWith('⏳') || text.startsWith('✍️') || text.startsWith('⚠️')) {
+      alert('هنوز پاسخی آماده قرائت نیست.');
+      return;
+    }
+    if (!('speechSynthesis' in window)) {
+      alert('مرورگر شما از قابلیت تبدیل نوشتار به گفتار پشتیبانی نمی‌کند.');
+      return;
+    }
     window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
+    const cleanText = text.replace(/[*#`_\\|]/g, ' ');
+    const utter = new SpeechSynthesisUtterance(cleanText);
     utter.lang = 'fa-IR';
+    utter.rate = 0.95;
     window.speechSynthesis.speak(utter);
-  } else {
-    alert('مرورگر از خواندن صوتی پشتیبانی نمی‌کند.');
   }
-}
 
-function copyEmail(){
-  navigator.clipboard.writeText('AI.Algorithms.Ballistics@gmail.com');
-  alert('ایمیل رسمی شرکت کپی شد:\nAI.Algorithms.Ballistics@gmail.com');
-}
+  // ضبط صوت پاسخ و ذخیره در قالب فایل WebM
+  async function saveSpokenAnswerAudio() {
+    const text = rawLastAnswer || document.getElementById('systemMessage').innerText;
+    if (!text || text.startsWith('🌀') || text.startsWith('⏳') || text.startsWith('✍️') || text.startsWith('⚠️')) {
+      alert('پاسخی برای ضبط و ذخیره صوتی وجود ندارد.');
+      return;
+    }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert('امکان دسترسی به ضبط صدا در این مرورگر مقدور نیست.');
+      return;
+    }
+    if (isRecording) {
+      alert('عملیات ضبط هم‌اکنون در جریان است.');
+      return;
+    }
 
-function pickPack(e){
-  msg('بسته انتخابی: '+e.textContent+' — جهت فعال‌سازی به ایمیل شرکت پیام دهید.');
-}
-</script></body></html>
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(stream);
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        stream.getTracks().forEach(t => t.stop());
+        const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'audio/webm' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'student-ai-answer.webm';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+        isRecording = false;
+        msg('✅ صوت پاسخ با موفقیت ذخیره گردید.');
+      };
+
+      isRecording = true;
+      msg('⏺️ در حال ضبط صدای پاسخ... لطفاً تا پایان صحبت شکیبا باشید.');
+      mediaRecorder.start();
+
+      speakAnswer();
+
+      const durationSec = Math.max(5, Math.min(120, Math.ceil(text.length / 12)));
+      setTimeout(() => {
+        try { mediaRecorder && mediaRecorder.state !== 'inactive' && mediaRecorder.stop(); } catch(e){}
+      }, durationSec * 1000);
+
+    } catch (err) {
+      isRecording = false;
+      alert('خطا در آغاز ضبط: ' + err.message + '\n\nلطفاً دسترسی میکروفون را در مرورگر مجاز بفرمایید.');
+    }
+  }
+</script>
+
+</body>
+</html>
